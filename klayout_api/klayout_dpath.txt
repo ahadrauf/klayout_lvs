@@ -1,0 +1,312 @@
+class DPath(__Base)
+ |  @brief A path class
+ |  
+ |  A path consists of an sequence of line segments forming the 'spine' of the path and a width. In addition, the starting point can be drawn back by a certain extent (the 'begin extension') and the end point can be pulled forward somewhat (by the 'end extension').
+ |  
+ |  A path may have round ends for special purposes. In particular, a round-ended path with a single point can represent a circle. Round-ended paths should have being and end extensions equal to half the width. Non-round-ended paths with a single point are allowed but the definition of the resulting shape in not well defined and may differ in other tools.
+ |  
+ |  See @<a href="/programming/database_api.xml">The Database API@</a> for more details about the database objects.
+ |  
+ |  Method resolution order:
+ |      DPath
+ |      __Base
+ |      builtins.object
+ |  
+ |  Methods defined here:
+ |  
+ |  __eq__(...)
+ |      @brief Equality test
+ |      @args p
+ |      @param p The object to compare against
+ |  
+ |  __ge__(...)
+ |      Return self>=value.
+ |  
+ |  __gt__(...)
+ |      Return self>value.
+ |  
+ |  __init__(...)
+ |      @brief Constructor given the points of the path's spine, the width, the extensions and the round end flag
+ |      
+ |      @args pts, width, bgn_ext, end_ext, round
+ |      
+ |      @param pts The points forming the spine of the path
+ |      @param width The width of the path
+ |      @param bgn_ext The begin extension of the path
+ |      @param end_ext The end extension of the path
+ |      @param round If this flag is true, the path will get rounded ends
+ |  
+ |  __le__(...)
+ |      Return self<=value.
+ |  
+ |  __lt__(...)
+ |      @brief Less operator
+ |      @args p
+ |      @param p The object to compare against
+ |      This operator is provided to establish some, not necessarily a certain sorting order
+ |  
+ |  __mul__(...)
+ |      @brief Scaling by some factor
+ |      
+ |      @args f
+ |      
+ |      Returns the scaled object. All coordinates are multiplied with the given factor and if necessary rounded.
+ |  
+ |  __ne__(...)
+ |      @brief Inequality test
+ |      @args p
+ |      @param p The object to compare against
+ |  
+ |  __repr__(...)
+ |      @brief Convert to a string
+ |  
+ |  __str__(...)
+ |      @brief Convert to a string
+ |  
+ |  area(...)
+ |      @brief Returns the approximate area of the path
+ |      This method returns the approximate value of the area. It is computed from the length times the width. end extensions are taken into account correctly, but not effects of the corner interpolation.
+ |      This method was added in version 0.22.
+ |  
+ |  assign(...)
+ |      @brief Assigns another object to self
+ |      @args other
+ |  
+ |  bbox(...)
+ |      @brief Returns the bounding box of the path
+ |  
+ |  create(...)
+ |      @brief Ensures the C++ object is created
+ |      Use this method to ensure the C++ object is created, for example to ensure that resources are allocated. Usually C++ objects are created on demand and not necessarily when the script object is created.
+ |  
+ |  destroy(...)
+ |      @brief Explicitly destroys the object
+ |      Explicitly destroys the object on C++ side if it was owned by the script interpreter. Subsequent access to this object will throw an exception.
+ |      If the object is not owned by the script, this method will do nothing.
+ |  
+ |  destroyed(...)
+ |      @brief Returns a value indicating whether the object was already destroyed
+ |      This method returns true, if the object was destroyed, either explicitly or by the C++ side.
+ |      The latter may happen, if the object is owned by a C++ object which got destroyed itself.
+ |  
+ |  dup(...)
+ |      @brief Creates a copy of self
+ |  
+ |  each_point(...)
+ |      @brief Get the points that make up the path's spine
+ |  
+ |  from_ipath(...) from builtins.type
+ |      @brief Creates a floating-point coordinate path from an integer coordinate path
+ |      
+ |      This constructor has been introduced in version 0.25 and replaces the previous static method 'from_ipath'.
+ |  
+ |  from_s(...) from builtins.type
+ |      @brief Creates an object from a string
+ |      @args s
+ |      Creates the object from a string representation (as returned by \to_s)
+ |      
+ |      This method has been added in version 0.23.
+ |  
+ |  hash(...)
+ |      @brief Computes a hash value
+ |      Returns a hash value for the given polygon. This method enables polygons as hash keys.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  is_const_object(...)
+ |      @brief Returns a value indicating whether the reference is a const reference
+ |      This method returns true, if self is a const reference.
+ |      In that case, only const methods may be called on self.
+ |  
+ |  is_round(...)
+ |      @brief Returns true, if the path has round ends
+ |  
+ |  length(...)
+ |      @brief Returns the length of the path
+ |      the length of the path is determined by summing the lengths of the segments and adding begin and end extensions. For round-ended paths the length of the paths between the tips of the ends.
+ |      
+ |      This method was added in version 0.23.
+ |  
+ |  move(...)
+ |      @brief Moves the path.
+ |      @args dx, dy
+ |      
+ |      Moves the path by the given offset and returns the 
+ |      moved path. The path is overwritten.
+ |      
+ |      @param dx The x distance to move the path.
+ |      @param dy The y distance to move the path.
+ |      
+ |      @return The moved path.
+ |      
+ |      This version has been added in version 0.23.
+ |  
+ |  moved(...)
+ |      @brief Returns the moved path (does not change self)
+ |      @args dx, dy
+ |      
+ |      Moves the path by the given offset and returns the 
+ |      moved path. The path is not modified.
+ |      
+ |      @param dx The x distance to move the path.
+ |      @param dy The y distance to move the path.
+ |      
+ |      @return The moved path.
+ |      
+ |      This version has been added in version 0.23.
+ |  
+ |  new(...) from builtins.type
+ |      @brief Constructor given the points of the path's spine, the width, the extensions and the round end flag
+ |      
+ |      @args pts, width, bgn_ext, end_ext, round
+ |      
+ |      @param pts The points forming the spine of the path
+ |      @param width The width of the path
+ |      @param bgn_ext The begin extension of the path
+ |      @param end_ext The end extension of the path
+ |      @param round If this flag is true, the path will get rounded ends
+ |  
+ |  new_pw(...) from builtins.type
+ |      @brief Constructor given the points of the path's spine and the width
+ |      
+ |      @args pts, width
+ |      
+ |      @param pts The points forming the spine of the path
+ |      @param width The width of the path
+ |  
+ |  new_pwx(...) from builtins.type
+ |      @brief Constructor given the points of the path's spine, the width and the extensions
+ |      
+ |      @args pts, width, bgn_ext, end_ext
+ |      
+ |      @param pts The points forming the spine of the path
+ |      @param width The width of the path
+ |      @param bgn_ext The begin extension of the path
+ |      @param end_ext The end extension of the path
+ |  
+ |  new_pwxr(...) from builtins.type
+ |      @brief Constructor given the points of the path's spine, the width, the extensions and the round end flag
+ |      
+ |      @args pts, width, bgn_ext, end_ext, round
+ |      
+ |      @param pts The points forming the spine of the path
+ |      @param width The width of the path
+ |      @param bgn_ext The begin extension of the path
+ |      @param end_ext The end extension of the path
+ |      @param round If this flag is true, the path will get rounded ends
+ |  
+ |  num_points(...)
+ |      @brief Get the number of points
+ |  
+ |  perimeter(...)
+ |      @brief Returns the approximate perimeter of the path
+ |      This method returns the approximate value of the perimeter. It is computed from the length and the width. end extensions are taken into account correctly, but not effects of the corner interpolation.
+ |      This method was added in version 0.24.4.
+ |  
+ |  polygon(...)
+ |      @brief Convert the path to a polygon
+ |      The returned polygon is not guaranteed to be non-self overlapping. This may happen if the path overlaps itself or contains very short segments.
+ |  
+ |  round_corners(...)
+ |      @brief Creates a new path whose corners are interpolated with circular bends
+ |      
+ |      @param radius The radius of the bends
+ |      @param npoints The number of points (per full circle) used for interpolating the bends
+ |      @param accuracy The numerical accuracy of the computation
+ |      
+ |      The accuracy parameter controls the numerical resolution of the approximation process and should be in the order of half the database unit. This accuracy is used for suppressing redundant points and simplication of the resulting path.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  simple_polygon(...)
+ |      @brief Convert the path to a simple polygon
+ |      The returned polygon is not guaranteed to be non-selfoverlapping. This may happen if the path overlaps itself or contains very short segments.
+ |  
+ |  to_itype(...)
+ |      @brief Converts the path to an integer coordinate path
+ |      
+ |      The database unit can be specified to translate the floating-point coordinate path in micron units to an integer-coordinate path in database units. The path's' coordinates will be divided by the database unit.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  to_s(...)
+ |      @brief Convert to a string
+ |  
+ |  transformed(...)
+ |      @brief Transform the path.
+ |      @args t
+ |      
+ |      Transforms the path with the given complex transformation.
+ |      Does not modify the path but returns the transformed path.
+ |      
+ |      @param t The transformation to apply.
+ |      
+ |      @return The transformed path.
+ |  
+ |  transformed_cplx(...)
+ |      @brief Transform the path.
+ |      @args t
+ |      
+ |      Transforms the path with the given complex transformation.
+ |      Does not modify the path but returns the transformed path.
+ |      
+ |      @param t The transformation to apply.
+ |      
+ |      @return The transformed path.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |  
+ |  bgn_ext
+ |      @brief Get the begin extension
+ |      
+ |      
+ |      @brief Set the begin extension
+ |      @args ext
+ |  
+ |  end_ext
+ |      @brief Get the end extension
+ |      
+ |      
+ |      @brief Set the end extension
+ |      @args ext
+ |  
+ |  points
+ |      @brief Get the number of points
+ |      
+ |      @brief Set the points of the path
+ |      @args p
+ |      @param p An array of points to assign to the path's spine
+ |  
+ |  round
+ |      @brief Set the 'round ends' flag
+ |      @args round_ends_flag
+ |      A path with round ends show half circles at the ends, instead of square or rectangular ends. Paths with this flag set should use a begin and end extension of half the width (see \bgn_ext and \end_ext). The interpretation of such paths in other tools may differ otherwise.
+ |  
+ |  width
+ |      @brief Get the width
+ |      
+ |      
+ |      @brief Set the width
+ |      @args w
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from __Base:
+ |  
+ |  __delattr__(self, name, /)
+ |      Implement delattr(self, name).
+ |  
+ |  __getattribute__(self, name, /)
+ |      Return getattr(self, name).
+ |  
+ |  __new__(*args, **kwargs) from builtins.type
+ |      Create and return a new object.  See help(type) for accurate signature.
+ |  
+ |  __setattr__(self, name, value, /)
+ |      Implement setattr(self, name, value).

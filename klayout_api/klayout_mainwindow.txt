@@ -1,0 +1,2040 @@
+class MainWindow(QMainWindow_Native)
+ |  @brief The main application window and central controller object
+ |  
+ |  This object first is the main window but also the main controller. The main controller is the port by which access can be gained to all the data objects, view and other aspects of the program.
+ |  
+ |  Method resolution order:
+ |      MainWindow
+ |      QMainWindow_Native
+ |      QWidget_Native
+ |      QObject_Native
+ |      __Base
+ |      builtins.object
+ |  
+ |  Methods defined here:
+ |  
+ |  __init__(...)
+ |      @brief Creates a new object of this class
+ |  
+ |  cancel(...)
+ |      @brief Cancels current editing operations
+ |      
+ |      This method call cancels all current editing operations and restores normal mouse mode.
+ |  
+ |  clone_current_view(...)
+ |      @brief Clones the current view and make it current
+ |  
+ |  close_all(...)
+ |      @brief Closes all views
+ |      
+ |      This method unconditionally closes all views. No dialog will be opened if unsaved edits exist.
+ |      
+ |      This method was added in version 0.18.
+ |  
+ |  close_current_view(...)
+ |      @brief Closes the current view
+ |      
+ |      This method does not open a dialog to ask which cell view to close if multiple cells are opened in the view, but rather closes all cells.
+ |  
+ |  cm_adjust_origin(...)
+ |      @brief 'cm_adjust_origin' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_bookmark_view(...)
+ |      @brief 'cm_bookmark_view' action (bound to a menu)
+ |  
+ |  cm_cancel(...)
+ |      @brief 'cm_cancel' action (bound to a menu)
+ |  
+ |  cm_cell_copy(...)
+ |      @brief 'cm_cell_copy' action (bound to a menu)
+ |      This method has been added in version 0.20.
+ |  
+ |  cm_cell_cut(...)
+ |      @brief 'cm_cell_cut' action (bound to a menu)
+ |      This method has been added in version 0.20.
+ |  
+ |  cm_cell_delete(...)
+ |      @brief 'cm_cell_delete' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_cell_flatten(...)
+ |      @brief 'cm_cell_flatten' action (bound to a menu)
+ |  
+ |  cm_cell_hide(...)
+ |      @brief 'cm_cell_hide' action (bound to a menu)
+ |  
+ |  cm_cell_paste(...)
+ |      @brief 'cm_cell_paste' action (bound to a menu)
+ |      This method has been added in version 0.20.
+ |  
+ |  cm_cell_rename(...)
+ |      @brief 'cm_cell_rename' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_cell_select(...)
+ |      @brief 'cm_cell_select' action (bound to a menu)
+ |  
+ |  cm_cell_show(...)
+ |      @brief 'cm_cell_show' action (bound to a menu)
+ |  
+ |  cm_cell_show_all(...)
+ |      @brief 'cm_cell_show_all' action (bound to a menu)
+ |  
+ |  cm_clear_layer(...)
+ |      @brief 'cm_clear_layer' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_clone(...)
+ |      @brief 'cm_clone' action (bound to a menu)
+ |  
+ |  cm_close(...)
+ |      @brief 'cm_close' action (bound to a menu)
+ |  
+ |  cm_close_all(...)
+ |      @brief 'cm_close_all' action (bound to a menu)
+ |      This method has been added in version 0.24.
+ |  
+ |  cm_copy(...)
+ |      @brief 'cm_copy' action (bound to a menu)
+ |  
+ |  cm_copy_layer(...)
+ |      @brief 'cm_copy_layer' action (bound to a menu)
+ |      This method has been added in version 0.22.
+ |  
+ |  cm_cut(...)
+ |      @brief 'cm_cut' action (bound to a menu)
+ |  
+ |  cm_dec_max_hier(...)
+ |      @brief 'cm_dec_max_hier' action (bound to a menu)
+ |  
+ |  cm_delete(...)
+ |      @brief 'cm_delete' action (bound to a menu)
+ |  
+ |  cm_delete_layer(...)
+ |      @brief 'cm_delete_layer' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_edit_layer(...)
+ |      @brief 'cm_edit_layer' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_exit(...)
+ |      @brief 'cm_exit' action (bound to a menu)
+ |  
+ |  cm_goto_position(...)
+ |      @brief 'cm_goto_position' action (bound to a menu)
+ |  
+ |  cm_help_about(...)
+ |      @brief 'cm_help_about' action (bound to a menu)
+ |  
+ |  cm_inc_max_hier(...)
+ |      @brief 'cm_inc_max_hier' action (bound to a menu)
+ |  
+ |  cm_last_display_state(...)
+ |      @brief 'cm_prev_display_state' action (bound to a menu)
+ |  
+ |  cm_layout_props(...)
+ |      @brief 'cm_layout_props' action (bound to a menu)
+ |  
+ |  cm_load_bookmarks(...)
+ |      @brief 'cm_load_bookmarks' action (bound to a menu)
+ |  
+ |  cm_load_layer_props(...)
+ |      @brief 'cm_load_layer_props' action (bound to a menu)
+ |  
+ |  cm_lv_add_missing(...)
+ |      @brief 'cm_lv_add_missing' action (bound to a menu)
+ |  
+ |  cm_lv_delete(...)
+ |      @brief 'cm_lv_delete' action (bound to a menu)
+ |  
+ |  cm_lv_expand_all(...)
+ |      @brief 'cm_lv_expand_all' action (bound to a menu)
+ |  
+ |  cm_lv_group(...)
+ |      @brief 'cm_lv_group' action (bound to a menu)
+ |  
+ |  cm_lv_hide(...)
+ |      @brief 'cm_lv_hide' action (bound to a menu)
+ |  
+ |  cm_lv_hide_all(...)
+ |      @brief 'cm_lv_hide_all' action (bound to a menu)
+ |  
+ |  cm_lv_insert(...)
+ |      @brief 'cm_lv_insert' action (bound to a menu)
+ |  
+ |  cm_lv_new_tab(...)
+ |      @brief 'cm_lv_new_tab' action (bound to a menu)
+ |  
+ |  cm_lv_regroup_by_datatype(...)
+ |      @brief 'cm_lv_regroup_by_datatype' action (bound to a menu)
+ |  
+ |  cm_lv_regroup_by_index(...)
+ |      @brief 'cm_lv_regroup_by_index' action (bound to a menu)
+ |  
+ |  cm_lv_regroup_by_layer(...)
+ |      @brief 'cm_lv_regroup_by_layer' action (bound to a menu)
+ |  
+ |  cm_lv_regroup_flatten(...)
+ |      @brief 'cm_lv_regroup_flatten' action (bound to a menu)
+ |  
+ |  cm_lv_remove_tab(...)
+ |      @brief 'cm_lv_remove_tab' action (bound to a menu)
+ |  
+ |  cm_lv_remove_unused(...)
+ |      @brief 'cm_lv_remove_unused' action (bound to a menu)
+ |  
+ |  cm_lv_rename(...)
+ |      @brief 'cm_lv_rename' action (bound to a menu)
+ |  
+ |  cm_lv_rename_tab(...)
+ |      @brief 'cm_lv_rename_tab' action (bound to a menu)
+ |  
+ |  cm_lv_select_all(...)
+ |      @brief 'cm_lv_select_all' action (bound to a menu)
+ |  
+ |  cm_lv_show(...)
+ |      @brief 'cm_lv_show' action (bound to a menu)
+ |  
+ |  cm_lv_show_all(...)
+ |      @brief 'cm_lv_show_all' action (bound to a menu)
+ |  
+ |  cm_lv_show_only(...)
+ |      @brief 'cm_lv_show_only' action (bound to a menu)
+ |      This method has been added in version 0.20.
+ |  
+ |  cm_lv_sort_by_dli(...)
+ |      @brief 'cm_lv_sort_by_dli' action (bound to a menu)
+ |  
+ |  cm_lv_sort_by_idl(...)
+ |      @brief 'cm_lv_sort_by_idl' action (bound to a menu)
+ |  
+ |  cm_lv_sort_by_ild(...)
+ |      @brief 'cm_lv_sort_by_ild' action (bound to a menu)
+ |  
+ |  cm_lv_sort_by_ldi(...)
+ |      @brief 'cm_lv_sort_by_ldi' action (bound to a menu)
+ |  
+ |  cm_lv_sort_by_name(...)
+ |      @brief 'cm_lv_sort_by_name' action (bound to a menu)
+ |  
+ |  cm_lv_source(...)
+ |      @brief 'cm_lv_source' action (bound to a menu)
+ |  
+ |  cm_lv_ungroup(...)
+ |      @brief 'cm_lv_ungroup' action (bound to a menu)
+ |  
+ |  cm_macro_editor(...)
+ |      @brief 'cm_macro_editor' action (bound to a menu)
+ |  
+ |  cm_manage_bookmarks(...)
+ |      @brief 'cm_manage_bookmarks' action (bound to a menu)
+ |  
+ |  cm_max_hier(...)
+ |      @brief 'cm_max_hier' action (bound to a menu)
+ |  
+ |  cm_max_hier_0(...)
+ |      @brief 'cm_max_hier_0' action (bound to a menu)
+ |  
+ |  cm_max_hier_1(...)
+ |      @brief 'cm_max_hier_1' action (bound to a menu)
+ |  
+ |  cm_navigator_close(...)
+ |      @brief 'cm_navigator_close' action (bound to a menu)
+ |  
+ |  cm_navigator_freeze(...)
+ |      @brief 'cm_navigator_freeze' action (bound to a menu)
+ |  
+ |  cm_new_cell(...)
+ |      @brief 'cm_new_cell' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_new_layer(...)
+ |      @brief 'cm_new_layer' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_new_layout(...)
+ |      @brief 'cm_new_layout' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_new_panel(...)
+ |      @brief 'cm_new_panel' action (bound to a menu)
+ |      This method has been added in version 0.20.
+ |  
+ |  cm_next_display_state(...)
+ |      @brief 'cm_next_display_state' action (bound to a menu)
+ |  
+ |  cm_open(...)
+ |      @brief 'cm_open' action (bound to a menu)
+ |  
+ |  cm_open_current_cell(...)
+ |      @brief 'cm_open_current_cell' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_open_new_view(...)
+ |      @brief 'cm_open_new_view' action (bound to a menu)
+ |  
+ |  cm_open_too(...)
+ |      @brief 'cm_open_too' action (bound to a menu)
+ |  
+ |  cm_packages(...)
+ |      @brief 'cm_packages' action (bound to a menu)
+ |      This method has been added in version 0.25.
+ |  
+ |  cm_pan_down(...)
+ |      @brief 'cm_pan_down' action (bound to a menu)
+ |  
+ |  cm_pan_left(...)
+ |      @brief 'cm_pan_left' action (bound to a menu)
+ |  
+ |  cm_pan_right(...)
+ |      @brief 'cm_pan_right' action (bound to a menu)
+ |  
+ |  cm_pan_up(...)
+ |      @brief 'cm_pan_up' action (bound to a menu)
+ |  
+ |  cm_paste(...)
+ |      @brief 'cm_paste' action (bound to a menu)
+ |  
+ |  cm_prev_display_state(...)
+ |      @brief 'cm_prev_display_state' action (bound to a menu)
+ |  
+ |  cm_print(...)
+ |      @brief 'cm_print' action (bound to a menu)
+ |      This method has been added in version 0.21.13.
+ |  
+ |  cm_pull_in(...)
+ |      @brief 'cm_pull_in' action (bound to a menu)
+ |      This method has been added in version 0.20.
+ |  
+ |  cm_reader_options(...)
+ |      @brief 'cm_reader_options' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_redo(...)
+ |      @brief 'cm_redo' action (bound to a menu)
+ |  
+ |  cm_redraw(...)
+ |      @brief 'cm_redraw' action (bound to a menu)
+ |  
+ |  cm_reload(...)
+ |      @brief 'cm_reload' action (bound to a menu)
+ |  
+ |  cm_reset_window_state(...)
+ |      @brief 'cm_reset_window_state' action (bound to a menu)
+ |      This method has been added in version 0.25.
+ |  
+ |  cm_restore_session(...)
+ |      @brief 'cm_restore_session' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_save(...)
+ |      @brief 'cm_save' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_save_all(...)
+ |      @brief 'cm_save_all' action (bound to a menu)
+ |      This method has been added in version 0.24.
+ |  
+ |  cm_save_as(...)
+ |      @brief 'cm_save_as' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_save_bookmarks(...)
+ |      @brief 'cm_save_bookmarks' action (bound to a menu)
+ |  
+ |  cm_save_current_cell_as(...)
+ |      @brief 'cm_save_current_cell_as' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_save_layer_props(...)
+ |      @brief 'cm_save_layer_props' action (bound to a menu)
+ |  
+ |  cm_save_session(...)
+ |      @brief 'cm_save_session' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_screenshot(...)
+ |      @brief 'cm_screenshot' action (bound to a menu)
+ |  
+ |  cm_sel_flip_x(...)
+ |      @brief 'cm_sel_flip_x' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_sel_flip_y(...)
+ |      @brief 'cm_sel_flip_y' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_sel_free_rot(...)
+ |      @brief 'cm_sel_free_rot' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_sel_move(...)
+ |      @brief 'cm_sel_move' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_sel_move_to(...)
+ |      @brief 'cm_sel_move_to' action (bound to a menu)
+ |      This method has been added in version 0.24.
+ |  
+ |  cm_sel_rot_ccw(...)
+ |      @brief 'cm_sel_rot_ccw' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_sel_rot_cw(...)
+ |      @brief 'cm_sel_rot_cw' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_sel_scale(...)
+ |      @brief 'cm_sel_scale' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_select_all(...)
+ |      @brief 'cm_select_all' action (bound to a menu)
+ |      This method has been added in version 0.22.
+ |  
+ |  cm_select_cell(...)
+ |      @brief 'cm_select_cell' action (bound to a menu)
+ |  
+ |  cm_select_current_cell(...)
+ |      @brief 'cm_select_current_cell' action (bound to a menu)
+ |  
+ |  cm_setup(...)
+ |      @brief 'cm_setup' action (bound to a menu)
+ |  
+ |  cm_show_properties(...)
+ |      @brief 'cm_show_properties' action (bound to a menu)
+ |  
+ |  cm_technologies(...)
+ |      @brief 'cm_technologies' action (bound to a menu)
+ |      This method has been added in version 0.22.
+ |  
+ |  cm_undo(...)
+ |      @brief 'cm_undo' action (bound to a menu)
+ |  
+ |  cm_unselect_all(...)
+ |      @brief 'cm_unselect_all' action (bound to a menu)
+ |      This method has been added in version 0.22.
+ |  
+ |  cm_view_log(...)
+ |      @brief 'cm_view_log' action (bound to a menu)
+ |      This method has been added in version 0.20.
+ |  
+ |  cm_zoom_fit(...)
+ |      @brief 'cm_zoom_fit' action (bound to a menu)
+ |  
+ |  cm_zoom_fit_sel(...)
+ |      @brief 'cm_zoom_fit_sel' action (bound to a menu)
+ |      This method has been added in version 0.18.
+ |  
+ |  cm_zoom_in(...)
+ |      @brief 'cm_zoom_in' action (bound to a menu)
+ |  
+ |  cm_zoom_out(...)
+ |      @brief 'cm_zoom_out' action (bound to a menu)
+ |  
+ |  create(...)
+ |      @brief Ensures the C++ object is created
+ |      Use this method to ensure the C++ object is created, for example to ensure that resources are allocated. Usually C++ objects are created on demand and not necessarily when the script object is created.
+ |  
+ |  create_layout(...)
+ |      @brief Creates a new, empty layout with the given technology
+ |      
+ |      @args tech, mode
+ |      @param mode An integer value of 0, 1 or 2 that determines how the layout is created
+ |      @param tech The name of the technology to use for that layout.
+ |      @return The cellview of the layout that was created
+ |      
+ |      Create the layout in the current view, replacing the current layouts (mode 0), in a new view (mode 1) or adding it to the current view (mode 2).
+ |      In mode 1, the new view is made the current one.
+ |      
+ |      If the technology name is not a valid technology name, the default technology will be used.
+ |      
+ |      This version was introduced in version 0.22.
+ |      Starting with version 0.25, this method returns a cellview object that can be modified to configure the cellview.
+ |  
+ |  create_view(...)
+ |      @brief Creates a new, empty view
+ |      
+ |      @return The index of the view that was created
+ |      
+ |      Creates an empty view that can be filled with layouts using the load_layout and create_layout methods on the view object. Use the \view method to obtain the view object from the view index.
+ |      This method has been added in version 0.22.
+ |  
+ |  current_view(...)
+ |      @brief Returns a reference to the current view's object
+ |      
+ |      @return A reference to a \LayoutView object representing the current view.
+ |  
+ |  destroy(...)
+ |      @brief Explicitly destroys the object
+ |      Explicitly destroys the object on C++ side if it was owned by the script interpreter. Subsequent access to this object will throw an exception.
+ |      If the object is not owned by the script, this method will do nothing.
+ |  
+ |  destroyed(...)
+ |      @brief Returns a value indicating whether the object was already destroyed
+ |      This method returns true, if the object was destroyed, either explicitly or by the C++ side.
+ |      The latter may happen, if the object is owned by a C++ object which got destroyed itself.
+ |  
+ |  enable_edits(...)
+ |      @brief Enables or disables editing
+ |      
+ |      @args enable
+ |      @param enable Enable edits if set to true
+ |      
+ |      Starting from version 0.25, this method enables/disables edits on the current view only. 
+ |      Use LayoutView#enable_edits instead.
+ |  
+ |  exit(...)
+ |      @brief Schedules an exit for the application
+ |      
+ |      This method does not immediately exit the application but sends an exit request to the application which will cause a clean shutdown of the GUI.
+ |  
+ |  grid_micron(...)
+ |      @brief Gets the global grid in micron
+ |      
+ |      @return The global grid in micron
+ |      
+ |      The global grid is used at various places, i.e. for ruler snapping, for grid display etc.
+ |  
+ |  index_of(...)
+ |      @brief Gets the index of the given view
+ |      
+ |      @return The index of the view that was given
+ |      
+ |      If the given view is not a view object within the main window, a negative value will be returned.
+ |      
+ |      This method has been added in version 0.25.
+ |  
+ |  instance(...) from builtins.type
+ |      @brief Gets application's main window instance
+ |      
+ |      This method has been added in version 0.24.
+ |  
+ |  is_const_object(...)
+ |      @brief Returns a value indicating whether the reference is a const reference
+ |      This method returns true, if self is a const reference.
+ |      In that case, only const methods may be called on self.
+ |  
+ |  load_layout(...)
+ |      @brief Loads a new layout with the given options and associate it with the given technology
+ |      
+ |      @args filename, options, tech, mode
+ |      @param filename The name of the file to load
+ |      @param options The reader options to use.
+ |      @param tech The name of the technology to use for that layout.
+ |      @param mode An integer value of 0, 1 or 2 that determines how the file is loaded
+ |      @return The cellview into which the layout was loaded
+ |      
+ |      Loads the given file into the current view, replacing the current layouts (mode 0), into a new view (mode 1) or adding the layout to the current view (mode 2).
+ |      In mode 1, the new view is made the current one.
+ |      
+ |      If the technology name is not a valid technology name, the default technology will be used.
+ |      
+ |      This version was introduced in version 0.22.
+ |      Starting with version 0.25, this method returns a cellview object that can be modified to configure the cellview.
+ |  
+ |  manager(...)
+ |      @brief Gets the \Manager object of this window
+ |      
+ |      The manager object is responsible to managing the undo/redo stack. Usually this object is not required. It's more convenient and safer to use the related methods provided by \LayoutView (\LayoutView#transaction, \LayoutView#commit) and \MainWindow (such as \MainWindow#cm_undo and \MainWindow#cm_redo).
+ |      
+ |      This method has been added in version 0.24.
+ |  
+ |  menu(...)
+ |      @brief Returns a reference to the abstract menu
+ |      
+ |      @return A reference to an \AbstractMenu object representing the menu system
+ |  
+ |  message(...)
+ |      @brief Displays a message in the status bar
+ |      
+ |      @args message,time
+ |      @param message The message to display
+ |      @param time The time how long to display the message in ms
+ |      
+ |      This given message is shown in the status bar for the given time.
+ |      
+ |      This method has been added in version 0.18.
+ |  
+ |  new(...) from builtins.type
+ |      @brief Creates a new object of this class
+ |  
+ |  on_view_closed_(...)
+ |      @brief An event indicating that a view was closed
+ |      @args index
+ |      @param index The index of the view that was closed
+ |      
+ |      This event is triggered after a view was closed. For example, because the tab was closed.
+ |      
+ |      This event has been added in version 0.25.
+ |  
+ |  on_view_created_(...)
+ |      @brief An event indicating that a new view was created
+ |      @args index
+ |      @param index The index of the view that was created
+ |      
+ |      This event is triggered after a new view was created. For example, if a layout is loaded into a new panel.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_new_view_observer/remove_new_view_observer) have been removed in 0.25.
+ |  
+ |  redraw(...)
+ |      @brief Redraws the current view
+ |      
+ |      Issues a redraw request to the current view. This usually happens automatically, so this method does not need to be called in most relevant cases.
+ |  
+ |  resize(...)
+ |      @brief Resizes the window
+ |      
+ |      @args width, height
+ |      @param width The new width of the window
+ |      @param height The new width of the window
+ |      
+ |      This method resizes the window to the given target size including decoration such as menu bar and control panels
+ |  
+ |  restore_session(...)
+ |      @brief Restores a session from the given file
+ |      
+ |      @args fn
+ |      @param fn The path to the session file
+ |      
+ |      The session stored in the given session file is restored. All existing views are closed and all layout edits are discarded without notification.
+ |      
+ |      This method was added in version 0.18.
+ |  
+ |  save_session(...)
+ |      @brief Saves the session to the given file
+ |      
+ |      @args fn
+ |      @param fn The path to the session file
+ |      
+ |      The session is saved to the given session file. Any existing layout edits are not automatically saved together with the session. The session just holds display settings and annotation objects. If layout edits exist, they have to be saved explicitly in a separate step.
+ |      
+ |      This method was added in version 0.18.
+ |  
+ |  select_view(...)
+ |      @brief Selects the view with the given index
+ |      
+ |      @args index
+ |      @param index The index of the view to select (0 is the first)
+ |      
+ |      This method will make the view with the given index the current (front) view.
+ |      
+ |      This method was renamed from select_view to current_view_index= in version 0.25. The old name is still available, but deprecated.
+ |  
+ |  synchroneous(...)
+ |      @brief Puts the main window into synchronous mode
+ |      
+ |      @args sync_mode
+ |      @param sync_mode 'true' if the application should behave synchronously
+ |      
+ |      In synchronous mode, an application is allowed to block on redraw. While redrawing, no user interactions are possible. Although this is not desirable for smooth operation, it can be beneficial for test or automation purposes, i.e. if a screenshot needs to be produced once the application has finished drawing.
+ |  
+ |  view(...)
+ |      @brief Returns a reference to a view object by index
+ |      @args n
+ |      
+ |      @return The view object's reference for the view with the given index.
+ |  
+ |  views(...)
+ |      @brief Returns the number of views
+ |      
+ |      @return The number of views available so far.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |  
+ |  current_view_index
+ |      @brief Returns the current view's index
+ |      
+ |      @return The index of the current view
+ |      
+ |      This method will return the index of the current view.
+ |      
+ |      @brief Selects the view with the given index
+ |      
+ |      @args index
+ |      @param index The index of the view to select (0 is the first)
+ |      
+ |      This method will make the view with the given index the current (front) view.
+ |      
+ |      This method was renamed from select_view to current_view_index= in version 0.25. The old name is still available, but deprecated.
+ |  
+ |  initial_technology
+ |      @brief Gets the technology used for creating or loading layouts (unless explicitly specified)
+ |      
+ |      @return The current initial technology
+ |      This method was added in version 0.22.
+ |      
+ |      @brief Sets the technology used for creating or loading layouts (unless explicitly specified)
+ |      
+ |      Setting the technology will have an effect on the next load_layout or create_layout operation which does not explicitly specify the technology but might not be reflected correctly in the reader options dialog and changes will be reset when the application is restarted.
+ |      @args tech
+ |      @param tech The new initial technology
+ |      
+ |      This method was added in version 0.22.
+ |  
+ |  on_current_view_changed
+ |      @brief An event indicating that the current view has changed
+ |      
+ |      This event is triggered after the current view has changed. This happens, if the user switches the layout tab.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_current_view_observer/remove_current_view_observer) have been removed in 0.25.
+ |      
+ |      
+ |      @brief An event indicating that the current view has changed
+ |      
+ |      This event is triggered after the current view has changed. This happens, if the user switches the layout tab.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_current_view_observer/remove_current_view_observer) have been removed in 0.25.
+ |      
+ |      
+ |      @brief An event indicating that the current view has changed
+ |      
+ |      This event is triggered after the current view has changed. This happens, if the user switches the layout tab.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_current_view_observer/remove_current_view_observer) have been removed in 0.25.
+ |  
+ |  on_view_closed
+ |      @brief An event indicating that a view was closed
+ |      @args index
+ |      @param index The index of the view that was closed
+ |      
+ |      This event is triggered after a view was closed. For example, because the tab was closed.
+ |      
+ |      This event has been added in version 0.25.
+ |      
+ |      
+ |      @brief An event indicating that a view was closed
+ |      @args index
+ |      @param index The index of the view that was closed
+ |      
+ |      This event is triggered after a view was closed. For example, because the tab was closed.
+ |      
+ |      This event has been added in version 0.25.
+ |  
+ |  on_view_created
+ |      @brief An event indicating that a new view was created
+ |      @args index
+ |      @param index The index of the view that was created
+ |      
+ |      This event is triggered after a new view was created. For example, if a layout is loaded into a new panel.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_new_view_observer/remove_new_view_observer) have been removed in 0.25.
+ |      
+ |      
+ |      @brief An event indicating that a new view was created
+ |      @args index
+ |      @param index The index of the view that was created
+ |      
+ |      This event is triggered after a new view was created. For example, if a layout is loaded into a new panel.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_new_view_observer/remove_new_view_observer) have been removed in 0.25.
+ |  
+ |  synchronous
+ |      @brief Puts the main window into synchronous mode
+ |      
+ |      @args sync_mode
+ |      @param sync_mode 'true' if the application should behave synchronously
+ |      
+ |      In synchronous mode, an application is allowed to block on redraw. While redrawing, no user interactions are possible. Although this is not desirable for smooth operation, it can be beneficial for test or automation purposes, i.e. if a screenshot needs to be produced once the application has finished drawing.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from QMainWindow_Native:
+ |  
+ |  addDockWidget(...)
+ |      @brief Method void QMainWindow::addDockWidget(Qt::DockWidgetArea area, QDockWidget *dockwidget, Qt::Orientation orientation)
+ |  
+ |  addToolBar(...)
+ |      @brief Method QToolBar *QMainWindow::addToolBar(const QString &title)
+ |  
+ |  addToolBarBreak(...)
+ |      @brief Method void QMainWindow::addToolBarBreak(Qt::ToolBarArea area)
+ |  
+ |  corner(...)
+ |      @brief Method Qt::DockWidgetArea QMainWindow::corner(Qt::Corner corner)
+ |  
+ |  createPopupMenu(...)
+ |      @brief Method QMenu *QMainWindow::createPopupMenu()
+ |  
+ |  customContextMenuRequested_(...)
+ |      @brief Signal declaration for QMainWindow::customContextMenuRequested(const QPoint &pos)
+ |      You can bind a procedure to this signal.
+ |  
+ |  destroyed_(...)
+ |      @brief Signal declaration for QMainWindow::destroyed(QObject *)
+ |      You can bind a procedure to this signal.
+ |  
+ |  dockWidgetArea(...)
+ |      @brief Method Qt::DockWidgetArea QMainWindow::dockWidgetArea(QDockWidget *dockwidget)
+ |  
+ |  iconSizeChanged_(...)
+ |      @brief Signal declaration for QMainWindow::iconSizeChanged(const QSize &iconSize)
+ |      You can bind a procedure to this signal.
+ |  
+ |  insertToolBar(...)
+ |      @brief Method void QMainWindow::insertToolBar(QToolBar *before, QToolBar *toolbar)
+ |  
+ |  insertToolBarBreak(...)
+ |      @brief Method void QMainWindow::insertToolBarBreak(QToolBar *before)
+ |  
+ |  isAnimated(...)
+ |      @brief Method bool QMainWindow::isAnimated()
+ |  
+ |  isDockNestingEnabled(...)
+ |      @brief Method bool QMainWindow::isDockNestingEnabled()
+ |  
+ |  isSeparator(...)
+ |      @brief Method bool QMainWindow::isSeparator(const QPoint &pos)
+ |  
+ |  removeDockWidget(...)
+ |      @brief Method void QMainWindow::removeDockWidget(QDockWidget *dockwidget)
+ |  
+ |  removeToolBar(...)
+ |      @brief Method void QMainWindow::removeToolBar(QToolBar *toolbar)
+ |  
+ |  removeToolBarBreak(...)
+ |      @brief Method void QMainWindow::removeToolBarBreak(QToolBar *before)
+ |  
+ |  restoreDockWidget(...)
+ |      @brief Method bool QMainWindow::restoreDockWidget(QDockWidget *dockwidget)
+ |  
+ |  restoreState(...)
+ |      @brief Method bool QMainWindow::restoreState(const QByteArray &state, int version)
+ |  
+ |  saveState(...)
+ |      @brief Method QByteArray QMainWindow::saveState(int version)
+ |  
+ |  setAnimated(...)
+ |      @brief Method void QMainWindow::setAnimated(bool enabled)
+ |  
+ |  setCentralWidget(...)
+ |      @brief Method void QMainWindow::setCentralWidget(QWidget *widget)
+ |  
+ |  setCorner(...)
+ |      @brief Method void QMainWindow::setCorner(Qt::Corner corner, Qt::DockWidgetArea area)
+ |  
+ |  setDockNestingEnabled(...)
+ |      @brief Method void QMainWindow::setDockNestingEnabled(bool enabled)
+ |  
+ |  setDockOptions(...)
+ |      @brief Method void QMainWindow::setDockOptions(QFlags<QMainWindow::DockOption> options)
+ |  
+ |  setDocumentMode(...)
+ |      @brief Method void QMainWindow::setDocumentMode(bool enabled)
+ |  
+ |  setIconSize(...)
+ |      @brief Method void QMainWindow::setIconSize(const QSize &iconSize)
+ |  
+ |  setMenuBar(...)
+ |      @brief Method void QMainWindow::setMenuBar(QMenuBar *menubar)
+ |  
+ |  setMenuWidget(...)
+ |      @brief Method void QMainWindow::setMenuWidget(QWidget *menubar)
+ |  
+ |  setStatusBar(...)
+ |      @brief Method void QMainWindow::setStatusBar(QStatusBar *statusbar)
+ |  
+ |  setTabPosition(...)
+ |      @brief Method void QMainWindow::setTabPosition(QFlags<Qt::DockWidgetArea> areas, QTabWidget::TabPosition tabPosition)
+ |  
+ |  setTabShape(...)
+ |      @brief Method void QMainWindow::setTabShape(QTabWidget::TabShape tabShape)
+ |  
+ |  setToolButtonStyle(...)
+ |      @brief Method void QMainWindow::setToolButtonStyle(Qt::ToolButtonStyle toolButtonStyle)
+ |  
+ |  setUnifiedTitleAndToolBarOnMac(...)
+ |      @brief Method void QMainWindow::setUnifiedTitleAndToolBarOnMac(bool set)
+ |  
+ |  splitDockWidget(...)
+ |      @brief Method void QMainWindow::splitDockWidget(QDockWidget *after, QDockWidget *dockwidget, Qt::Orientation orientation)
+ |  
+ |  staticMetaObject(...) from builtins.type
+ |      @brief Obtains the static MetaObject for this class.
+ |  
+ |  tabPosition(...)
+ |      @brief Method QTabWidget::TabPosition QMainWindow::tabPosition(Qt::DockWidgetArea area)
+ |  
+ |  tabifiedDockWidgets(...)
+ |      @brief Method QList<QDockWidget*> QMainWindow::tabifiedDockWidgets(QDockWidget *dockwidget)
+ |  
+ |  tabifyDockWidget(...)
+ |      @brief Method void QMainWindow::tabifyDockWidget(QDockWidget *first, QDockWidget *second)
+ |  
+ |  takeCentralWidget(...)
+ |      @brief Method QWidget *QMainWindow::takeCentralWidget()
+ |  
+ |  toolBarArea(...)
+ |      @brief Method Qt::ToolBarArea QMainWindow::toolBarArea(QToolBar *toolbar)
+ |  
+ |  toolBarBreak(...)
+ |      @brief Method bool QMainWindow::toolBarBreak(QToolBar *toolbar)
+ |  
+ |  toolButtonStyleChanged_(...)
+ |      @brief Signal declaration for QMainWindow::toolButtonStyleChanged(Qt::ToolButtonStyle toolButtonStyle)
+ |      You can bind a procedure to this signal.
+ |  
+ |  tr(...) from builtins.type
+ |      @brief Static method QString QMainWindow::tr(const char *s, const char *c, int n)
+ |      This method is static and can be called without an instance.
+ |  
+ |  trUtf8(...) from builtins.type
+ |      @brief Static method QString QMainWindow::trUtf8(const char *s, const char *c, int n)
+ |      This method is static and can be called without an instance.
+ |  
+ |  windowIconChanged_(...)
+ |      @brief Signal declaration for QMainWindow::windowIconChanged(const QIcon &icon)
+ |      You can bind a procedure to this signal.
+ |  
+ |  windowIconTextChanged_(...)
+ |      @brief Signal declaration for QMainWindow::windowIconTextChanged(const QString &iconText)
+ |      You can bind a procedure to this signal.
+ |  
+ |  windowTitleChanged_(...)
+ |      @brief Signal declaration for QMainWindow::windowTitleChanged(const QString &title)
+ |      You can bind a procedure to this signal.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors inherited from QMainWindow_Native:
+ |  
+ |  animated
+ |      @brief Method bool QMainWindow::isAnimated()
+ |      
+ |      
+ |      @brief Method void QMainWindow::setAnimated(bool enabled)
+ |  
+ |  centralWidget
+ |      @brief Method QWidget *QMainWindow::centralWidget()
+ |      
+ |      
+ |      @brief Method void QMainWindow::setCentralWidget(QWidget *widget)
+ |  
+ |  customContextMenuRequested
+ |      @brief Signal declaration for QMainWindow::customContextMenuRequested(const QPoint &pos)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QMainWindow::customContextMenuRequested(const QPoint &pos)
+ |      You can bind a procedure to this signal.
+ |  
+ |  dockNestingEnabled
+ |      @brief Method bool QMainWindow::isDockNestingEnabled()
+ |      
+ |      
+ |      @brief Method void QMainWindow::setDockNestingEnabled(bool enabled)
+ |  
+ |  dockOptions
+ |      @brief Method QFlags<QMainWindow::DockOption> QMainWindow::dockOptions()
+ |      
+ |      
+ |      @brief Method void QMainWindow::setDockOptions(QFlags<QMainWindow::DockOption> options)
+ |  
+ |  documentMode
+ |      @brief Method bool QMainWindow::documentMode()
+ |      
+ |      
+ |      @brief Method void QMainWindow::setDocumentMode(bool enabled)
+ |  
+ |  iconSize
+ |      @brief Method QSize QMainWindow::iconSize()
+ |      
+ |      
+ |      @brief Method void QMainWindow::setIconSize(const QSize &iconSize)
+ |  
+ |  iconSizeChanged
+ |      @brief Signal declaration for QMainWindow::iconSizeChanged(const QSize &iconSize)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QMainWindow::iconSizeChanged(const QSize &iconSize)
+ |      You can bind a procedure to this signal.
+ |  
+ |  menuBar
+ |      @brief Method QMenuBar *QMainWindow::menuBar()
+ |      
+ |      
+ |      @brief Method void QMainWindow::setMenuBar(QMenuBar *menubar)
+ |  
+ |  menuWidget
+ |      @brief Method QWidget *QMainWindow::menuWidget()
+ |      
+ |      
+ |      @brief Method void QMainWindow::setMenuWidget(QWidget *menubar)
+ |  
+ |  statusBar
+ |      @brief Method QStatusBar *QMainWindow::statusBar()
+ |      
+ |      
+ |      @brief Method void QMainWindow::setStatusBar(QStatusBar *statusbar)
+ |  
+ |  tabShape
+ |      @brief Method QTabWidget::TabShape QMainWindow::tabShape()
+ |      
+ |      
+ |      @brief Method void QMainWindow::setTabShape(QTabWidget::TabShape tabShape)
+ |  
+ |  toolButtonStyle
+ |      @brief Method Qt::ToolButtonStyle QMainWindow::toolButtonStyle()
+ |      
+ |      
+ |      @brief Method void QMainWindow::setToolButtonStyle(Qt::ToolButtonStyle toolButtonStyle)
+ |  
+ |  toolButtonStyleChanged
+ |      @brief Signal declaration for QMainWindow::toolButtonStyleChanged(Qt::ToolButtonStyle toolButtonStyle)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QMainWindow::toolButtonStyleChanged(Qt::ToolButtonStyle toolButtonStyle)
+ |      You can bind a procedure to this signal.
+ |  
+ |  unifiedTitleAndToolBarOnMac
+ |      @brief Method bool QMainWindow::unifiedTitleAndToolBarOnMac()
+ |      
+ |      
+ |      @brief Method void QMainWindow::setUnifiedTitleAndToolBarOnMac(bool set)
+ |  
+ |  windowIconChanged
+ |      @brief Signal declaration for QMainWindow::windowIconChanged(const QIcon &icon)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QMainWindow::windowIconChanged(const QIcon &icon)
+ |      You can bind a procedure to this signal.
+ |  
+ |  windowIconTextChanged
+ |      @brief Signal declaration for QMainWindow::windowIconTextChanged(const QString &iconText)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QMainWindow::windowIconTextChanged(const QString &iconText)
+ |      You can bind a procedure to this signal.
+ |  
+ |  windowTitleChanged
+ |      @brief Signal declaration for QMainWindow::windowTitleChanged(const QString &title)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QMainWindow::windowTitleChanged(const QString &title)
+ |      You can bind a procedure to this signal.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes inherited from QMainWindow_Native:
+ |  
+ |  AllowNestedDocks = AllowNestedDocks (2)
+ |  
+ |  AllowTabbedDocks = AllowTabbedDocks (4)
+ |  
+ |  AnimatedDocks = AnimatedDocks (1)
+ |  
+ |  DockOption = <class 'pya.QMainWindow_DockOption'>
+ |      @qt
+ |      @brief This class represents the QMainWindow::DockOption enum
+ |  
+ |  ForceTabbedDocks = ForceTabbedDocks (8)
+ |  
+ |  QFlags_DockOption = <class 'pya.QMainWindow_QFlags_DockOption'>
+ |      @qt
+ |      @brief This class represents the QFlags<QMainWindow::DockOption> flag set
+ |  
+ |  VerticalTabs = VerticalTabs (16)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from QWidget_Native:
+ |  
+ |  actions(...)
+ |      @brief Method QList<QAction*> QWidget::actions()
+ |  
+ |  activateWindow(...)
+ |      @brief Method void QWidget::activateWindow()
+ |  
+ |  addAction(...)
+ |      @brief Method void QWidget::addAction(QAction *action)
+ |  
+ |  addActions(...)
+ |      @brief Method void QWidget::addActions(QList<QAction*> actions)
+ |  
+ |  adjustSize(...)
+ |      @brief Method void QWidget::adjustSize()
+ |  
+ |  asConstQObject(...)
+ |      @brief Delivers the base class interface QObject of QWidget
+ |      Class QWidget is derived from multiple base classes. This method delivers the QObject base class aspect.
+ |      
+ |      Use this version if you have a const reference.
+ |  
+ |  asConstQPaintDevice(...)
+ |      @brief Delivers the base class interface QPaintDevice of QWidget
+ |      Class QWidget is derived from multiple base classes. This method delivers the QPaintDevice base class aspect.
+ |      
+ |      Use this version if you have a const reference.
+ |  
+ |  asQObject(...)
+ |      @brief Delivers the base class interface QObject of QWidget
+ |      Class QWidget is derived from multiple base classes. This method delivers the QObject base class aspect.
+ |  
+ |  asQPaintDevice(...)
+ |      @brief Delivers the base class interface QPaintDevice of QWidget
+ |      Class QWidget is derived from multiple base classes. This method delivers the QPaintDevice base class aspect.
+ |  
+ |  backingStore(...)
+ |      @brief Method QBackingStore *QWidget::backingStore()
+ |  
+ |  childAt(...)
+ |      @brief Method QWidget *QWidget::childAt(const QPoint &p)
+ |  
+ |  clearFocus(...)
+ |      @brief Method void QWidget::clearFocus()
+ |  
+ |  clearMask(...)
+ |      @brief Method void QWidget::clearMask()
+ |  
+ |  close(...)
+ |      @brief Method bool QWidget::close()
+ |  
+ |  contentsRect(...)
+ |      @brief Method QRect QWidget::contentsRect()
+ |  
+ |  createWinId(...)
+ |      @brief Method void QWidget::createWinId()
+ |  
+ |  createWindowContainer(...) from builtins.type
+ |      @brief Static method QWidget *QWidget::createWindowContainer(QWindow *window, QWidget *parent, QFlags<Qt::WindowType> flags)
+ |      This method is static and can be called without an instance.
+ |  
+ |  effectiveWinId(...)
+ |      @brief Method WId QWidget::effectiveWinId()
+ |  
+ |  ensurePolished(...)
+ |      @brief Method void QWidget::ensurePolished()
+ |  
+ |  find(...) from builtins.type
+ |      @brief Static method QWidget *QWidget::find(WId)
+ |      This method is static and can be called without an instance.
+ |  
+ |  focusWidget(...)
+ |      @brief Method QWidget *QWidget::focusWidget()
+ |  
+ |  fontInfo(...)
+ |      @brief Method QFontInfo QWidget::fontInfo()
+ |  
+ |  fontMetrics(...)
+ |      @brief Method QFontMetrics QWidget::fontMetrics()
+ |  
+ |  getContentsMargins(...)
+ |      @brief Method void QWidget::getContentsMargins(int *left, int *top, int *right, int *bottom)
+ |  
+ |  grab(...)
+ |      @brief Method QPixmap QWidget::grab(const QRect &rectangle)
+ |  
+ |  grabGesture(...)
+ |      @brief Method void QWidget::grabGesture(Qt::GestureType type, QFlags<Qt::GestureFlag> flags)
+ |  
+ |  grabKeyboard(...)
+ |      @brief Method void QWidget::grabKeyboard()
+ |  
+ |  grabMouse(...)
+ |      @brief Method void QWidget::grabMouse(const QCursor &)
+ |  
+ |  grabShortcut(...)
+ |      @brief Method int QWidget::grabShortcut(const QKeySequence &key, Qt::ShortcutContext context)
+ |  
+ |  graphicsProxyWidget(...)
+ |      @brief Method QGraphicsProxyWidget *QWidget::graphicsProxyWidget()
+ |  
+ |  hasFocus(...)
+ |      @brief Method bool QWidget::hasFocus()
+ |  
+ |  hasHeightForWidth(...)
+ |      @brief Method bool QWidget::hasHeightForWidth()
+ |  
+ |  hasMouseTracking(...)
+ |      @brief Method bool QWidget::hasMouseTracking()
+ |  
+ |  heightForWidth(...)
+ |      @brief Method int QWidget::heightForWidth(int)
+ |  
+ |  hide(...)
+ |      @brief Method void QWidget::hide()
+ |  
+ |  inputMethodQuery(...)
+ |      @brief Method QVariant QWidget::inputMethodQuery(Qt::InputMethodQuery)
+ |  
+ |  insertAction(...)
+ |      @brief Method void QWidget::insertAction(QAction *before, QAction *action)
+ |  
+ |  insertActions(...)
+ |      @brief Method void QWidget::insertActions(QAction *before, QList<QAction*> actions)
+ |  
+ |  internalWinId(...)
+ |      @brief Method WId QWidget::internalWinId()
+ |  
+ |  isAncestorOf(...)
+ |      @brief Method bool QWidget::isAncestorOf(const QWidget *child)
+ |  
+ |  isEnabled(...)
+ |      @brief Method bool QWidget::isEnabled()
+ |  
+ |  isEnabledTo(...)
+ |      @brief Method bool QWidget::isEnabledTo(const QWidget *)
+ |  
+ |  isEnabledToTLW(...)
+ |      @brief Method bool QWidget::isEnabledToTLW()
+ |  
+ |  isFullScreen(...)
+ |      @brief Method bool QWidget::isFullScreen()
+ |  
+ |  isHidden(...)
+ |      @brief Method bool QWidget::isHidden()
+ |  
+ |  isLeftToRight(...)
+ |      @brief Method bool QWidget::isLeftToRight()
+ |  
+ |  isMaximized(...)
+ |      @brief Method bool QWidget::isMaximized()
+ |  
+ |  isMinimized(...)
+ |      @brief Method bool QWidget::isMinimized()
+ |  
+ |  isModal(...)
+ |      @brief Method bool QWidget::isModal()
+ |  
+ |  isRightToLeft(...)
+ |      @brief Method bool QWidget::isRightToLeft()
+ |  
+ |  isTopLevel(...)
+ |      @brief Method bool QWidget::isTopLevel()
+ |  
+ |  isVisible(...)
+ |      @brief Method bool QWidget::isVisible()
+ |  
+ |  isVisibleTo(...)
+ |      @brief Method bool QWidget::isVisibleTo(const QWidget *)
+ |  
+ |  isWindow(...)
+ |      @brief Method bool QWidget::isWindow()
+ |  
+ |  isWindowModified(...)
+ |      @brief Method bool QWidget::isWindowModified()
+ |  
+ |  keyboardGrabber(...) from builtins.type
+ |      @brief Static method QWidget *QWidget::keyboardGrabber()
+ |      This method is static and can be called without an instance.
+ |  
+ |  lower(...)
+ |      @brief Method void QWidget::lower()
+ |  
+ |  mapFrom(...)
+ |      @brief Method QPoint QWidget::mapFrom(const QWidget *, const QPoint &)
+ |  
+ |  mapFromGlobal(...)
+ |      @brief Method QPoint QWidget::mapFromGlobal(const QPoint &)
+ |  
+ |  mapFromParent(...)
+ |      @brief Method QPoint QWidget::mapFromParent(const QPoint &)
+ |  
+ |  mapTo(...)
+ |      @brief Method QPoint QWidget::mapTo(const QWidget *, const QPoint &)
+ |  
+ |  mapToGlobal(...)
+ |      @brief Method QPoint QWidget::mapToGlobal(const QPoint &)
+ |  
+ |  mapToParent(...)
+ |      @brief Method QPoint QWidget::mapToParent(const QPoint &)
+ |  
+ |  mask(...)
+ |      @brief Method QRegion QWidget::mask()
+ |  
+ |  mouseGrabber(...) from builtins.type
+ |      @brief Static method QWidget *QWidget::mouseGrabber()
+ |      This method is static and can be called without an instance.
+ |  
+ |  move(...)
+ |      @brief Method void QWidget::move(const QPoint &)
+ |  
+ |  nativeParentWidget(...)
+ |      @brief Method QWidget *QWidget::nativeParentWidget()
+ |  
+ |  nextInFocusChain(...)
+ |      @brief Method QWidget *QWidget::nextInFocusChain()
+ |  
+ |  overrideWindowFlags(...)
+ |      @brief Method void QWidget::overrideWindowFlags(QFlags<Qt::WindowType> type)
+ |  
+ |  overrideWindowState(...)
+ |      @brief Method void QWidget::overrideWindowState(QFlags<Qt::WindowState> state)
+ |  
+ |  paintEngine(...)
+ |      @brief Method () const
+ |      This is a reimplementation of QPaintDevice::paintEngine
+ |  
+ |  parentWidget(...)
+ |      @brief Method QWidget *QWidget::parentWidget()
+ |  
+ |  previousInFocusChain(...)
+ |      @brief Method QWidget *QWidget::previousInFocusChain()
+ |  
+ |  qt_raise(...)
+ |      @brief Method void QWidget::raise()
+ |  
+ |  releaseKeyboard(...)
+ |      @brief Method void QWidget::releaseKeyboard()
+ |  
+ |  releaseMouse(...)
+ |      @brief Method void QWidget::releaseMouse()
+ |  
+ |  releaseShortcut(...)
+ |      @brief Method void QWidget::releaseShortcut(int id)
+ |  
+ |  removeAction(...)
+ |      @brief Method void QWidget::removeAction(QAction *action)
+ |  
+ |  render(...)
+ |      @brief Method void QWidget::render(QPainter *painter, const QPoint &targetOffset, const QRegion &sourceRegion, QFlags<QWidget::RenderFlag> renderFlags)
+ |  
+ |  repaint(...)
+ |      @brief Method void QWidget::repaint(const QRegion &)
+ |  
+ |  restoreGeometry(...)
+ |      @brief Method bool QWidget::restoreGeometry(const QByteArray &geometry)
+ |  
+ |  saveGeometry(...)
+ |      @brief Method QByteArray QWidget::saveGeometry()
+ |  
+ |  scroll(...)
+ |      @brief Method void QWidget::scroll(int dx, int dy, const QRect &)
+ |  
+ |  setAcceptDrops(...)
+ |      @brief Method void QWidget::setAcceptDrops(bool on)
+ |  
+ |  setAccessibleDescription(...)
+ |      @brief Method void QWidget::setAccessibleDescription(const QString &description)
+ |  
+ |  setAccessibleName(...)
+ |      @brief Method void QWidget::setAccessibleName(const QString &name)
+ |  
+ |  setAttribute(...)
+ |      @brief Method void QWidget::setAttribute(Qt::WidgetAttribute, bool on)
+ |  
+ |  setAutoFillBackground(...)
+ |      @brief Method void QWidget::setAutoFillBackground(bool enabled)
+ |  
+ |  setBackgroundRole(...)
+ |      @brief Method void QWidget::setBackgroundRole(QPalette::ColorRole)
+ |  
+ |  setBaseSize(...)
+ |      @brief Method void QWidget::setBaseSize(int basew, int baseh)
+ |  
+ |  setContentsMargins(...)
+ |      @brief Method void QWidget::setContentsMargins(const QMargins &margins)
+ |  
+ |  setContextMenuPolicy(...)
+ |      @brief Method void QWidget::setContextMenuPolicy(Qt::ContextMenuPolicy policy)
+ |  
+ |  setCursor(...)
+ |      @brief Method void QWidget::setCursor(const QCursor &)
+ |  
+ |  setDisabled(...)
+ |      @brief Method void QWidget::setDisabled(bool)
+ |  
+ |  setEnabled(...)
+ |      @brief Method void QWidget::setEnabled(bool)
+ |  
+ |  setFixedHeight(...)
+ |      @brief Method void QWidget::setFixedHeight(int h)
+ |  
+ |  setFixedSize(...)
+ |      @brief Method void QWidget::setFixedSize(int w, int h)
+ |  
+ |  setFixedWidth(...)
+ |      @brief Method void QWidget::setFixedWidth(int w)
+ |  
+ |  setFocus(...)
+ |      @brief Method void QWidget::setFocus(Qt::FocusReason reason)
+ |  
+ |  setFocusPolicy(...)
+ |      @brief Method void QWidget::setFocusPolicy(Qt::FocusPolicy policy)
+ |  
+ |  setFocusProxy(...)
+ |      @brief Method void QWidget::setFocusProxy(QWidget *)
+ |  
+ |  setFont(...)
+ |      @brief Method void QWidget::setFont(const QFont &)
+ |  
+ |  setForegroundRole(...)
+ |      @brief Method void QWidget::setForegroundRole(QPalette::ColorRole)
+ |  
+ |  setGeometry(...)
+ |      @brief Method void QWidget::setGeometry(const QRect &)
+ |  
+ |  setGraphicsEffect(...)
+ |      @brief Method void QWidget::setGraphicsEffect(QGraphicsEffect *effect)
+ |  
+ |  setHidden(...)
+ |      @brief Method void QWidget::setHidden(bool hidden)
+ |  
+ |  setInputMethodHints(...)
+ |      @brief Method void QWidget::setInputMethodHints(QFlags<Qt::InputMethodHint> hints)
+ |  
+ |  setLayout(...)
+ |      @brief Method void QWidget::setLayout(QLayout *)
+ |  
+ |  setLayoutDirection(...)
+ |      @brief Method void QWidget::setLayoutDirection(Qt::LayoutDirection direction)
+ |  
+ |  setLocale(...)
+ |      @brief Method void QWidget::setLocale(const QLocale &locale)
+ |  
+ |  setMask(...)
+ |      @brief Method void QWidget::setMask(const QRegion &)
+ |  
+ |  setMaximumHeight(...)
+ |      @brief Method void QWidget::setMaximumHeight(int maxh)
+ |  
+ |  setMaximumSize(...)
+ |      @brief Method void QWidget::setMaximumSize(int maxw, int maxh)
+ |  
+ |  setMaximumWidth(...)
+ |      @brief Method void QWidget::setMaximumWidth(int maxw)
+ |  
+ |  setMinimumHeight(...)
+ |      @brief Method void QWidget::setMinimumHeight(int minh)
+ |  
+ |  setMinimumSize(...)
+ |      @brief Method void QWidget::setMinimumSize(int minw, int minh)
+ |  
+ |  setMinimumWidth(...)
+ |      @brief Method void QWidget::setMinimumWidth(int minw)
+ |  
+ |  setMouseTracking(...)
+ |      @brief Method void QWidget::setMouseTracking(bool enable)
+ |  
+ |  setPalette(...)
+ |      @brief Method void QWidget::setPalette(const QPalette &)
+ |  
+ |  setParent(...)
+ |      @brief Method (QWidget *, QFlags<Qt::WindowType>)
+ |  
+ |  setShortcutAutoRepeat(...)
+ |      @brief Method void QWidget::setShortcutAutoRepeat(int id, bool enable)
+ |  
+ |  setShortcutEnabled(...)
+ |      @brief Method void QWidget::setShortcutEnabled(int id, bool enable)
+ |  
+ |  setSizeIncrement(...)
+ |      @brief Method void QWidget::setSizeIncrement(int w, int h)
+ |  
+ |  setSizePolicy(...)
+ |      @brief Method void QWidget::setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical)
+ |  
+ |  setStatusTip(...)
+ |      @brief Method void QWidget::setStatusTip(const QString &)
+ |  
+ |  setStyle(...)
+ |      @brief Method void QWidget::setStyle(QStyle *)
+ |  
+ |  setStyleSheet(...)
+ |      @brief Method void QWidget::setStyleSheet(const QString &styleSheet)
+ |  
+ |  setTabOrder(...) from builtins.type
+ |      @brief Static method void QWidget::setTabOrder(QWidget *, QWidget *)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setToolTip(...)
+ |      @brief Method void QWidget::setToolTip(const QString &)
+ |  
+ |  setToolTipDuration(...)
+ |      @brief Method void QWidget::setToolTipDuration(int msec)
+ |  
+ |  setUpdatesEnabled(...)
+ |      @brief Method void QWidget::setUpdatesEnabled(bool enable)
+ |  
+ |  setVisible(...)
+ |      @brief Method void QWidget::setVisible(bool visible)
+ |  
+ |  setWhatsThis(...)
+ |      @brief Method void QWidget::setWhatsThis(const QString &)
+ |  
+ |  setWindowFilePath(...)
+ |      @brief Method void QWidget::setWindowFilePath(const QString &filePath)
+ |  
+ |  setWindowFlags(...)
+ |      @brief Method void QWidget::setWindowFlags(QFlags<Qt::WindowType> type)
+ |  
+ |  setWindowIcon(...)
+ |      @brief Method void QWidget::setWindowIcon(const QIcon &icon)
+ |  
+ |  setWindowIconText(...)
+ |      @brief Method void QWidget::setWindowIconText(const QString &)
+ |  
+ |  setWindowModality(...)
+ |      @brief Method void QWidget::setWindowModality(Qt::WindowModality windowModality)
+ |  
+ |  setWindowModified(...)
+ |      @brief Method void QWidget::setWindowModified(bool)
+ |  
+ |  setWindowOpacity(...)
+ |      @brief Method void QWidget::setWindowOpacity(double level)
+ |  
+ |  setWindowRole(...)
+ |      @brief Method void QWidget::setWindowRole(const QString &)
+ |  
+ |  setWindowState(...)
+ |      @brief Method void QWidget::setWindowState(QFlags<Qt::WindowState> state)
+ |  
+ |  setWindowTitle(...)
+ |      @brief Method void QWidget::setWindowTitle(const QString &)
+ |  
+ |  show(...)
+ |      @brief Method void QWidget::show()
+ |  
+ |  showFullScreen(...)
+ |      @brief Method void QWidget::showFullScreen()
+ |  
+ |  showMaximized(...)
+ |      @brief Method void QWidget::showMaximized()
+ |  
+ |  showMinimized(...)
+ |      @brief Method void QWidget::showMinimized()
+ |  
+ |  showNormal(...)
+ |      @brief Method void QWidget::showNormal()
+ |  
+ |  stackUnder(...)
+ |      @brief Method void QWidget::stackUnder(QWidget *)
+ |  
+ |  testAttribute(...)
+ |      @brief Method bool QWidget::testAttribute(Qt::WidgetAttribute)
+ |  
+ |  topLevelWidget(...)
+ |      @brief Method QWidget *QWidget::topLevelWidget()
+ |  
+ |  underMouse(...)
+ |      @brief Method bool QWidget::underMouse()
+ |  
+ |  ungrabGesture(...)
+ |      @brief Method void QWidget::ungrabGesture(Qt::GestureType type)
+ |  
+ |  unsetCursor(...)
+ |      @brief Method void QWidget::unsetCursor()
+ |  
+ |  unsetLayoutDirection(...)
+ |      @brief Method void QWidget::unsetLayoutDirection()
+ |  
+ |  unsetLocale(...)
+ |      @brief Method void QWidget::unsetLocale()
+ |  
+ |  update(...)
+ |      @brief Method void QWidget::update(const QRegion &)
+ |  
+ |  updateGeometry(...)
+ |      @brief Method void QWidget::updateGeometry()
+ |  
+ |  visibleRegion(...)
+ |      @brief Method QRegion QWidget::visibleRegion()
+ |  
+ |  winId(...)
+ |      @brief Method WId QWidget::winId()
+ |  
+ |  window(...)
+ |      @brief Method QWidget *QWidget::window()
+ |  
+ |  windowHandle(...)
+ |      @brief Method QWindow *QWidget::windowHandle()
+ |  
+ |  windowType(...)
+ |      @brief Method Qt::WindowType QWidget::windowType()
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors inherited from QWidget_Native:
+ |  
+ |  acceptDrops
+ |      @brief Method bool QWidget::acceptDrops()
+ |      
+ |      
+ |      @brief Method void QWidget::setAcceptDrops(bool on)
+ |  
+ |  accessibleDescription
+ |      @brief Method QString QWidget::accessibleDescription()
+ |      
+ |      
+ |      @brief Method void QWidget::setAccessibleDescription(const QString &description)
+ |  
+ |  accessibleName
+ |      @brief Method QString QWidget::accessibleName()
+ |      
+ |      
+ |      @brief Method void QWidget::setAccessibleName(const QString &name)
+ |  
+ |  autoFillBackground
+ |      @brief Method bool QWidget::autoFillBackground()
+ |      
+ |      
+ |      @brief Method void QWidget::setAutoFillBackground(bool enabled)
+ |  
+ |  backgroundRole
+ |      @brief Method QPalette::ColorRole QWidget::backgroundRole()
+ |      
+ |      
+ |      @brief Method void QWidget::setBackgroundRole(QPalette::ColorRole)
+ |  
+ |  baseSize
+ |      @brief Method QSize QWidget::baseSize()
+ |      
+ |      
+ |      @brief Method void QWidget::setBaseSize(const QSize &)
+ |  
+ |  childrenRect
+ |      @brief Method QRect QWidget::childrenRect()
+ |  
+ |  childrenRegion
+ |      @brief Method QRegion QWidget::childrenRegion()
+ |  
+ |  contentsMargins
+ |      @brief Method QMargins QWidget::contentsMargins()
+ |      
+ |      
+ |      @brief Method void QWidget::setContentsMargins(const QMargins &margins)
+ |  
+ |  contextMenuPolicy
+ |      @brief Method Qt::ContextMenuPolicy QWidget::contextMenuPolicy()
+ |      
+ |      
+ |      @brief Method void QWidget::setContextMenuPolicy(Qt::ContextMenuPolicy policy)
+ |  
+ |  cursor
+ |      @brief Method QCursor QWidget::cursor()
+ |      
+ |      
+ |      @brief Method void QWidget::setCursor(const QCursor &)
+ |  
+ |  enabled
+ |      @brief Method bool QWidget::isEnabled()
+ |      
+ |      
+ |      @brief Method void QWidget::setEnabled(bool)
+ |  
+ |  focus
+ |      @brief Method bool QWidget::hasFocus()
+ |  
+ |  focusPolicy
+ |      @brief Method Qt::FocusPolicy QWidget::focusPolicy()
+ |      
+ |      
+ |      @brief Method void QWidget::setFocusPolicy(Qt::FocusPolicy policy)
+ |  
+ |  focusProxy
+ |      @brief Method QWidget *QWidget::focusProxy()
+ |      
+ |      
+ |      @brief Method void QWidget::setFocusProxy(QWidget *)
+ |  
+ |  font
+ |      @brief Method const QFont &QWidget::font()
+ |      
+ |      
+ |      @brief Method void QWidget::setFont(const QFont &)
+ |  
+ |  foregroundRole
+ |      @brief Method QPalette::ColorRole QWidget::foregroundRole()
+ |      
+ |      
+ |      @brief Method void QWidget::setForegroundRole(QPalette::ColorRole)
+ |  
+ |  frameGeometry
+ |      @brief Method QRect QWidget::frameGeometry()
+ |  
+ |  frameSize
+ |      @brief Method QSize QWidget::frameSize()
+ |  
+ |  fullScreen
+ |      @brief Method bool QWidget::isFullScreen()
+ |  
+ |  geometry
+ |      @brief Method const QRect &QWidget::geometry()
+ |      
+ |      
+ |      @brief Method void QWidget::setGeometry(const QRect &)
+ |  
+ |  graphicsEffect
+ |      @brief Method QGraphicsEffect *QWidget::graphicsEffect()
+ |      
+ |      
+ |      @brief Method void QWidget::setGraphicsEffect(QGraphicsEffect *effect)
+ |  
+ |  height
+ |      @brief Method () const
+ |  
+ |  hidden
+ |      @brief Method bool QWidget::isHidden()
+ |      
+ |      
+ |      @brief Method void QWidget::setHidden(bool hidden)
+ |  
+ |  inputMethodHints
+ |      @brief Method QFlags<Qt::InputMethodHint> QWidget::inputMethodHints()
+ |      
+ |      
+ |      @brief Method void QWidget::setInputMethodHints(QFlags<Qt::InputMethodHint> hints)
+ |  
+ |  isActiveWindow
+ |      @brief Method bool QWidget::isActiveWindow()
+ |      
+ |      
+ |      @brief Method bool QWidget::isActiveWindow()
+ |  
+ |  layout
+ |      @brief Method QLayout *QWidget::layout()
+ |      
+ |      
+ |      @brief Method void QWidget::setLayout(QLayout *)
+ |  
+ |  layoutDirection
+ |      @brief Method Qt::LayoutDirection QWidget::layoutDirection()
+ |      
+ |      
+ |      @brief Method void QWidget::setLayoutDirection(Qt::LayoutDirection direction)
+ |  
+ |  locale
+ |      @brief Method QLocale QWidget::locale()
+ |      
+ |      
+ |      @brief Method void QWidget::setLocale(const QLocale &locale)
+ |  
+ |  maximized
+ |      @brief Method bool QWidget::isMaximized()
+ |  
+ |  maximumHeight
+ |      @brief Method int QWidget::maximumHeight()
+ |      
+ |      
+ |      @brief Method void QWidget::setMaximumHeight(int maxh)
+ |  
+ |  maximumSize
+ |      @brief Method QSize QWidget::maximumSize()
+ |      
+ |      
+ |      @brief Method void QWidget::setMaximumSize(const QSize &)
+ |  
+ |  maximumWidth
+ |      @brief Method int QWidget::maximumWidth()
+ |      
+ |      
+ |      @brief Method void QWidget::setMaximumWidth(int maxw)
+ |  
+ |  minimized
+ |      @brief Method bool QWidget::isMinimized()
+ |  
+ |  minimumHeight
+ |      @brief Method int QWidget::minimumHeight()
+ |      
+ |      
+ |      @brief Method void QWidget::setMinimumHeight(int minh)
+ |  
+ |  minimumSize
+ |      @brief Method QSize QWidget::minimumSize()
+ |      
+ |      
+ |      @brief Method void QWidget::setMinimumSize(const QSize &)
+ |  
+ |  minimumSizeHint
+ |      @brief Method QSize QWidget::minimumSizeHint()
+ |  
+ |  minimumWidth
+ |      @brief Method int QWidget::minimumWidth()
+ |      
+ |      
+ |      @brief Method void QWidget::setMinimumWidth(int minw)
+ |  
+ |  modal
+ |      @brief Method bool QWidget::isModal()
+ |  
+ |  mouseTracking
+ |      @brief Method bool QWidget::hasMouseTracking()
+ |      
+ |      
+ |      @brief Method void QWidget::setMouseTracking(bool enable)
+ |  
+ |  normalGeometry
+ |      @brief Method QRect QWidget::normalGeometry()
+ |  
+ |  palette
+ |      @brief Method const QPalette &QWidget::palette()
+ |      
+ |      
+ |      @brief Method void QWidget::setPalette(const QPalette &)
+ |  
+ |  pos
+ |      @brief Method QPoint QWidget::pos()
+ |  
+ |  rect
+ |      @brief Method QRect QWidget::rect()
+ |  
+ |  size
+ |      @brief Method QSize QWidget::size()
+ |  
+ |  sizeHint
+ |      @brief Method QSize QWidget::sizeHint()
+ |  
+ |  sizeIncrement
+ |      @brief Method QSize QWidget::sizeIncrement()
+ |      
+ |      
+ |      @brief Method void QWidget::setSizeIncrement(const QSize &)
+ |  
+ |  sizePolicy
+ |      @brief Method QSizePolicy QWidget::sizePolicy()
+ |      
+ |      
+ |      @brief Method void QWidget::setSizePolicy(QSizePolicy)
+ |  
+ |  statusTip
+ |      @brief Method QString QWidget::statusTip()
+ |      
+ |      
+ |      @brief Method void QWidget::setStatusTip(const QString &)
+ |  
+ |  style
+ |      @brief Method QStyle *QWidget::style()
+ |      
+ |      
+ |      @brief Method void QWidget::setStyle(QStyle *)
+ |  
+ |  styleSheet
+ |      @brief Method QString QWidget::styleSheet()
+ |      
+ |      
+ |      @brief Method void QWidget::setStyleSheet(const QString &styleSheet)
+ |  
+ |  toolTip
+ |      @brief Method QString QWidget::toolTip()
+ |      
+ |      
+ |      @brief Method void QWidget::setToolTip(const QString &)
+ |  
+ |  toolTipDuration
+ |      @brief Method int QWidget::toolTipDuration()
+ |      
+ |      
+ |      @brief Method void QWidget::setToolTipDuration(int msec)
+ |  
+ |  updatesEnabled
+ |      @brief Method bool QWidget::updatesEnabled()
+ |      
+ |      
+ |      @brief Method void QWidget::setUpdatesEnabled(bool enable)
+ |  
+ |  visible
+ |      @brief Method bool QWidget::isVisible()
+ |      
+ |      
+ |      @brief Method void QWidget::setVisible(bool visible)
+ |  
+ |  whatsThis
+ |      @brief Method QString QWidget::whatsThis()
+ |      
+ |      
+ |      @brief Method void QWidget::setWhatsThis(const QString &)
+ |  
+ |  width
+ |      @brief Method () const
+ |  
+ |  windowFilePath
+ |      @brief Method QString QWidget::windowFilePath()
+ |      
+ |      
+ |      @brief Method void QWidget::setWindowFilePath(const QString &filePath)
+ |  
+ |  windowFlags
+ |      @brief Method QFlags<Qt::WindowType> QWidget::windowFlags()
+ |      
+ |      
+ |      @brief Method void QWidget::setWindowFlags(QFlags<Qt::WindowType> type)
+ |  
+ |  windowIcon
+ |      @brief Method QIcon QWidget::windowIcon()
+ |      
+ |      
+ |      @brief Method void QWidget::setWindowIcon(const QIcon &icon)
+ |  
+ |  windowIconText
+ |      @brief Method QString QWidget::windowIconText()
+ |      
+ |      
+ |      @brief Method void QWidget::setWindowIconText(const QString &)
+ |  
+ |  windowModality
+ |      @brief Method Qt::WindowModality QWidget::windowModality()
+ |      
+ |      
+ |      @brief Method void QWidget::setWindowModality(Qt::WindowModality windowModality)
+ |  
+ |  windowModified
+ |      @brief Method bool QWidget::isWindowModified()
+ |      
+ |      
+ |      @brief Method void QWidget::setWindowModified(bool)
+ |  
+ |  windowOpacity
+ |      @brief Method double QWidget::windowOpacity()
+ |      
+ |      
+ |      @brief Method void QWidget::setWindowOpacity(double level)
+ |  
+ |  windowRole
+ |      @brief Method QString QWidget::windowRole()
+ |      
+ |      
+ |      @brief Method void QWidget::setWindowRole(const QString &)
+ |  
+ |  windowState
+ |      @brief Method QFlags<Qt::WindowState> QWidget::windowState()
+ |      
+ |      
+ |      @brief Method void QWidget::setWindowState(QFlags<Qt::WindowState> state)
+ |  
+ |  windowTitle
+ |      @brief Method QString QWidget::windowTitle()
+ |      
+ |      
+ |      @brief Method void QWidget::setWindowTitle(const QString &)
+ |  
+ |  x
+ |      @brief Method int QWidget::x()
+ |  
+ |  y
+ |      @brief Method int QWidget::y()
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes inherited from QWidget_Native:
+ |  
+ |  DrawChildren = DrawChildren (2)
+ |  
+ |  DrawWindowBackground = DrawWindowBackground (1)
+ |  
+ |  IgnoreMask = IgnoreMask (4)
+ |  
+ |  QFlags_RenderFlag = <class 'pya.QWidget_QFlags_RenderFlag'>
+ |      @qt
+ |      @brief This class represents the QFlags<QWidget::RenderFlag> flag set
+ |  
+ |  RenderFlag = <class 'pya.QWidget_RenderFlag'>
+ |      @qt
+ |      @brief This class represents the QWidget::RenderFlag enum
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from QObject_Native:
+ |  
+ |  __getattr__ = _getattr_with_child_objects(s, n)
+ |      Provides a new __getattr__ implementation which looks for child widgets
+ |      and maps them into the attribute space.
+ |  
+ |  blockSignals(...)
+ |      @brief Method bool QObject::blockSignals(bool b)
+ |  
+ |  children(...)
+ |      @brief Method const QList<QObject*> &QObject::children()
+ |  
+ |  connect = _class_connect(...) from builtins.type
+ |      @brief Static method QMetaObject::Connection QObject::connect(const QObject *sender, const QMetaMethod &signal, const QObject *receiver, const QMetaMethod &method, Qt::ConnectionType type)
+ |      This method is static and can be called without an instance.
+ |  
+ |  deleteLater(...)
+ |      @brief Method void QObject::deleteLater()
+ |  
+ |  disconnect = _class_disconnect(...) from builtins.type
+ |      @brief Static method bool QObject::disconnect(const QMetaObject::Connection &)
+ |      This method is static and can be called without an instance.
+ |  
+ |  dumpObjectInfo(...)
+ |      @brief Method void QObject::dumpObjectInfo()
+ |  
+ |  dumpObjectTree(...)
+ |      @brief Method void QObject::dumpObjectTree()
+ |  
+ |  dynamicPropertyNames(...)
+ |      @brief Method QList<QByteArray> QObject::dynamicPropertyNames()
+ |  
+ |  event(...)
+ |      @brief Method bool QObject::event(QEvent *)
+ |  
+ |  eventFilter(...)
+ |      @brief Method bool QObject::eventFilter(QObject *, QEvent *)
+ |  
+ |  findChild(...)
+ |      @brief Specialisation for findChild (uses QObject as T).
+ |  
+ |  inherits(...)
+ |      @brief Method bool QObject::inherits(const char *classname)
+ |  
+ |  installEventFilter(...)
+ |      @brief Method void QObject::installEventFilter(QObject *)
+ |  
+ |  isWidgetType(...)
+ |      @brief Method bool QObject::isWidgetType()
+ |  
+ |  isWindowType(...)
+ |      @brief Method bool QObject::isWindowType()
+ |  
+ |  killTimer(...)
+ |      @brief Method void QObject::killTimer(int id)
+ |  
+ |  moveToThread(...)
+ |      @brief Method void QObject::moveToThread(QThread *thread)
+ |  
+ |  property(...)
+ |      @brief Method QVariant QObject::property(const char *name)
+ |  
+ |  registerUserData(...) from builtins.type
+ |      @brief Static method unsigned int QObject::registerUserData()
+ |      This method is static and can be called without an instance.
+ |  
+ |  removeEventFilter(...)
+ |      @brief Method void QObject::removeEventFilter(QObject *)
+ |  
+ |  setObjectName(...)
+ |      @brief Method void QObject::setObjectName(const QString &name)
+ |  
+ |  setProperty(...)
+ |      @brief Method bool QObject::setProperty(const char *name, const QVariant &value)
+ |  
+ |  signalsBlocked(...)
+ |      @brief Method bool QObject::signalsBlocked()
+ |  
+ |  startTimer(...)
+ |      @brief Method int QObject::startTimer(int interval, Qt::TimerType timerType)
+ |  
+ |  thread(...)
+ |      @brief Method QThread *QObject::thread()
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors inherited from QObject_Native:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |  
+ |  objectName
+ |      @brief Method QString QObject::objectName()
+ |      
+ |      
+ |      @brief Method void QObject::setObjectName(const QString &name)
+ |  
+ |  parent
+ |      @brief Method QObject *QObject::parent()
+ |      
+ |      
+ |      @brief Method void QObject::setParent(QObject *)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from __Base:
+ |  
+ |  __delattr__(self, name, /)
+ |      Implement delattr(self, name).
+ |  
+ |  __getattribute__(self, name, /)
+ |      Return getattr(self, name).
+ |  
+ |  __new__(*args, **kwargs) from builtins.type
+ |      Create and return a new object.  See help(type) for accurate signature.
+ |  
+ |  __setattr__(self, name, value, /)
+ |      Implement setattr(self, name, value).
+

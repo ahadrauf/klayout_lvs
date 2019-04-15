@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<klayout-macro>
+ <description/>
+ <version/>
+ <category>pymacros</category>
+ <prolog/>
+ <epilog/>
+ <doc/>
+ <autorun>false</autorun>
+ <autorun-early>false</autorun-early>
+ <shortcut/>
+ <show-in-menu>false</show-in-menu>
+ <group-name/>
+ <menu-path/>
+ <interpreter>python</interpreter>
+ <dsl-interpreter-name/>
+ <text>"""
+This is a KLayout-based Layout-versus-Schematic checker for MEMS layouts
+
+Information about using KLayout's User Properties:
+https://www.klayout.de/doc-qt4/about/variant_notation.html
+"""
+import pya
+import numpy as np
+
+#####################################################################################
+## User-defined constants
+MF = 2  # The buffer in how much each polygon should get expanded to account for 
+        # manufacturing deviations. I set it at 2 um originally, but this can be
+        # changed
+
+etch_hole_size = 5  # To improve computation time, we can ignore etch holes. Set 
+                    # to 0 if you don't want to ignore etch holes. The metric for
+                    # ignoring shapes will be if shape_area &lt;= etch_hole_size^2
+
+#####################################################################################
+## Main Code
+
+# Initialization of layout view
+app = pya.Application.instance()  # Select the current application
+mw = app.main_window()  # Select the current main window (not sure how this is chosen,
+                        # but this is the entire KLayout screen, with menus, toolbars, 
+                        # and the main layer view screen [the part that shows you the
+                        # GDS file you opened])
+lv = mw.current_view()  # Select the current level (the current tab, if you have multiple
+                        # tabs open in the same main window [generated through File &gt;
+                        # Open in New Panel])
+if lv is None:
+    raise IllegalArgumentException("Shape Statistics: No view selected")
+
+# Define objects
+skipped = 0
+paths = 0
+polygons = 0
+boxes = 0
+texts = 0
+other = 0
+
+for obj in lv.each_object_selected():
+    shape = obj.shape
+    if shape.darea() &lt;= etch_hole_size*etch_hole_size:
+        skipped = skipped + 1
+        continue
+    
+    if not (shape.is_box() || shape.is_polygon() || shape.is_path()):
+        skipped = skipped + 1
+        continue
+    
+    if shape.is_path():
+        paths += 1
+    elif shape.is_box():
+        boxes += 1
+    elif shape.is_polygon():
+        polygons += 1
+    elif shape.is_text():
+        texts += 1
+    else:
+        other += 1
+
+print("Skipped", skipped)
+print("Paths", paths)
+print("Boxes", boxes)
+print("Polygons", polygons)
+print("Texts", texts)
+print("Other", other)</text>
+</klayout-macro>

@@ -1,0 +1,933 @@
+class Application(QApplication_Native)
+ |  @brief The application object
+ |  
+ |  The application object is the main port from which to access all the internals of the application, in particular the main window.
+ |  
+ |  Method resolution order:
+ |      Application
+ |      QApplication_Native
+ |      QGuiApplication_Native
+ |      QCoreApplication_Native
+ |      QObject_Native
+ |      __Base
+ |      builtins.object
+ |  
+ |  Methods defined here:
+ |  
+ |  __init__(...)
+ |      @brief Creates a new object of this class
+ |  
+ |  application_data_path(...)
+ |      @brief Returns the application's data path (where the configuration file is stored for example)
+ |      
+ |      This method has been added in version 0.22.
+ |  
+ |  arch(...)
+ |      @brief Returns the architecture string
+ |      This method has been introduced in version 0.25.
+ |  
+ |  commit_config(...)
+ |      @brief Commits the configuration settings
+ |      
+ |      Some configuration options are queued for performance reasons and become active only after 'commit_config' has been called. After a sequence of \set_config calls, this method should be called to activate the settings made by these calls.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  crash_me(...) from builtins.type
+ |      @hide
+ |  
+ |  create(...)
+ |      @brief Ensures the C++ object is created
+ |      Use this method to ensure the C++ object is created, for example to ensure that resources are allocated. Usually C++ objects are created on demand and not necessarily when the script object is created.
+ |  
+ |  destroy(...)
+ |      @brief Explicitly destroys the object
+ |      Explicitly destroys the object on C++ side if it was owned by the script interpreter. Subsequent access to this object will throw an exception.
+ |      If the object is not owned by the script, this method will do nothing.
+ |  
+ |  destroyed(...)
+ |      @brief Returns a value indicating whether the object was already destroyed
+ |      This method returns true, if the object was destroyed, either explicitly or by the C++ side.
+ |      The latter may happen, if the object is owned by a C++ object which got destroyed itself.
+ |  
+ |  exec_(...)
+ |      @brief Executes the application's main loop
+ |      
+ |      This method must be called in order to execute the application in the main script if a script is provided.
+ |  
+ |  execute(...)
+ |      @brief Executes the application's main loop
+ |      
+ |      This method must be called in order to execute the application in the main script if a script is provided.
+ |  
+ |  exit(...)
+ |      @args result
+ |      @brief Ends the application with the given exit status
+ |      
+ |      This method should be called instead of simply shutting down the process. It performs some important cleanup without which the process might crash. If the result code is 0 (success), the configuration file will be updated unless that has been disabled by the -nc command line switch.
+ |      This method has been added in version 0.22.
+ |  
+ |  get_config(...)
+ |      @brief Gets the value for a configuration parameter
+ |      
+ |      @args name
+ |      @param name The name of the configuration parameter whose value shall be obtained (a string)
+ |      
+ |      @return The value of the parameter
+ |      
+ |      This method returns the value of the given configuration parameter. If the parameter is not known, an exception will be thrown. Use \get_config_names to obtain a list of all configuration parameter names available.
+ |      
+ |      Configuration parameters are always stored as strings. The actual format of this string is specific to the configuration parameter. The values delivered by this method correspond to the values stored in the configuration file
+ |  
+ |  get_config_names(...)
+ |      @brief Gets the configuration parameter names
+ |      
+ |      @return A list of configuration parameter names
+ |      
+ |      This method returns the names of all known configuration parameters. These names can be used to get and set configuration parameter values.
+ |  
+ |  inst_path(...)
+ |      @brief Returns the application's installation path (where the executable is located)
+ |      
+ |      This method has been added in version 0.18. Version 0.22 offers the method \klayout_path which delivers all components of the search path.
+ |  
+ |  instance(...) from builtins.type
+ |      @brief Return the singleton instance of the application
+ |      
+ |      There is exactly one instance of the application. This instance can be obtained with this method.
+ |  
+ |  is_const_object(...)
+ |      @brief Returns a value indicating whether the reference is a const reference
+ |      This method returns true, if self is a const reference.
+ |      In that case, only const methods may be called on self.
+ |  
+ |  is_editable(...)
+ |      @brief Returns true if the application is in editable mode
+ |  
+ |  klayout_path(...)
+ |      @brief Returns the KLayout path (search path for KLayout components)
+ |      
+ |      The result is an array containing the components of the path.
+ |      
+ |      This method has been added in version 0.22.
+ |  
+ |  main_window(...)
+ |      @brief Returns a reference to the main window
+ |      
+ |      @return A object reference to the main window object.
+ |  
+ |  new(...) from builtins.type
+ |      @brief Creates a new object of this class
+ |  
+ |  process_events(...)
+ |      @brief Processes pending events
+ |      
+ |      This method processes pending events and dispatches them internally. Calling this method periodically during a long operation keeps the application 'alive'
+ |  
+ |  read_config(...)
+ |      @brief Reads the configuration from a file
+ |      @args file_name
+ |      @return A value indicating whether the operation was successful
+ |      
+ |      This method siletly does nothing, if the config file does not
+ |      exist. If it does and an error occured, the error message is printed
+ |      on stderr. In both cases, false is returned.
+ |  
+ |  set_config(...)
+ |      @brief Sets a configuration parameter with the given name to the given value
+ |      
+ |      @args name, value
+ |      @param name The name of the configuration parameter to set
+ |      @param value The value to which to set the configuration parameter
+ |      
+ |      This method sets the configuration parameter with the given name to the given value. Values can only be strings. Numerical values have to be converted into strings first. The actual format of the value depends on the configuration parameter. The name must be one of the names returned by \get_config_names.
+ |      It is possible to write an arbitrary name/value pair into the configuration database which then is written to the configuration file.
+ |  
+ |  symname(...) from builtins.type
+ |      @hide
+ |  
+ |  version(...)
+ |      @brief Returns the application's version string
+ |  
+ |  write_config(...)
+ |      @brief Writes configuration to a file
+ |      @args file_name
+ |      @return A value indicating whether the operation was successful
+ |      
+ |      If the configuration file cannot be written, 
+ |      is returned but no exception is thrown.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from QApplication_Native:
+ |  
+ |  aboutQt(...) from builtins.type
+ |      @brief Static method void QApplication::aboutQt()
+ |      This method is static and can be called without an instance.
+ |  
+ |  activeModalWidget(...) from builtins.type
+ |      @brief Static method QWidget *QApplication::activeModalWidget()
+ |      This method is static and can be called without an instance.
+ |  
+ |  activePopupWidget(...) from builtins.type
+ |      @brief Static method QWidget *QApplication::activePopupWidget()
+ |      This method is static and can be called without an instance.
+ |  
+ |  alert(...) from builtins.type
+ |      @brief Static method void QApplication::alert(QWidget *widget, int duration)
+ |      This method is static and can be called without an instance.
+ |  
+ |  allWidgets(...) from builtins.type
+ |      @brief Static method QList<QWidget *> QApplication::allWidgets()
+ |      This method is static and can be called without an instance.
+ |  
+ |  applicationStateChanged_(...)
+ |      @brief Signal declaration for QApplication::applicationStateChanged(Qt::ApplicationState state)
+ |      You can bind a procedure to this signal.
+ |  
+ |  beep(...) from builtins.type
+ |      @brief Static method void QApplication::beep()
+ |      This method is static and can be called without an instance.
+ |  
+ |  closeAllWindows(...) from builtins.type
+ |      @brief Static method void QApplication::closeAllWindows()
+ |      This method is static and can be called without an instance.
+ |  
+ |  commitDataRequest_(...)
+ |      @brief Signal declaration for QApplication::commitDataRequest(QSessionManager &sessionManager)
+ |      You can bind a procedure to this signal.
+ |  
+ |  desktop(...) from builtins.type
+ |      @brief Static method QDesktopWidget *QApplication::desktop()
+ |      This method is static and can be called without an instance.
+ |  
+ |  destroyed_(...)
+ |      @brief Signal declaration for QApplication::destroyed(QObject *)
+ |      You can bind a procedure to this signal.
+ |  
+ |  focusChanged_(...)
+ |      @brief Signal declaration for QApplication::focusChanged(QWidget *old, QWidget *now)
+ |      You can bind a procedure to this signal.
+ |  
+ |  focusObjectChanged_(...)
+ |      @brief Signal declaration for QApplication::focusObjectChanged(QObject *focusObject)
+ |      You can bind a procedure to this signal.
+ |  
+ |  focusWidget(...) from builtins.type
+ |      @brief Static method QWidget *QApplication::focusWidget()
+ |      This method is static and can be called without an instance.
+ |  
+ |  focusWindowChanged_(...)
+ |      @brief Signal declaration for QApplication::focusWindowChanged(QWindow *focusWindow)
+ |      You can bind a procedure to this signal.
+ |  
+ |  fontMetrics(...) from builtins.type
+ |      @brief Static method QFontMetrics QApplication::fontMetrics()
+ |      This method is static and can be called without an instance.
+ |  
+ |  font_(...) from builtins.type
+ |      @brief Static method QFont QApplication::font(const char *className)
+ |      This method is static and can be called without an instance.
+ |  
+ |  isEffectEnabled(...) from builtins.type
+ |      @brief Static method bool QApplication::isEffectEnabled(Qt::UIEffect)
+ |      This method is static and can be called without an instance.
+ |  
+ |  layoutDirectionChanged_(...)
+ |      @brief Signal declaration for QApplication::layoutDirectionChanged(Qt::LayoutDirection direction)
+ |      You can bind a procedure to this signal.
+ |  
+ |  new_app(...) from builtins.type
+ |      @brief Creates a new QApplication object
+ |      
+ |      This implementation is provided for test purposes only. It is not required usually to create a QApplication object. Use the object provided by QApplication::instance instead.
+ |  
+ |  notify(...)
+ |      @brief Method (QObject *, QEvent *)
+ |      This is a reimplementation of QGuiApplication::notify
+ |  
+ |  paletteChanged_(...)
+ |      @brief Signal declaration for QApplication::paletteChanged(const QPalette &pal)
+ |      You can bind a procedure to this signal.
+ |  
+ |  palette_(...) from builtins.type
+ |      @brief Static method QPalette QApplication::palette(const char *className)
+ |      This method is static and can be called without an instance.
+ |  
+ |  saveStateRequest_(...)
+ |      @brief Signal declaration for QApplication::saveStateRequest(QSessionManager &sessionManager)
+ |      You can bind a procedure to this signal.
+ |  
+ |  screenAdded_(...)
+ |      @brief Signal declaration for QApplication::screenAdded(QScreen *screen)
+ |      You can bind a procedure to this signal.
+ |  
+ |  screenRemoved_(...)
+ |      @brief Signal declaration for QApplication::screenRemoved(QScreen *screen)
+ |      You can bind a procedure to this signal.
+ |  
+ |  setActiveWindow(...) from builtins.type
+ |      @brief Static method void QApplication::setActiveWindow(QWidget *act)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setAutoSipEnabled(...)
+ |      @brief Method void QApplication::setAutoSipEnabled(const bool enabled)
+ |  
+ |  setColorSpec(...) from builtins.type
+ |      @brief Static method void QApplication::setColorSpec(int)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setCursorFlashTime(...) from builtins.type
+ |      @brief Static method void QApplication::setCursorFlashTime(int)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setDoubleClickInterval(...) from builtins.type
+ |      @brief Static method void QApplication::setDoubleClickInterval(int)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setEffectEnabled(...) from builtins.type
+ |      @brief Static method void QApplication::setEffectEnabled(Qt::UIEffect, bool enable)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setFont(...) from builtins.type
+ |      @brief Static method void QApplication::setFont(const QFont &, const char *className)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setGlobalStrut(...) from builtins.type
+ |      @brief Static method void QApplication::setGlobalStrut(const QSize &)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setKeyboardInputInterval(...) from builtins.type
+ |      @brief Static method void QApplication::setKeyboardInputInterval(int)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setPalette(...) from builtins.type
+ |      @brief Static method void QApplication::setPalette(const QPalette &, const char *className)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setStartDragDistance(...) from builtins.type
+ |      @brief Static method void QApplication::setStartDragDistance(int l)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setStartDragTime(...) from builtins.type
+ |      @brief Static method void QApplication::setStartDragTime(int ms)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setStyle(...) from builtins.type
+ |      @brief Static method QStyle *QApplication::setStyle(const QString &)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setStyleSheet(...)
+ |      @brief Method void QApplication::setStyleSheet(const QString &sheet)
+ |  
+ |  setWheelScrollLines(...) from builtins.type
+ |      @brief Static method void QApplication::setWheelScrollLines(int)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setWindowIcon(...) from builtins.type
+ |      @brief Static method void QApplication::setWindowIcon(const QIcon &icon)
+ |      This method is static and can be called without an instance.
+ |  
+ |  staticMetaObject(...) from builtins.type
+ |      @brief Obtains the static MetaObject for this class.
+ |  
+ |  topLevelAt(...) from builtins.type
+ |      @brief Static method QWidget *QApplication::topLevelAt(int x, int y)
+ |      This method is static and can be called without an instance.
+ |  
+ |  topLevelWidgets(...) from builtins.type
+ |      @brief Static method QList<QWidget *> QApplication::topLevelWidgets()
+ |      This method is static and can be called without an instance.
+ |  
+ |  tr(...) from builtins.type
+ |      @brief Static method QString QApplication::tr(const char *s, const char *c, int n)
+ |      This method is static and can be called without an instance.
+ |  
+ |  trUtf8(...) from builtins.type
+ |      @brief Static method QString QApplication::trUtf8(const char *s, const char *c, int n)
+ |      This method is static and can be called without an instance.
+ |  
+ |  widgetAt(...) from builtins.type
+ |      @brief Static method QWidget *QApplication::widgetAt(int x, int y)
+ |      This method is static and can be called without an instance.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors inherited from QApplication_Native:
+ |  
+ |  applicationNameChanged
+ |      @brief Signal declaration for QApplication::applicationNameChanged()
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::applicationNameChanged()
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::applicationNameChanged()
+ |      You can bind a procedure to this signal.
+ |  
+ |  applicationStateChanged
+ |      @brief Signal declaration for QApplication::applicationStateChanged(Qt::ApplicationState state)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::applicationStateChanged(Qt::ApplicationState state)
+ |      You can bind a procedure to this signal.
+ |  
+ |  applicationVersionChanged
+ |      @brief Signal declaration for QApplication::applicationVersionChanged()
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::applicationVersionChanged()
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::applicationVersionChanged()
+ |      You can bind a procedure to this signal.
+ |  
+ |  autoSipEnabled
+ |      @brief Method bool QApplication::autoSipEnabled()
+ |      
+ |      
+ |      @brief Method void QApplication::setAutoSipEnabled(const bool enabled)
+ |  
+ |  commitDataRequest
+ |      @brief Signal declaration for QApplication::commitDataRequest(QSessionManager &sessionManager)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::commitDataRequest(QSessionManager &sessionManager)
+ |      You can bind a procedure to this signal.
+ |  
+ |  focusChanged
+ |      @brief Signal declaration for QApplication::focusChanged(QWidget *old, QWidget *now)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::focusChanged(QWidget *old, QWidget *now)
+ |      You can bind a procedure to this signal.
+ |  
+ |  focusObjectChanged
+ |      @brief Signal declaration for QApplication::focusObjectChanged(QObject *focusObject)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::focusObjectChanged(QObject *focusObject)
+ |      You can bind a procedure to this signal.
+ |  
+ |  focusWindowChanged
+ |      @brief Signal declaration for QApplication::focusWindowChanged(QWindow *focusWindow)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::focusWindowChanged(QWindow *focusWindow)
+ |      You can bind a procedure to this signal.
+ |  
+ |  fontDatabaseChanged
+ |      @brief Signal declaration for QApplication::fontDatabaseChanged()
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::fontDatabaseChanged()
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::fontDatabaseChanged()
+ |      You can bind a procedure to this signal.
+ |  
+ |  lastWindowClosed
+ |      @brief Signal declaration for QApplication::lastWindowClosed()
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::lastWindowClosed()
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::lastWindowClosed()
+ |      You can bind a procedure to this signal.
+ |  
+ |  layoutDirectionChanged
+ |      @brief Signal declaration for QApplication::layoutDirectionChanged(Qt::LayoutDirection direction)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::layoutDirectionChanged(Qt::LayoutDirection direction)
+ |      You can bind a procedure to this signal.
+ |  
+ |  organizationDomainChanged
+ |      @brief Signal declaration for QApplication::organizationDomainChanged()
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::organizationDomainChanged()
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::organizationDomainChanged()
+ |      You can bind a procedure to this signal.
+ |  
+ |  organizationNameChanged
+ |      @brief Signal declaration for QApplication::organizationNameChanged()
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::organizationNameChanged()
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::organizationNameChanged()
+ |      You can bind a procedure to this signal.
+ |  
+ |  paletteChanged
+ |      @brief Signal declaration for QApplication::paletteChanged(const QPalette &pal)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::paletteChanged(const QPalette &pal)
+ |      You can bind a procedure to this signal.
+ |  
+ |  saveStateRequest
+ |      @brief Signal declaration for QApplication::saveStateRequest(QSessionManager &sessionManager)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::saveStateRequest(QSessionManager &sessionManager)
+ |      You can bind a procedure to this signal.
+ |  
+ |  screenAdded
+ |      @brief Signal declaration for QApplication::screenAdded(QScreen *screen)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::screenAdded(QScreen *screen)
+ |      You can bind a procedure to this signal.
+ |  
+ |  screenRemoved
+ |      @brief Signal declaration for QApplication::screenRemoved(QScreen *screen)
+ |      You can bind a procedure to this signal.
+ |      
+ |      @brief Signal declaration for QApplication::screenRemoved(QScreen *screen)
+ |      You can bind a procedure to this signal.
+ |  
+ |  styleSheet
+ |      @brief Method QString QApplication::styleSheet()
+ |      
+ |      
+ |      @brief Method void QApplication::setStyleSheet(const QString &sheet)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes inherited from QApplication_Native:
+ |  
+ |  activeWindow = <pya.QDialog_Native object>
+ |  
+ |  colorSpec = 0
+ |  
+ |  cursorFlashTime = 1060
+ |  
+ |  doubleClickInterval = 900
+ |  
+ |  font = MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0
+ |  
+ |  globalStrut = <pya.QSize object>
+ |  
+ |  keyboardInputInterval = 400
+ |  
+ |  palette = <pya.QPalette object>
+ |  
+ |  startDragDistance = 10
+ |  
+ |  startDragTime = 500
+ |  
+ |  style = <pya.QCommonStyle_Native object>
+ |  
+ |  wheelScrollLines = 3
+ |  
+ |  windowIcon = <pya.QIcon object>
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from QGuiApplication_Native:
+ |  
+ |  allWindows(...) from builtins.type
+ |      @brief Static method QList<QWindow *> QGuiApplication::allWindows()
+ |      This method is static and can be called without an instance.
+ |  
+ |  applicationState(...) from builtins.type
+ |      @brief Static method Qt::ApplicationState QGuiApplication::applicationState()
+ |      This method is static and can be called without an instance.
+ |  
+ |  changeOverrideCursor(...) from builtins.type
+ |      @brief Static method void QGuiApplication::changeOverrideCursor(const QCursor &)
+ |      This method is static and can be called without an instance.
+ |  
+ |  clipboard(...) from builtins.type
+ |      @brief Static method QClipboard *QGuiApplication::clipboard()
+ |      This method is static and can be called without an instance.
+ |  
+ |  devicePixelRatio(...)
+ |      @brief Method double QGuiApplication::devicePixelRatio()
+ |  
+ |  focusObject(...) from builtins.type
+ |      @brief Static method QObject *QGuiApplication::focusObject()
+ |      This method is static and can be called without an instance.
+ |  
+ |  focusWindow(...) from builtins.type
+ |      @brief Static method QWindow *QGuiApplication::focusWindow()
+ |      This method is static and can be called without an instance.
+ |  
+ |  inputMethod(...) from builtins.type
+ |      @brief Static method QInputMethod *QGuiApplication::inputMethod()
+ |      This method is static and can be called without an instance.
+ |  
+ |  isLeftToRight(...) from builtins.type
+ |      @brief Static method bool QGuiApplication::isLeftToRight()
+ |      This method is static and can be called without an instance.
+ |  
+ |  isRightToLeft(...) from builtins.type
+ |      @brief Static method bool QGuiApplication::isRightToLeft()
+ |      This method is static and can be called without an instance.
+ |  
+ |  isSavingSession(...)
+ |      @brief Method bool QGuiApplication::isSavingSession()
+ |  
+ |  isSessionRestored(...)
+ |      @brief Method bool QGuiApplication::isSessionRestored()
+ |  
+ |  keyboardModifiers(...) from builtins.type
+ |      @brief Static method QFlags<Qt::KeyboardModifier> QGuiApplication::keyboardModifiers()
+ |      This method is static and can be called without an instance.
+ |  
+ |  modalWindow(...) from builtins.type
+ |      @brief Static method QWindow *QGuiApplication::modalWindow()
+ |      This method is static and can be called without an instance.
+ |  
+ |  mouseButtons(...) from builtins.type
+ |      @brief Static method QFlags<Qt::MouseButton> QGuiApplication::mouseButtons()
+ |      This method is static and can be called without an instance.
+ |  
+ |  overrideCursor(...) from builtins.type
+ |      @brief Static method QCursor *QGuiApplication::overrideCursor()
+ |      This method is static and can be called without an instance.
+ |  
+ |  primaryScreen(...) from builtins.type
+ |      @brief Static method QScreen *QGuiApplication::primaryScreen()
+ |      This method is static and can be called without an instance.
+ |  
+ |  queryKeyboardModifiers(...) from builtins.type
+ |      @brief Static method QFlags<Qt::KeyboardModifier> QGuiApplication::queryKeyboardModifiers()
+ |      This method is static and can be called without an instance.
+ |  
+ |  restoreOverrideCursor(...) from builtins.type
+ |      @brief Static method void QGuiApplication::restoreOverrideCursor()
+ |      This method is static and can be called without an instance.
+ |  
+ |  screens(...) from builtins.type
+ |      @brief Static method QList<QScreen *> QGuiApplication::screens()
+ |      This method is static and can be called without an instance.
+ |  
+ |  sessionId(...)
+ |      @brief Method QString QGuiApplication::sessionId()
+ |  
+ |  sessionKey(...)
+ |      @brief Method QString QGuiApplication::sessionKey()
+ |  
+ |  setApplicationDisplayName(...) from builtins.type
+ |      @brief Static method void QGuiApplication::setApplicationDisplayName(const QString &name)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setDesktopSettingsAware(...) from builtins.type
+ |      @brief Static method void QGuiApplication::setDesktopSettingsAware(bool on)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setLayoutDirection(...) from builtins.type
+ |      @brief Static method void QGuiApplication::setLayoutDirection(Qt::LayoutDirection direction)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setOverrideCursor(...) from builtins.type
+ |      @brief Static method void QGuiApplication::setOverrideCursor(const QCursor &)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setQuitOnLastWindowClosed(...) from builtins.type
+ |      @brief Static method void QGuiApplication::setQuitOnLastWindowClosed(bool quit)
+ |      This method is static and can be called without an instance.
+ |  
+ |  styleHints(...) from builtins.type
+ |      @brief Static method QStyleHints *QGuiApplication::styleHints()
+ |      This method is static and can be called without an instance.
+ |  
+ |  sync(...) from builtins.type
+ |      @brief Static method void QGuiApplication::sync()
+ |      This method is static and can be called without an instance.
+ |  
+ |  topLevelWindows(...) from builtins.type
+ |      @brief Static method QList<QWindow *> QGuiApplication::topLevelWindows()
+ |      This method is static and can be called without an instance.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes inherited from QGuiApplication_Native:
+ |  
+ |  applicationDisplayName = 'klayout_app'
+ |  
+ |  desktopSettingsAware = True
+ |  
+ |  layoutDirection = LeftToRight (0)
+ |  
+ |  platformName = 'windows'
+ |  
+ |  quitOnLastWindowClosed = True
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from QCoreApplication_Native:
+ |  
+ |  addLibraryPath(...) from builtins.type
+ |      @brief Static method void QCoreApplication::addLibraryPath(const QString &)
+ |      This method is static and can be called without an instance.
+ |  
+ |  applicationDirPath(...) from builtins.type
+ |      @brief Static method QString QCoreApplication::applicationDirPath()
+ |      This method is static and can be called without an instance.
+ |  
+ |  applicationFilePath(...) from builtins.type
+ |      @brief Static method QString QCoreApplication::applicationFilePath()
+ |      This method is static and can be called without an instance.
+ |  
+ |  applicationPid(...) from builtins.type
+ |      @brief Static method qint64 QCoreApplication::applicationPid()
+ |      This method is static and can be called without an instance.
+ |  
+ |  arguments(...) from builtins.type
+ |      @brief Static method QStringList QCoreApplication::arguments()
+ |      This method is static and can be called without an instance.
+ |  
+ |  closingDown(...) from builtins.type
+ |      @brief Static method bool QCoreApplication::closingDown()
+ |      This method is static and can be called without an instance.
+ |  
+ |  flush(...) from builtins.type
+ |      @brief Static method void QCoreApplication::flush()
+ |      This method is static and can be called without an instance.
+ |  
+ |  hasPendingEvents(...) from builtins.type
+ |      @brief Static method bool QCoreApplication::hasPendingEvents()
+ |      This method is static and can be called without an instance.
+ |  
+ |  installNativeEventFilter(...)
+ |      @brief Method void QCoreApplication::installNativeEventFilter(QAbstractNativeEventFilter *filterObj)
+ |  
+ |  installTranslator(...) from builtins.type
+ |      @brief Static method bool QCoreApplication::installTranslator(QTranslator *messageFile)
+ |      This method is static and can be called without an instance.
+ |  
+ |  isQuitLockEnabled(...) from builtins.type
+ |      @brief Static method bool QCoreApplication::isQuitLockEnabled()
+ |      This method is static and can be called without an instance.
+ |  
+ |  isSetuidAllowed(...) from builtins.type
+ |      @brief Static method bool QCoreApplication::isSetuidAllowed()
+ |      This method is static and can be called without an instance.
+ |  
+ |  postEvent(...) from builtins.type
+ |      @brief Static method void QCoreApplication::postEvent(QObject *receiver, QEvent *event, int priority)
+ |      This method is static and can be called without an instance.
+ |  
+ |  processEvents(...) from builtins.type
+ |      @brief Static method void QCoreApplication::processEvents(QFlags<QEventLoop::ProcessEventsFlag> flags, int maxtime)
+ |      This method is static and can be called without an instance.
+ |  
+ |  quit(...) from builtins.type
+ |      @brief Static method void QCoreApplication::quit()
+ |      This method is static and can be called without an instance.
+ |  
+ |  removeLibraryPath(...) from builtins.type
+ |      @brief Static method void QCoreApplication::removeLibraryPath(const QString &)
+ |      This method is static and can be called without an instance.
+ |  
+ |  removeNativeEventFilter(...)
+ |      @brief Method void QCoreApplication::removeNativeEventFilter(QAbstractNativeEventFilter *filterObj)
+ |  
+ |  removePostedEvents(...) from builtins.type
+ |      @brief Static method void QCoreApplication::removePostedEvents(QObject *receiver, int eventType)
+ |      This method is static and can be called without an instance.
+ |  
+ |  removeTranslator(...) from builtins.type
+ |      @brief Static method bool QCoreApplication::removeTranslator(QTranslator *messageFile)
+ |      This method is static and can be called without an instance.
+ |  
+ |  sendEvent(...) from builtins.type
+ |      @brief Static method bool QCoreApplication::sendEvent(QObject *receiver, QEvent *event)
+ |      This method is static and can be called without an instance.
+ |  
+ |  sendPostedEvents(...) from builtins.type
+ |      @brief Static method void QCoreApplication::sendPostedEvents(QObject *receiver, int event_type)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setApplicationName(...) from builtins.type
+ |      @brief Static method void QCoreApplication::setApplicationName(const QString &application)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setApplicationVersion(...) from builtins.type
+ |      @brief Static method void QCoreApplication::setApplicationVersion(const QString &version)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setAttribute(...) from builtins.type
+ |      @brief Static method void QCoreApplication::setAttribute(Qt::ApplicationAttribute attribute, bool on)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setEventDispatcher(...) from builtins.type
+ |      @brief Static method void QCoreApplication::setEventDispatcher(QAbstractEventDispatcher *eventDispatcher)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setLibraryPaths(...) from builtins.type
+ |      @brief Static method void QCoreApplication::setLibraryPaths(const QStringList &)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setOrganizationDomain(...) from builtins.type
+ |      @brief Static method void QCoreApplication::setOrganizationDomain(const QString &orgDomain)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setOrganizationName(...) from builtins.type
+ |      @brief Static method void QCoreApplication::setOrganizationName(const QString &orgName)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setQuitLockEnabled(...) from builtins.type
+ |      @brief Static method void QCoreApplication::setQuitLockEnabled(bool enabled)
+ |      This method is static and can be called without an instance.
+ |  
+ |  setSetuidAllowed(...) from builtins.type
+ |      @brief Static method void QCoreApplication::setSetuidAllowed(bool allow)
+ |      This method is static and can be called without an instance.
+ |  
+ |  startingUp(...) from builtins.type
+ |      @brief Static method bool QCoreApplication::startingUp()
+ |      This method is static and can be called without an instance.
+ |  
+ |  testAttribute(...) from builtins.type
+ |      @brief Static method bool QCoreApplication::testAttribute(Qt::ApplicationAttribute attribute)
+ |      This method is static and can be called without an instance.
+ |  
+ |  translate(...) from builtins.type
+ |      @brief Static method QString QCoreApplication::translate(const char *context, const char *key, const char *disambiguation, int n)
+ |      This method is static and can be called without an instance.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes inherited from QCoreApplication_Native:
+ |  
+ |  applicationName = 'klayout_app'
+ |  
+ |  applicationVersion = ''
+ |  
+ |  eventDispatcher = <pya.QAbstractEventDispatcher_Native object>
+ |  
+ |  libraryPaths = ['C:/Users/Ahad Rauf/AppData/Roaming/KLayout']
+ |  
+ |  organizationDomain = ''
+ |  
+ |  organizationName = ''
+ |  
+ |  quitLockEnabled = True
+ |  
+ |  setuidAllowed = False
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from QObject_Native:
+ |  
+ |  __getattr__ = _getattr_with_child_objects(s, n)
+ |      Provides a new __getattr__ implementation which looks for child widgets
+ |      and maps them into the attribute space.
+ |  
+ |  blockSignals(...)
+ |      @brief Method bool QObject::blockSignals(bool b)
+ |  
+ |  children(...)
+ |      @brief Method const QList<QObject*> &QObject::children()
+ |  
+ |  connect = _class_connect(...) from builtins.type
+ |      @brief Static method QMetaObject::Connection QObject::connect(const QObject *sender, const QMetaMethod &signal, const QObject *receiver, const QMetaMethod &method, Qt::ConnectionType type)
+ |      This method is static and can be called without an instance.
+ |  
+ |  deleteLater(...)
+ |      @brief Method void QObject::deleteLater()
+ |  
+ |  disconnect = _class_disconnect(...) from builtins.type
+ |      @brief Static method bool QObject::disconnect(const QMetaObject::Connection &)
+ |      This method is static and can be called without an instance.
+ |  
+ |  dumpObjectInfo(...)
+ |      @brief Method void QObject::dumpObjectInfo()
+ |  
+ |  dumpObjectTree(...)
+ |      @brief Method void QObject::dumpObjectTree()
+ |  
+ |  dynamicPropertyNames(...)
+ |      @brief Method QList<QByteArray> QObject::dynamicPropertyNames()
+ |  
+ |  event(...)
+ |      @brief Method bool QObject::event(QEvent *)
+ |  
+ |  eventFilter(...)
+ |      @brief Method bool QObject::eventFilter(QObject *, QEvent *)
+ |  
+ |  findChild(...)
+ |      @brief Specialisation for findChild (uses QObject as T).
+ |  
+ |  inherits(...)
+ |      @brief Method bool QObject::inherits(const char *classname)
+ |  
+ |  installEventFilter(...)
+ |      @brief Method void QObject::installEventFilter(QObject *)
+ |  
+ |  isWidgetType(...)
+ |      @brief Method bool QObject::isWidgetType()
+ |  
+ |  isWindowType(...)
+ |      @brief Method bool QObject::isWindowType()
+ |  
+ |  killTimer(...)
+ |      @brief Method void QObject::killTimer(int id)
+ |  
+ |  moveToThread(...)
+ |      @brief Method void QObject::moveToThread(QThread *thread)
+ |  
+ |  property(...)
+ |      @brief Method QVariant QObject::property(const char *name)
+ |  
+ |  registerUserData(...) from builtins.type
+ |      @brief Static method unsigned int QObject::registerUserData()
+ |      This method is static and can be called without an instance.
+ |  
+ |  removeEventFilter(...)
+ |      @brief Method void QObject::removeEventFilter(QObject *)
+ |  
+ |  setObjectName(...)
+ |      @brief Method void QObject::setObjectName(const QString &name)
+ |  
+ |  setParent(...)
+ |      @brief Method void QObject::setParent(QObject *)
+ |  
+ |  setProperty(...)
+ |      @brief Method bool QObject::setProperty(const char *name, const QVariant &value)
+ |  
+ |  signalsBlocked(...)
+ |      @brief Method bool QObject::signalsBlocked()
+ |  
+ |  startTimer(...)
+ |      @brief Method int QObject::startTimer(int interval, Qt::TimerType timerType)
+ |  
+ |  thread(...)
+ |      @brief Method QThread *QObject::thread()
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors inherited from QObject_Native:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |  
+ |  objectName
+ |      @brief Method QString QObject::objectName()
+ |      
+ |      
+ |      @brief Method void QObject::setObjectName(const QString &name)
+ |  
+ |  parent
+ |      @brief Method QObject *QObject::parent()
+ |      
+ |      
+ |      @brief Method void QObject::setParent(QObject *)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from __Base:
+ |  
+ |  __delattr__(self, name, /)
+ |      Implement delattr(self, name).
+ |  
+ |  __getattribute__(self, name, /)
+ |      Return getattr(self, name).
+ |  
+ |  __new__(*args, **kwargs) from builtins.type
+ |      Create and return a new object.  See help(type) for accurate signature.
+ |  
+ |  __setattr__(self, name, value, /)
+ |      Implement setattr(self, name, value).
+

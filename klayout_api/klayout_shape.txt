@@ -1,0 +1,1072 @@
+class Shape(__Base)
+ |  @brief An object representing a shape in the layout database
+ |  
+ |  The shape proxy is basically a pointer to a shape of different kinds.
+ |  No copy of the shape is created: if the shape proxy is copied the copy still
+ |  points to the original shape. If the original shape is modified or deleted,
+ |  the shape proxy will also point to a modified or invalid shape.
+ |  The proxy can be "null" which indicates an invalid reference.
+ |  
+ |  Shape objects are used together with the \Shapes container object which
+ |  stores the actual shape objects and uses Shape references as pointers inside the
+ |  actual data storage. Shape references are used in various places, i.e. when removing or
+ |  transforming objects inside a \Shapes container.
+ |  
+ |  Method resolution order:
+ |      Shape
+ |      __Base
+ |      builtins.object
+ |  
+ |  Methods defined here:
+ |  
+ |  __eq__(...)
+ |      @brief Equality operator
+ |      @args other
+ |      
+ |      Equality of shapes is not specified by the identity of the objects but by the
+ |      identity of the pointers - both shapes must refer to the same object.
+ |  
+ |  __init__(...)
+ |      @brief Creates a new object of this class
+ |  
+ |  __ne__(...)
+ |      @brief Inequality operator
+ |      @args other
+ |  
+ |  __repr__(...)
+ |      @brief Create a string showing the contents of the reference
+ |      
+ |      This method has been introduced with version 0.16.
+ |  
+ |  __str__(...)
+ |      @brief Create a string showing the contents of the reference
+ |      
+ |      This method has been introduced with version 0.16.
+ |  
+ |  area(...)
+ |      @brief Returns the area of the shape
+ |      This method has been added in version 0.22.
+ |  
+ |  array_dtrans(...)
+ |      @brief Gets the array instance member transformation in micrometer units
+ |      
+ |      This attribute is valid only if \is_array_member? is true.
+ |      The transformation returned describes the relative transformation of the 
+ |      array member addressed. The displacement is given in micrometer units.
+ |      
+ |      This method has been added in version 0.25.
+ |  
+ |  array_trans(...)
+ |      @brief Gets the array instance member transformation
+ |      
+ |      This attribute is valid only if \is_array_member? is true.
+ |      The transformation returned describes the relative transformation of the 
+ |      array member addressed.
+ |  
+ |  assign(...)
+ |      @brief Assigns another object to self
+ |      @args other
+ |  
+ |  bbox(...)
+ |      @brief Returns the bounding box of the shape
+ |  
+ |  create(...)
+ |      @brief Ensures the C++ object is created
+ |      Use this method to ensure the C++ object is created, for example to ensure that resources are allocated. Usually C++ objects are created on demand and not necessarily when the script object is created.
+ |  
+ |  darea(...)
+ |      @brief Returns the area of the shape in square micrometer units
+ |      This method has been added in version 0.25.
+ |  
+ |  dbbox(...)
+ |      @brief Returns the bounding box of the shape in micrometer units
+ |      This method has been added in version 0.25.
+ |  
+ |  delete(...)
+ |      @brief Deletes the shape
+ |      
+ |      After the shape is deleted, the shape object is emptied and points to nothing.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  delete_property(...)
+ |      @brief Deletes the user property with the given key
+ |      @args key
+ |      This method is a convenience method that deletes the property with the given key. It does nothing if no property with that key exists. Using that method is more convenient than creating a new property set with a new ID and assigning that properties ID.
+ |      This method may change the properties ID. Calling this method will invalidate any iterators. It should not be called inside a loop iterating over shapes.
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  destroy(...)
+ |      @brief Explicitly destroys the object
+ |      Explicitly destroys the object on C++ side if it was owned by the script interpreter. Subsequent access to this object will throw an exception.
+ |      If the object is not owned by the script, this method will do nothing.
+ |  
+ |  destroyed(...)
+ |      @brief Returns a value indicating whether the object was already destroyed
+ |      This method returns true, if the object was destroyed, either explicitly or by the C++ side.
+ |      The latter may happen, if the object is owned by a C++ object which got destroyed itself.
+ |  
+ |  dperimeter(...)
+ |      @brief Returns the perimeter of the shape in micrometer units
+ |      
+ |      This method will return an approximation of the perimeter for paths.
+ |      
+ |      This method has been added in version 0.25.
+ |  
+ |  dup(...)
+ |      @brief Creates a copy of self
+ |  
+ |  each_dedge(...)
+ |      @brief Iterates over the edges of a single contour of the object and returns edges in micrometer units
+ |      
+ |      This method iterates over all edges of polygons and simple polygons like \each_edge, but will deliver edges in micrometer units. Multiplication by the database unit is done internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  each_dpoint(...)
+ |      @brief Iterates over all points of the object and returns points in micrometer units
+ |      
+ |      This method iterates over all points of the object like \each_point, but it returns \DPoint objects that are given in micrometer units already. Multiplication with the database unit happens internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  each_dpoint_hole(...)
+ |      @brief Iterates over a hole contour of the object and returns points in micrometer units
+ |      
+ |      This method iterates over all points of the object's contour' like \each_point_hole, but it returns \DPoint objects that are given in micrometer units already. Multiplication with the database unit happens internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  each_dpoint_hull(...)
+ |      @brief Iterates over the hull contour of the object and returns points in micrometer units
+ |      
+ |      This method iterates over all points of the object's contour' like \each_point_hull, but it returns \DPoint objects that are given in micrometer units already. Multiplication with the database unit happens internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  each_edge(...)
+ |      @brief Iterates over the edges of a single contour of the object
+ |      @param contour The contour number (0 for hull, 1 for first hole ...)
+ |      
+ |      This method applies to polygons and simple polygons and delivers all edges that form the given contour of the polygon. The hull has contour number 0, the first hole has contour 1 etc.
+ |      Hole edges are oriented counterclockwise while hull egdes are oriented clockwise.
+ |      
+ |      It will throw an exception if the object is not a polygon.
+ |      
+ |      This method was introduced in version 0.24.
+ |  
+ |  each_point(...)
+ |      @brief Iterates over all points of the object
+ |      
+ |      This method applies to paths and delivers all points of the path's center line.
+ |      It will throw an exception for other objects.
+ |  
+ |  each_point_hole(...)
+ |      @brief Iterates over the points of a hole contour
+ |      @args hole_index
+ |      
+ |      This method applies to polygons and delivers all points of the respective hole contour.
+ |      It will throw an exception for other objects.
+ |      Simple polygons deliver an empty sequence.
+ |      
+ |      @param hole The hole index (see holes () method)
+ |  
+ |  each_point_hull(...)
+ |      @brief Iterates over the hull contour of the object
+ |      
+ |      This method applies to polygons and delivers all points of the polygon hull contour.
+ |      It will throw an exception for other objects.
+ |  
+ |  has_prop_id(...)
+ |      @brief Returns true, if the shape has properties, i.e. has a properties ID
+ |  
+ |  holes(...)
+ |      @brief Returns the number of holes
+ |      
+ |      This method applies to polygons and will throw an exception for other objects..
+ |      Simple polygons deliver a value of zero.
+ |  
+ |  is_array_member(...)
+ |      @brief Returns true, if the shape is a member of a shape array
+ |  
+ |  is_box(...)
+ |      @brief Returns true if the shape is a box
+ |  
+ |  is_const_object(...)
+ |      @brief Returns a value indicating whether the reference is a const reference
+ |      This method returns true, if self is a const reference.
+ |      In that case, only const methods may be called on self.
+ |  
+ |  is_edge(...)
+ |      @brief Returns true, if the object is an edge
+ |  
+ |  is_null(...)
+ |      @brief Returns true, if the shape reference is a null reference (not referring to a shape)
+ |  
+ |  is_path(...)
+ |      @brief Returns true, if the shape is a path
+ |  
+ |  is_polygon(...)
+ |      @brief Returns true, if the shape is a polygon
+ |      
+ |      This method returns true only if the object is a polygon or a simple polygon. Other objects can convert to polygons, for example paths, so it may be possible to use the \polygon method also if is_polygon? does not return true.
+ |  
+ |  is_simple_polygon(...)
+ |      @brief Returns true, if the shape is a simple polygon
+ |      
+ |      This method returns true only if the object is a simple polygon. The simple polygon identity is contained in the polygon identity, so usually it is sufficient to use \is_polygon? and \polygon instead of specifically handle simply polygons. This method is provided only for specific optimisation purposes.
+ |  
+ |  is_text(...)
+ |      @brief Returns true, if the object is a text
+ |  
+ |  is_user_object(...)
+ |      @brief Returns true if the shape is a user defined object
+ |  
+ |  is_valid(...)
+ |      @brief Returns true, if the shape is valid
+ |      
+ |      After the shape is deleted, the shape object is no longer valid and this method returns false.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  layout(...)
+ |      @brief Gets a reference to the Layout the shape belongs to
+ |      
+ |      This reference can be nil, if the Shape object is not living inside a layout.
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  new(...) from builtins.type
+ |      @brief Creates a new object of this class
+ |  
+ |  path_dlength(...)
+ |      @brief Returns the length of the path in micrometer units
+ |      
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      This method returns the length of the spine plus extensions if present.
+ |      The value returned is given in micrometer units.
+ |      
+ |      This method has been added in version 0.25.
+ |  
+ |  path_length(...)
+ |      @brief Returns the length of the path
+ |      
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      This method returns the length of the spine plus extensions if present.
+ |      
+ |      This method has been added in version 0.23.
+ |  
+ |  perimeter(...)
+ |      @brief Returns the perimeter of the shape
+ |      
+ |      This method will return an approximation of the perimeter for paths.
+ |      
+ |      This method has been added in version 0.23.
+ |  
+ |  property(...)
+ |      @brief Gets the user property with the given key
+ |      @args key
+ |      This method is a convenience method that gets the property with the given key. If no property with that key does not exist, it will return nil. Using that method is more convenient than using the layout object and the properties ID to retrieve the property value. 
+ |      This method has been introduced in version 0.22.
+ |  
+ |  set_property(...)
+ |      @brief Sets the user property with the given key to the given value
+ |      @args key, value
+ |      This method is a convenience method that sets the property with the given key to the given value. If no property with that key exists, it will create one. Using that method is more convenient than creating a new property set with a new ID and assigning that properties ID.
+ |      This method may change the properties ID. Calling this method will invalidate any iterators. It should not be called inside a loop iterating over shapes.
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  shapes(...)
+ |      @brief Gets a reference to the Shapes container the shape lives in
+ |      
+ |      This reference can be nil, if the Shape object is not referring to an actual shape.
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  t_box(...) from builtins.type
+ |  
+ |  t_box_array(...) from builtins.type
+ |  
+ |  t_box_array_member(...) from builtins.type
+ |  
+ |  t_edge(...) from builtins.type
+ |  
+ |  t_null(...) from builtins.type
+ |  
+ |  t_path(...) from builtins.type
+ |  
+ |  t_path_ptr_array(...) from builtins.type
+ |  
+ |  t_path_ptr_array_member(...) from builtins.type
+ |  
+ |  t_path_ref(...) from builtins.type
+ |  
+ |  t_polygon(...) from builtins.type
+ |  
+ |  t_polygon_ptr_array(...) from builtins.type
+ |  
+ |  t_polygon_ptr_array_member(...) from builtins.type
+ |  
+ |  t_polygon_ref(...) from builtins.type
+ |  
+ |  t_short_box(...) from builtins.type
+ |  
+ |  t_short_box_array(...) from builtins.type
+ |  
+ |  t_short_box_array_member(...) from builtins.type
+ |  
+ |  t_simple_polygon(...) from builtins.type
+ |  
+ |  t_simple_polygon_ptr_array(...) from builtins.type
+ |  
+ |  t_simple_polygon_ptr_array_member(...) from builtins.type
+ |  
+ |  t_simple_polygon_ref(...) from builtins.type
+ |  
+ |  t_text(...) from builtins.type
+ |  
+ |  t_text_ptr_array(...) from builtins.type
+ |  
+ |  t_text_ptr_array_member(...) from builtins.type
+ |  
+ |  t_text_ref(...) from builtins.type
+ |  
+ |  t_user_object(...) from builtins.type
+ |  
+ |  to_s(...)
+ |      @brief Create a string showing the contents of the reference
+ |      
+ |      This method has been introduced with version 0.16.
+ |  
+ |  transform(...)
+ |      @brief Transforms the shape with the given complex transformation, given in micrometer units
+ |      This method has been introduced in version 0.25.
+ |  
+ |  type(...)
+ |      @brief Return the type of the shape
+ |      
+ |      The returned values are the t_... constants available through the corresponding class members.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |  
+ |  box
+ |      @brief Gets the box object
+ |      
+ |      Starting with version 0.23, this method returns nil, if the shape does not represent a box.
+ |      
+ |      @brief Replaces the shape by the given box
+ |      @args box
+ |      This method replaces the shape by the given box. This method can only be called for editable layouts. It does not change the user properties of the shape.
+ |      Calling this method will invalidate any iterators. It should not be called inside a loop iterating over shapes.
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Replaces the shape by the given box (in micrometer units)
+ |      This method replaces the shape by the given box, like \box= with a \Box argument does. This version translates the box from micrometer units to database units internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  box_center
+ |      @brief Returns the center of the box
+ |      
+ |      Applies to boxes only. Returns the center of the box and throws an exception if the shape is not a box.
+ |      
+ |      This method has been introduced in version 0.23.
+ |      
+ |      
+ |      @brief Sets the center of the box
+ |      
+ |      Applies to boxes only. Changes the center of the box and throws an exception if the shape is not a box.
+ |      
+ |      This method has been introduced in version 0.23.
+ |      
+ |      
+ |      @brief Sets the center of the box with the point being given in micrometer units
+ |      
+ |      Applies to boxes only. Changes the center of the box and throws an exception if the shape is not a box.
+ |      Translation from micrometer units to database units is done internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  box_dcenter
+ |      @brief Returns the center of the box as a \DPoint object in micrometer units
+ |      
+ |      Applies to boxes only. Returns the center of the box and throws an exception if the shape is not a box.
+ |      Conversion from database units to micrometers is done internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |      
+ |      
+ |      @brief Sets the center of the box with the point being given in micrometer units
+ |      
+ |      Applies to boxes only. Changes the center of the box and throws an exception if the shape is not a box.
+ |      Translation from micrometer units to database units is done internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  box_dheight
+ |      @brief Returns the height of the box in micrometer units
+ |      
+ |      Applies to boxes only. Returns the height of the box in micrometers and throws an exception if the shape is not a box.
+ |      
+ |      This method has been introduced in version 0.25.
+ |      
+ |      
+ |      @brief Sets the height of the box
+ |      
+ |      Applies to boxes only. Changes the height of the box to the value given in micrometer units and throws an exception if the shape is not a box.
+ |      Translation to database units happens internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  box_dp1
+ |      @brief Returns the lower left point of the box as a \DPoint object in micrometer units
+ |      
+ |      Applies to boxes only. Returns the lower left point of the box and throws an exception if the shape is not a box.
+ |      Conversion from database units to micrometers is done internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |      
+ |      
+ |      @brief Sets the lower left corner of the box with the point being given in micrometer units
+ |      
+ |      Applies to boxes only. Changes the lower left point of the box and throws an exception if the shape is not a box.
+ |      Translation from micrometer units to database units is done internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  box_dp2
+ |      @brief Returns the upper right point of the box as a \DPoint object in micrometer units
+ |      
+ |      Applies to boxes only. Returns the upper right point of the box and throws an exception if the shape is not a box.
+ |      Conversion from database units to micrometers is done internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |      
+ |      
+ |      @brief Sets the upper right corner of the box with the point being given in micrometer units
+ |      
+ |      Applies to boxes only. Changes the upper right point of the box and throws an exception if the shape is not a box.
+ |      Translation from micrometer units to database units is done internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  box_dwidth
+ |      @brief Returns the width of the box in micrometer units
+ |      
+ |      Applies to boxes only. Returns the width of the box in micrometers and throws an exception if the shape is not a box.
+ |      
+ |      This method has been introduced in version 0.25.
+ |      
+ |      
+ |      @brief Sets the width of the box in micrometer units
+ |      @args w
+ |      
+ |      Applies to boxes only. Changes the width of the box to the value given in micrometer units and throws an exception if the shape is not a box.
+ |      Translation to database units happens internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  box_height
+ |      @brief Returns the height of the box
+ |      
+ |      Applies to boxes only. Returns the height of the box and throws an exception if the shape is not a box.
+ |      
+ |      This method has been introduced in version 0.23.
+ |      
+ |      
+ |      @brief Sets the height of the box
+ |      @args h
+ |      
+ |      Applies to boxes only. Changes the height of the box and throws an exception if the shape is not a box.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  box_p1
+ |      @brief Returns the lower left point of the box
+ |      
+ |      Applies to boxes only. Returns the lower left point of the box and throws an exception if the shape is not a box.
+ |      
+ |      This method has been introduced in version 0.23.
+ |      
+ |      
+ |      @brief Sets the lower left point of the box
+ |      
+ |      Applies to boxes only. Changes the lower left point of the box and throws an exception if the shape is not a box.
+ |      
+ |      This method has been introduced in version 0.23.
+ |      
+ |      
+ |      @brief Sets the lower left corner of the box with the point being given in micrometer units
+ |      
+ |      Applies to boxes only. Changes the lower left point of the box and throws an exception if the shape is not a box.
+ |      Translation from micrometer units to database units is done internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  box_p2
+ |      @brief Returns the upper right point of the box
+ |      
+ |      Applies to boxes only. Returns the upper right point of the box and throws an exception if the shape is not a box.
+ |      
+ |      This method has been introduced in version 0.23.
+ |      
+ |      
+ |      @brief Sets the upper right point of the box
+ |      
+ |      Applies to boxes only. Changes the upper right point of the box and throws an exception if the shape is not a box.
+ |      
+ |      This method has been introduced in version 0.23.
+ |      
+ |      
+ |      @brief Sets the upper right corner of the box with the point being given in micrometer units
+ |      
+ |      Applies to boxes only. Changes the upper right point of the box and throws an exception if the shape is not a box.
+ |      Translation from micrometer units to database units is done internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  box_width
+ |      @brief Returns the width of the box
+ |      
+ |      Applies to boxes only. Returns the width of the box and throws an exception if the shape is not a box.
+ |      
+ |      This method has been introduced in version 0.23.
+ |      
+ |      
+ |      @brief Sets the width of the box
+ |      @args w
+ |      
+ |      Applies to boxes only. Changes the width of the box and throws an exception if the shape is not a box.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  cell
+ |      @brief Gets a reference to the cell the shape belongs to
+ |      
+ |      This reference can be nil, if the Shape object is not living inside a cell
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Moves the shape to a different cell
+ |      @args cell
+ |      
+ |      Both the current and the target cell must reside in the same layout.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  dbox
+ |      @brief Gets the box object in micrometer units
+ |      See \box for a description of this method. This method returns the box after translation to micrometer units.
+ |      
+ |      This method has been added in version 0.25.
+ |      
+ |      
+ |      @brief Replaces the shape by the given box (in micrometer units)
+ |      This method replaces the shape by the given box, like \box= with a \Box argument does. This version translates the box from micrometer units to database units internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  dedge
+ |      @brief Returns the path object as a \DEdge object in micrometer units
+ |      See \edge for a description of this method. This method returns the edge after translation to micrometer units.
+ |      
+ |      This method has been added in version 0.25.
+ |      
+ |      
+ |      @brief Replaces the shape by the given edge (in micrometer units)
+ |      This method replaces the shape by the given edge, like \edge= with a \Edge argument does. This version translates the edge from micrometer units to database units internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  dpath
+ |      @brief Returns the path object as a \DPath object in micrometer units
+ |      See \path for a description of this method. This method returns the path after translation to micrometer units.
+ |      
+ |      This method has been added in version 0.25.
+ |      
+ |      
+ |      @brief Replaces the shape by the given path (in micrometer units)
+ |      This method replaces the shape by the given path, like \path= with a \Path argument does. This version translates the path from micrometer units to database units internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  dpolygon
+ |      @brief Returns the polygon object in micrometer units
+ |      
+ |      Returns the polygon object that this shape refers to or converts the object to a polygon. The method returns the same object than \polygon, but translates it to micrometer units internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |      
+ |      
+ |      @brief Replaces the shape by the given polygon (in micrometer units)
+ |      This method replaces the shape by the given polygon, like \polygon= with a \Polygon argument does. This version translates the polygon from micrometer units to database units internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  dsimple_polygon
+ |      @brief Returns the simple polygon object in micrometer units
+ |      
+ |      Returns the simplep olygon object that this shape refers to or converts the object to a simplepolygon. The method returns the same object than \simple_polygon, but translates it to micrometer units internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |      
+ |      
+ |      @brief Replaces the shape by the given simple polygon (in micrometer units)
+ |      This method replaces the shape by the given text, like \simple_polygon= with a \SimplePolygon argument does. This version translates the polygon from micrometer units to database units internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  dtext
+ |      @brief Returns the path object as a \DText object in micrometer units
+ |      See \edge for a description of this method. This method returns the text after translation to micrometer units.
+ |      
+ |      This method has been added in version 0.25.
+ |      
+ |      
+ |      @brief Replaces the shape by the given text (in micrometer units)
+ |      This method replaces the shape by the given text, like \text= with a \Text argument does. This version translates the text from micrometer units to database units internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  edge
+ |      @brief Returns the edge object
+ |      
+ |      Starting with version 0.23, this method returns nil, if the shape does not represent an edge.
+ |      
+ |      @brief Replaces the shape by the given edge
+ |      @args box
+ |      This method replaces the shape by the given edge. This method can only be called for editable layouts. It does not change the user properties of the shape.
+ |      Calling this method will invalidate any iterators. It should not be called inside a loop iterating over shapes.
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Replaces the shape by the given edge (in micrometer units)
+ |      This method replaces the shape by the given edge, like \edge= with a \Edge argument does. This version translates the edge from micrometer units to database units internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  layer
+ |      @brief Returns the layer index of the layer the shape is on
+ |      Throws an exception if the shape does not reside inside a cell.
+ |      
+ |      This method has been added in version 0.23.
+ |      
+ |      
+ |      @brief Moves the shape to a layer given by the layer index object
+ |      @args layer_index
+ |      
+ |      This method has been added in version 0.23.
+ |  
+ |  layer_info
+ |      @brief Returns the \LayerInfo object of the layer the shape is on
+ |      If the shape does not reside inside a cell, an empty layer is returned.
+ |      
+ |      This method has been added in version 0.23.
+ |      
+ |      
+ |      @brief Moves the shape to a layer given by a \LayerInfo object
+ |      @args layer_info
+ |      If no layer with the given properties exists, an exception is thrown.
+ |      
+ |      This method has been added in version 0.23.
+ |  
+ |  path
+ |      @brief Returns the path object
+ |      
+ |      Starting with version 0.23, this method returns nil, if the shape does not represent a path.
+ |      
+ |      @brief Replaces the shape by the given path object
+ |      @args box
+ |      This method replaces the shape by the given path object. This method can only be called for editable layouts. It does not change the user properties of the shape.
+ |      Calling this method will invalidate any iterators. It should not be called inside a loop iterating over shapes.
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Replaces the shape by the given path (in micrometer units)
+ |      This method replaces the shape by the given path, like \path= with a \Path argument does. This version translates the path from micrometer units to database units internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  path_bgnext
+ |      @brief Gets the path's starting vertex extension
+ |      
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      
+ |      
+ |      @brief Sets the path's starting vertex extension
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  path_dbgnext
+ |      @brief Gets the path's starting vertex extension in micrometer units
+ |      
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      
+ |      This method has been introduced in version 0.25.
+ |      
+ |      @brief Sets the path's starting vertex extension in micrometer units
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  path_dendext
+ |      @brief Gets the path's end vertex extension in micrometer units
+ |      
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      
+ |      This method has been introduced in version 0.25.
+ |      
+ |      @brief Sets the path's end vertex extension in micrometer units
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  path_dwidth
+ |      @brief Gets the path width in micrometer units
+ |      
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      
+ |      This method has been introduced in version 0.25.
+ |      
+ |      @brief Sets the path width in micrometer units
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      Conversion to database units is done internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  path_endext
+ |      @brief Obtain the path's end vertex extension
+ |      
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      
+ |      
+ |      @brief Sets the path's end vertex extension
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  path_width
+ |      @brief Gets the path width
+ |      
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      
+ |      
+ |      @brief Sets the path width
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  polygon
+ |      @brief Returns the polygon object
+ |      
+ |      Returns the polygon object that this shape refers to or converts the object to a polygon. Paths, boxes and simple polygons are converted to polygons. For paths this operation renders the path's hull contour.
+ |      
+ |      Starting with version 0.23, this method returns nil, if the shape does not represent a geometrical primitive that can be converted to a polygon.
+ |      
+ |      
+ |      @brief Replaces the shape by the given polygon object
+ |      @args box
+ |      This method replaces the shape by the given polygon object. This method can only be called for editable layouts. It does not change the user properties of the shape.
+ |      Calling this method will invalidate any iterators. It should not be called inside a loop iterating over shapes.
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Replaces the shape by the given polygon (in micrometer units)
+ |      This method replaces the shape by the given polygon, like \polygon= with a \Polygon argument does. This version translates the polygon from micrometer units to database units internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  prop_id
+ |      @brief Gets the properties ID associated with the shape
+ |      
+ |      The \Layout object can be used to retrieve the actual properties associated with the ID.
+ |      
+ |      @brief Sets the properties ID of this shape
+ |      
+ |      The \Layout object can be used to retrieve an ID for a given set of properties. Calling this method will invalidate any iterators. It should not be called inside a loop iterating over shapes.
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  round_path
+ |      @brief Returns true, if the path has round ends
+ |      
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      
+ |      
+ |      @brief The path will be a round-ended path if this property is set to true
+ |      @args r
+ |      
+ |      Applies to paths only. Will throw an exception if the object is not a path.
+ |      Please note that the extensions will apply as well. To get a path with circular ends, set the begin and end extensions to half the path's width.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  simple_polygon
+ |      @brief Returns the simple polygon object
+ |      
+ |      Returns the simple polygon object that this shape refers to or converts the object to a simple polygon. Paths, boxes and polygons are converted to simple polygons. Polygons with holes will have their holes removed but introducing cut lines that connect the hole contours with the outer contour. 
+ |      Starting with version 0.23, this method returns nil, if the shape does not represent a geometrical primitive that can be converted to a simple polygon.
+ |      
+ |      
+ |      @brief Replaces the shape by the given simple polygon object
+ |      This method replaces the shape by the given simple polygon object. This method can only be called for editable layouts. It does not change the user properties of the shape.
+ |      Calling this method will invalidate any iterators. It should not be called inside a loop iterating over shapes.
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Replaces the shape by the given simple polygon (in micrometer units)
+ |      This method replaces the shape by the given text, like \simple_polygon= with a \SimplePolygon argument does. This version translates the polygon from micrometer units to database units internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  text
+ |      @brief Returns the text object
+ |      
+ |      Starting with version 0.23, this method returns nil, if the shape does not represent a text.
+ |      
+ |      @brief Replaces the shape by the given text object
+ |      @args box
+ |      This method replaces the shape by the given text object. This method can only be called for editable layouts. It does not change the user properties of the shape.
+ |      Calling this method will invalidate any iterators. It should not be called inside a loop iterating over shapes.
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Replaces the shape by the given text (in micrometer units)
+ |      This method replaces the shape by the given text, like \text= with a \Text argument does. This version translates the text from micrometer units to database units internally.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  text_dpos
+ |      @brief Gets the text's position in micrometer units
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      This method has been added in version 0.25.
+ |      
+ |      
+ |      @brief Sets the text's position in micrometer units
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      This method has been added in version 0.25.
+ |  
+ |  text_dsize
+ |      @brief Gets the text size in micrometer units
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      This method has been introduced in version 0.25.
+ |      
+ |      @brief Sets the text size in micrometer units
+ |      @args size
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  text_dtrans
+ |      @brief Gets the text transformation in micrometer units
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      This method has been added in version 0.25.
+ |      
+ |      
+ |      @brief Sets the text transformation in micrometer units
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  text_font
+ |      @brief Gets the text's font
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      
+ |      @brief Sets the text's font
+ |      @args font
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  text_halign
+ |      @brief Gets the text's horizontal alignment
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      The return value is 0 for left alignment, 1 for center alignment and 2 to right alignment.
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      
+ |      @brief Sets the text's horizontal alignment
+ |      @args a
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      See \text_halign for a description of that property.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  text_pos
+ |      @brief Gets the text's position
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      
+ |      @brief Sets the text's position
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      
+ |      @brief Sets the text's position in micrometer units
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      This method has been added in version 0.25.
+ |  
+ |  text_rot
+ |      @brief Gets the text's orientation code (see \Trans)
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      
+ |      @brief Sets the text's orientation code (see \Trans)
+ |      @args o
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |  
+ |  text_size
+ |      @brief Gets the text size
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      
+ |      @brief Sets the text size
+ |      @args size
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  text_string
+ |      @brief Obtain the text string
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      
+ |      @brief Sets the text string
+ |      @args string
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  text_trans
+ |      @brief Gets the text transformation
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      
+ |      @brief Sets the text transformation
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      This method has been introduced in version 0.23.
+ |      
+ |      @brief Sets the text transformation in micrometer units
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  text_valign
+ |      @brief Gets the text's vertical alignment
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      The return value is 0 for top alignment, 1 for center alignment and 2 to bottom alignment.
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      
+ |      @brief Sets the text's vertical alignment
+ |      @args a
+ |      
+ |      Applies to texts only. Will throw an exception if the object is not a text.
+ |      See \text_valign for a description of that property.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes defined here:
+ |  
+ |  TBox = 14
+ |  
+ |  TBoxArray = 15
+ |  
+ |  TBoxArrayMember = 16
+ |  
+ |  TEdge = 9
+ |  
+ |  TNull = 0
+ |  
+ |  TPath = 10
+ |  
+ |  TPathPtrArray = 12
+ |  
+ |  TPathPtrArrayMember = 13
+ |  
+ |  TPathRef = 11
+ |  
+ |  TPolygon = 1
+ |  
+ |  TPolygonPtrArray = 3
+ |  
+ |  TPolygonPtrArrayMember = 4
+ |  
+ |  TPolygonRef = 2
+ |  
+ |  TShortBox = 17
+ |  
+ |  TShortBoxArray = 18
+ |  
+ |  TShortBoxArrayMember = 19
+ |  
+ |  TSimplePolygon = 5
+ |  
+ |  TSimplePolygonPtrArray = 7
+ |  
+ |  TSimplePolygonPtrArrayMember = 8
+ |  
+ |  TSimplePolygonRef = 6
+ |  
+ |  TText = 20
+ |  
+ |  TTextPtrArray = 22
+ |  
+ |  TTextPtrArrayMember = 23
+ |  
+ |  TTextRef = 21
+ |  
+ |  TUserObject = 24
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from __Base:
+ |  
+ |  __delattr__(self, name, /)
+ |      Implement delattr(self, name).
+ |  
+ |  __getattribute__(self, name, /)
+ |      Return getattr(self, name).
+ |  
+ |  __new__(*args, **kwargs) from builtins.type
+ |      Create and return a new object.  See help(type) for accurate signature.
+ |  
+ |  __setattr__(self, name, value, /)
+ |      Implement setattr(self, name, value).
+

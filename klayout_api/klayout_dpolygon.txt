@@ -1,0 +1,447 @@
+class DPolygon(__Base)
+ |  @brief A polygon class
+ |  
+ |  A polygon consists of an outer hull and zero to many
+ |  holes. Each contour consists of several points. The point
+ |  list is normalized such that the leftmost, lowest point is 
+ |  the first one. The orientation is normalized such that
+ |  the orientation of the hull contour is clockwise, while
+ |  the orientation of the holes is counterclockwise.
+ |  
+ |  It is in no way checked that the contours are not overlapping.
+ |  This must be ensured by the user of the object
+ |  when filling the contours.
+ |  
+ |  A polygon can be asked for the number of holes using the \holes method. \each_point_hull delivers the points of the hull contour. \each_point_hole delivers the points of a specific hole. \each_edge delivers the edges (point-to-point connections) of both hull and holes. \bbox delivers the bounding box, \area the area and \perimeter the perimeter of the polygon.
+ |  
+ |  Here's an example of how to create a polygon:
+ |  
+ |  @code
+ |  hull =  [ RBA::DPoint::new(0, 0),       RBA::DPoint::new(6000, 0), 
+ |            RBA::DPoint::new(6000, 3000), RBA::DPoint::new(0, 3000) ]
+ |  hole1 = [ RBA::DPoint::new(1000, 1000), RBA::DPoint::new(2000, 1000), 
+ |            RBA::DPoint::new(2000, 2000), RBA::DPoint::new(1000, 2000) ]
+ |  hole2 = [ RBA::DPoint::new(3000, 1000), RBA::DPoint::new(4000, 1000), 
+ |            RBA::DPoint::new(4000, 2000), RBA::DPoint::new(3000, 2000) ]
+ |  poly = RBA::DPolygon::new(hull)
+ |  poly.insert_hole(hole1)
+ |  poly.insert_hole(hole2)
+ |  
+ |  # ask the polygon for some properties
+ |  poly.holes      # -> 2
+ |  poly.area       # -> 16000000.0
+ |  poly.perimeter  # -> 26000.0
+ |  poly.bbox       # -> (0,0;6000,3000)
+ |  @/code
+ |  
+ |  The \DPolygon class stores coordinates in floating-point format which gives a higher precision for some operations. A class that stores integer coordinates is \Polygon.
+ |  
+ |  See @<a href="/programming/database_api.xml">The Database API@</a> for more details about the database objects.
+ |  
+ |  Method resolution order:
+ |      DPolygon
+ |      __Base
+ |      builtins.object
+ |  
+ |  Methods defined here:
+ |  
+ |  __eq__(...)
+ |      @brief Equality test
+ |      @args p
+ |      @param p The object to compare against
+ |  
+ |  __ge__(...)
+ |      Return self>=value.
+ |  
+ |  __gt__(...)
+ |      Return self>value.
+ |  
+ |  __init__(...)
+ |      @brief Constructor converting a box to a polygon
+ |      
+ |      @args box
+ |      
+ |      @param box The box to convert to a polygon
+ |  
+ |  __le__(...)
+ |      Return self<=value.
+ |  
+ |  __lt__(...)
+ |      @brief Less operator
+ |      @args p
+ |      @param p The object to compare against
+ |      This operator is provided to establish some, not necessarily a certain sorting order
+ |  
+ |  __mul__(...)
+ |      @brief Scaling by some factor
+ |      
+ |      @args f
+ |      
+ |      Returns the scaled object. All coordinates are multiplied with the given factor and if necessary rounded.
+ |  
+ |  __ne__(...)
+ |      @brief Inequality test
+ |      @args p
+ |      @param p The object to compare against
+ |  
+ |  __repr__(...)
+ |      @brief Convert to a string
+ |  
+ |  __str__(...)
+ |      @brief Convert to a string
+ |  
+ |  area(...)
+ |      @brief The area of the polygon
+ |      The area is correct only if the polygon is not self-overlapping and the polygon is oriented clockwise.Orientation is ensured automatically in most cases.
+ |  
+ |  assign(...)
+ |      @brief Assigns another object to self
+ |      @args other
+ |  
+ |  assign_hole(...)
+ |      @brief Set the box as the given hole of the polygon
+ |      @args n,b
+ |      @param n The index of the hole to which the points should be assigned
+ |      @param b The box to assign to the polygon's hole
+ |      If the hole index is not valid, this method does nothing.
+ |      This method was introduced in version 0.23.
+ |  
+ |  assign_hull(...)
+ |      @brief Set the points of the hull of polygon
+ |      @args p
+ |      @param p An array of points to assign to the polygon's hull
+ |      @param raw If true, the points won't be compressed
+ |      
+ |      If the 'raw' argument is set to true, the points are taken as they are. Specifically no removal of redundant points or joining of coincident edges will take place. In effect, polygons consisting of a single point or two points can be constructed as well as polygons with duplicate points. Note that such polygons may cause problems in some applications.
+ |      
+ |      Regardless of raw mode, the point list will be adjusted such that the first point is the lowest-leftmost one and the orientation is clockwise always.
+ |      
+ |      The 'assign_hull' variant is provided in analogy to 'assign_hole'.
+ |      
+ |      The 'raw' argument was added in version 0.24.
+ |  
+ |  bbox(...)
+ |      @brief Return the bounding box of the polygon
+ |      The bounding box is the box enclosing all points of the polygon.
+ |  
+ |  compress(...)
+ |      @brief Compress the polygon.
+ |      @args remove_reflected
+ |      
+ |      This method removes redundant points from the polygon, such as points being on a line formed by two other points.
+ |      If remove_reflected is true, points are also removed if the two adjacent edges form a spike.
+ |      
+ |      @param remove_reflected See description of the functionality.
+ |      
+ |      This method was introduced in version 0.18.
+ |  
+ |  create(...)
+ |      @brief Ensures the C++ object is created
+ |      Use this method to ensure the C++ object is created, for example to ensure that resources are allocated. Usually C++ objects are created on demand and not necessarily when the script object is created.
+ |  
+ |  destroy(...)
+ |      @brief Explicitly destroys the object
+ |      Explicitly destroys the object on C++ side if it was owned by the script interpreter. Subsequent access to this object will throw an exception.
+ |      If the object is not owned by the script, this method will do nothing.
+ |  
+ |  destroyed(...)
+ |      @brief Returns a value indicating whether the object was already destroyed
+ |      This method returns true, if the object was destroyed, either explicitly or by the C++ side.
+ |      The latter may happen, if the object is owned by a C++ object which got destroyed itself.
+ |  
+ |  dup(...)
+ |      @brief Creates a copy of self
+ |  
+ |  each_edge(...)
+ |      @brief Iterate over the edges of one contour of the polygon
+ |      
+ |      @args contour
+ |      @param contour The contour number (0 for hull, 1 for first hole ...)
+ |      
+ |      This iterator will deliver all edges of the contour specified by the contour parameter. The hull has contour number 0, the first hole has contour 1 etc.
+ |      Hole edges are oriented counterclockwise while hull egdes are oriented clockwise.
+ |      
+ |      This method was introduced in version 0.24.
+ |  
+ |  each_point_hole(...)
+ |      @brief Iterate over the points that make up the nth hole
+ |      @args n
+ |      The hole number must be less than the number of holes (see \holes)
+ |  
+ |  each_point_hull(...)
+ |      @brief Iterate over the points that make up the hull
+ |  
+ |  ellipse(...) from builtins.type
+ |      @brief Creates a simple polygon appoximating an ellipse
+ |      
+ |      @args box, n
+ |      
+ |      @param box The bounding box of the ellipse
+ |      @param n The number of points that will be used to approximate the ellipse
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  extract_rad(...)
+ |      @brief Extracts the corner radii from a rounded polygon
+ |      
+ |      Attempts to extract the radii of rounded corner polygon. This is essentially the inverse of the \round_corners method. If this method succeeds, if will return an array of four elements: @ul
+ |      @li The polygon with the rounded corners replaced by edgy ones @/li
+ |      @li The radius of the inner corners @/li
+ |      @li The radius of the outer corners @/li
+ |      @li The number of points per full circle @/li
+ |      @/ul
+ |      
+ |      This method is based on some assumptions and may fail. In this case, an empty array is returned.
+ |      
+ |      If successful, the following code will more or less render the original polygon and parameters
+ |      
+ |      @code
+ |      p = ...   # some polygon
+ |      p.round_corners(ri, ro, n)
+ |      (p2, ri2, ro2, n2) = p.extract_rad
+ |      # -> p2 == p, ro2 == ro, ri2 == ri, n2 == n (within some limits)
+ |      @/code
+ |      
+ |      This method was introduced in version 0.25.
+ |  
+ |  from_ipoly(...) from builtins.type
+ |      @brief Creates a floating-point coordinate polygon from an integer coordinate polygon
+ |      
+ |      This constructor has been introduced in version 0.25 and replaces the previous static method 'from_ipolygon'.
+ |  
+ |  from_s(...) from builtins.type
+ |      @brief Creates an object from a string
+ |      @args s
+ |      Creates the object from a string representation (as returned by \to_s)
+ |      
+ |      This method has been added in version 0.23.
+ |  
+ |  hash(...)
+ |      @brief Computes a hash value
+ |      Returns a hash value for the given polygon. This method enables polygons as hash keys.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  holes(...)
+ |      @brief Returns the number of holes
+ |  
+ |  insert_hole(...)
+ |      @brief Insert a hole from the given box
+ |      @args b
+ |      @param b The box to insert as a new hole
+ |      This method was introduced in version 0.23.
+ |  
+ |  inside(...)
+ |      @brief Test, if the given point is inside the polygon
+ |      @args p
+ |      If the given point is inside or on the edge of the polygon, true is returned. This tests works well only if the polygon is not self-overlapping and oriented clockwise.
+ |  
+ |  is_box(...)
+ |      @brief Returns true, if the polygon is a simple box.
+ |      
+ |      A polygon is a box if it is identical to it's bounding box.
+ |      
+ |      @return True if the polygon is a box.
+ |      
+ |      This method was introduced in version 0.23.
+ |  
+ |  is_const_object(...)
+ |      @brief Returns a value indicating whether the reference is a const reference
+ |      This method returns true, if self is a const reference.
+ |      In that case, only const methods may be called on self.
+ |  
+ |  move(...)
+ |      @brief Moves the polygon.
+ |      @args x,y
+ |      
+ |      Moves the polygon by the given offset and returns the 
+ |      moved polygon. The polygon is overwritten.
+ |      
+ |      @param x The x distance to move the polygon.
+ |      @param y The y distance to move the polygon.
+ |      
+ |      @return The moved polygon (self).
+ |  
+ |  moved(...)
+ |      @brief Returns the moved polygon (does not modify self)
+ |      @args x,y
+ |      
+ |      Moves the polygon by the given offset and returns the 
+ |      moved polygon. The polygon is not modified.
+ |      
+ |      @param x The x distance to move the polygon.
+ |      @param y The y distance to move the polygon.
+ |      
+ |      @return The moved polygon.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  new(...) from builtins.type
+ |      @brief Constructor converting a box to a polygon
+ |      
+ |      @args box
+ |      
+ |      @param box The box to convert to a polygon
+ |  
+ |  num_points(...)
+ |      @brief Get the total number of points (hull plus holes)
+ |      This method was introduced in version 0.18.
+ |  
+ |  num_points_hole(...)
+ |      @brief Get the number of points of the given hole
+ |      @args n
+ |      The argument gives the index of the hole of which the number of points are requested. The index must be less than the number of holes (see \holes).
+ |  
+ |  num_points_hull(...)
+ |      @brief Get the number of points of the hull
+ |  
+ |  perimeter(...)
+ |      @brief The perimeter of the polygon
+ |      The perimeter is sum of the lengths of all edges making up the polygon.
+ |      
+ |      This method has been introduce in version 0.23.
+ |  
+ |  point_hole(...)
+ |      @brief Get a specific point of a hole
+ |      @args n,p
+ |      @param n The index of the hole to which the points should be assigned
+ |      @param p The index of the point to get
+ |      If the index of the point or of the hole is not valid, a default value is returned.
+ |      This method was introduced in version 0.18.
+ |  
+ |  point_hull(...)
+ |      @brief Get a specific point of the hull
+ |      @args p
+ |      @param p The index of the point to get
+ |      If the index of the point is not a valid index, a default value is returned.
+ |      This method was introduced in version 0.18.
+ |  
+ |  round_corners(...)
+ |      @brief Rounds the corners of the polygon
+ |      @args rinner, router, n
+ |      
+ |      Replaces the corners of the polygon with circle segments.
+ |      
+ |      @param rinner The circle radius of inner corners (in database units).
+ |      @param router The circle radius of outer corners (in database units).
+ |      @param n The number of points per full circle.
+ |      
+ |      @return The new polygon.
+ |      
+ |      This method was introduced in version 0.20 for integer coordinates and in 0.25 for all coordinate types.
+ |  
+ |  size(...)
+ |      @brief Sizing (biasing)
+ |      @args d
+ |      
+ |      Shifts the contour outwards (d>0) or inwards (d<0).
+ |      This method is equivalent to
+ |      @code
+ |      size(d, d, 2)
+ |      @/code
+ |      
+ |      See \size for a detailed description.
+ |  
+ |  sized(...)
+ |      @brief Sizing (biasing)
+ |      @args d
+ |      
+ |      @brief Sizing (biasing) without modifying self
+ |      This method is equivalent to
+ |      @code
+ |      sized(d, d, 2)
+ |      @/code
+ |      
+ |      See \size and \sized for a detailed description.
+ |  
+ |  split(...)
+ |      @brief Splits the polygon into two or more parts
+ |      This method will break the polygon into parts. The exact breaking algorithm is unspecified, the result are smaller polygons of roughly equal number of points and 'less concave' nature. Usually the returned polygon set consists of two polygons, but there can be more. The merged region of the resulting polygons equals the original polygon with the exception of small snapping effects at new vertexes.
+ |      
+ |      The intended use for this method is a iteratively split polygons until the satisfy some maximum number of points limit.
+ |      
+ |      This method has been introduced in version 0.25.3.
+ |  
+ |  to_itype(...)
+ |      @brief Converts the polygon to an integer coordinate polygon
+ |      
+ |      The database unit can be specified to translate the floating-point coordinate polygon in micron units to an integer-coordinate polygon in database units. The polygons coordinates will be divided by the database unit.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  to_s(...)
+ |      @brief Convert to a string
+ |  
+ |  touches(...)
+ |      @brief Returns true, if the polygon touches the other polygon.
+ |      The polygons touch if they overlap or their contours share at least one point.
+ |      
+ |      This method was introduced in version 0.25.1.
+ |  
+ |  transform(...)
+ |      @brief Transforms the polygon (in-place)
+ |      @args t
+ |      
+ |      Transforms the polygon with the given transformation.
+ |      Modifies self and returns self. An out-of-place version which does not modify self is \transformed.
+ |      
+ |      @param t The transformation to apply.
+ |      
+ |      This method has been introduced in version 0.24.
+ |  
+ |  transformed(...)
+ |      @brief Transforms the polygon with a complex transformation
+ |      @args t
+ |      
+ |      Transforms the polygon with the given complex transformation.
+ |      Does not modify the polygon but returns the transformed polygon.
+ |      
+ |      @param t The transformation to apply.
+ |      
+ |      @return The transformed polygon.
+ |      
+ |      With version 0.25, the original 'transformed_cplx' method is deprecated and 'transformed' takes both simple and complex transformations.
+ |  
+ |  transformed_cplx(...)
+ |      @brief Transforms the polygon with a complex transformation
+ |      @args t
+ |      
+ |      Transforms the polygon with the given complex transformation.
+ |      Does not modify the polygon but returns the transformed polygon.
+ |      
+ |      @param t The transformation to apply.
+ |      
+ |      @return The transformed polygon.
+ |      
+ |      With version 0.25, the original 'transformed_cplx' method is deprecated and 'transformed' takes both simple and complex transformations.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |  
+ |  hull
+ |      @brief Set the points of the hull of polygon
+ |      @args p
+ |      @param p An array of points to assign to the polygon's hull
+ |      The 'assign_hull' variant is provided in analogy to 'assign_hole'.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from __Base:
+ |  
+ |  __delattr__(self, name, /)
+ |      Implement delattr(self, name).
+ |  
+ |  __getattribute__(self, name, /)
+ |      Return getattr(self, name).
+ |  
+ |  __new__(*args, **kwargs) from builtins.type
+ |      Create and return a new object.  See help(type) for accurate signature.
+ |  
+ |  __setattr__(self, name, value, /)
+ |      Implement setattr(self, name, value).
+

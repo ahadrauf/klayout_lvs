@@ -1,0 +1,738 @@
+class LayerPropertiesNodeRef(LayerPropertiesNode)
+ |  @brief A class representing a reference to a layer properties node
+ |  
+ |  This object is returned by the layer properties iterator's current method (\LayerPropertiesIterator#current). A reference behaves like a layer properties node, but changes in the node are reflected in the view it is attached to.
+ |  
+ |  A typical use case for references is this:
+ |  
+ |  @code
+ |  # Hides a layers of a view
+ |  view = RBA::LayoutView::current
+ |  view.each_layer do |lref|
+ |    # lref is a LayerPropertiesNodeRef object
+ |    lref.visible = false
+ |  end
+ |  @/code
+ |  
+ |  This class has been introduced in version 0.25.
+ |  
+ |  Method resolution order:
+ |      LayerPropertiesNodeRef
+ |      LayerPropertiesNode
+ |      LayerProperties
+ |      __Base
+ |      builtins.object
+ |  
+ |  Methods defined here:
+ |  
+ |  __init__(...)
+ |      @brief Creates a new object of this class
+ |  
+ |  assign(...)
+ |      @brief Assigns the contents of the 'other' object to self.
+ |      
+ |      This version accepts a \LayerProperties object. Assignment will change the properties of the layer in the view.
+ |  
+ |  create(...)
+ |      @brief Ensures the C++ object is created
+ |      Use this method to ensure the C++ object is created, for example to ensure that resources are allocated. Usually C++ objects are created on demand and not necessarily when the script object is created.
+ |  
+ |  delete(...)
+ |      @brief Erases the current node and all child nodes
+ |      
+ |      After erasing the node, the reference will become invalid.
+ |  
+ |  destroy(...)
+ |      @brief Explicitly destroys the object
+ |      Explicitly destroys the object on C++ side if it was owned by the script interpreter. Subsequent access to this object will throw an exception.
+ |      If the object is not owned by the script, this method will do nothing.
+ |  
+ |  destroyed(...)
+ |      @brief Returns a value indicating whether the object was already destroyed
+ |      This method returns true, if the object was destroyed, either explicitly or by the C++ side.
+ |      The latter may happen, if the object is owned by a C++ object which got destroyed itself.
+ |  
+ |  dup(...)
+ |      @brief Creates a \LayerPropertiesNode object as a copy of the content of this node.
+ |      This method is mainly provided for backward compatibility with 0.24 and before.
+ |  
+ |  is_const_object(...)
+ |      @brief Returns a value indicating whether the reference is a const reference
+ |      This method returns true, if self is a const reference.
+ |      In that case, only const methods may be called on self.
+ |  
+ |  is_valid(...)
+ |      @brief Returns true, if the reference points to a valid layer properties node
+ |      
+ |      Invalid references behave like ordinary \LayerPropertiesNode objects but without the ability to update the view upon changes of attributes.
+ |  
+ |  new(...) from builtins.type
+ |      @brief Creates a new object of this class
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from LayerPropertiesNode:
+ |  
+ |  __eq__(...)
+ |      @brief Equality 
+ |      @args other
+ |      
+ |      @param other The other object to compare against
+ |  
+ |  __ne__(...)
+ |      @brief Inequality 
+ |      @args other
+ |      
+ |      @param other The other object to compare against
+ |  
+ |  add_child(...)
+ |      @brief Add a child entry
+ |      @args child
+ |      @return A reference to the node created
+ |      This method allows to build a layer properties tree by adding children to node objects. It returns a reference to the node object created.
+ |      
+ |      This method was introduced in version 0.22.
+ |  
+ |  bbox(...)
+ |      @brief Compute the bbox of this layer
+ |      
+ |      This takes the layout and path definition (supported by the
+ |      given default layout or path, if no specific is given).
+ |      The node must have been attached to a view to make this
+ |      operation possible.
+ |      
+ |      @return A bbox in micron units
+ |  
+ |  clear_children(...)
+ |      @brief Clears all children
+ |      This method was introduced in version 0.22.
+ |  
+ |  flat(...)
+ |      @brief return the "flattened" (effective) layer properties node for this node
+ |      
+ |      This method returns a \LayerPropertiesNode object that is not embedded into a hierarchy.
+ |      This object represents the effective layer properties for the given node. In particular, all 'local' properties are identical to the 'real' properties. Such an object can be used as a basis for manipulations.
+ |      
+ |      Unlike the name suggests, this node will still contain a hierarchy of nodes below if the original node did so.
+ |  
+ |  has_children(...)
+ |      @brief Test, if there are children
+ |  
+ |  id(...)
+ |      @brief Obtain the unique ID
+ |      
+ |      Each layer properties node object has a unique ID that is created 
+ |      when a new LayerPropertiesNode object is instantiated. The ID is
+ |      copied when the object is copied. The ID can be used to identify the
+ |      object irregardless of it's content.
+ |  
+ |  list_index(...)
+ |      @brief Gets the index of the layer properties list that the node lives in
+ |  
+ |  view(...)
+ |      @brief Gets the view this node lives in
+ |      
+ |      This reference can be nil if the node is a orphan node that lives outside a view.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from LayerProperties:
+ |  
+ |  animation_(...)
+ |      @brief Gets the animation state
+ |      @args real
+ |      
+ |      The animation state is an integer either being 0 (static), 1 (scrolling), 2 (blinking) or 3 (inversely blinking)
+ |  
+ |  cellview(...)
+ |      @brief Gets the the cellview index
+ |      
+ |      This is the index of the actual cellview to use. Basically, this method returns \source_cellview in "real" mode. The result may be different, if the cellview is not valid for example. In this case, a negative value is returned.
+ |  
+ |  clear_dither_pattern(...)
+ |      @brief Clears the dither pattern
+ |  
+ |  clear_fill_color(...)
+ |      @brief Resets the fill color
+ |  
+ |  clear_frame_color(...)
+ |      @brief Resets the frame color
+ |  
+ |  clear_line_style(...)
+ |      @brief Clears the line style
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  clear_lower_hier_level(...)
+ |      @brief Clears the lower hierarchy level specification
+ |      
+ |      See \has_lower_hier_level for a description of this property
+ |  
+ |  clear_source_name(...)
+ |      @brief Removes any stream layer name specification from this layer
+ |  
+ |  clear_upper_hier_level(...)
+ |      @brief Clears the upper hierarchy level specification
+ |      
+ |      See \has_upper_hier_level for a description of this property
+ |  
+ |  dither_pattern_(...)
+ |      @brief Gets the dither pattern index
+ |      @args real
+ |      
+ |      This method may deliver an invalid dither pattern index if it is not set.
+ |      
+ |      @param real Set to true to return the real instead of local value
+ |  
+ |  eff_dither_pattern(...)
+ |      @brief Gets the effective dither pattern index
+ |      
+ |      This method is a convenience method for "eff_dither_pattern(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  eff_fill_color(...)
+ |      @brief Gets the effective fill color
+ |      
+ |      This method is a convenience method for "eff_fill_color(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  eff_frame_color(...)
+ |      @brief Gets the effective frame color
+ |      
+ |      This method is a convenience method for "eff_frame_color(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  eff_line_style(...)
+ |      @brief Gets the line style index
+ |      
+ |      This method is a convenience method for "eff_line_style(true)"
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  fill_brightness_(...)
+ |      @brief Gets the fill brightness value
+ |      @args real
+ |      
+ |      If the brightness is not set, this method may return an invalid value
+ |      
+ |      @param real Set to true to return the real instead of local value
+ |  
+ |  fill_color_(...)
+ |      @brief Gets the fill color
+ |      @args real
+ |      
+ |      This method may return an invalid color if the color is not set.
+ |      
+ |      @param real Set to true to return the real instead of local value
+ |  
+ |  frame_brightness_(...)
+ |      @brief Gets the frame brightness value
+ |      @args real
+ |      
+ |      If the brightness is not set, this method may return an invalid value
+ |      
+ |      @param real Set to true to return the real instead of local value
+ |  
+ |  frame_color_(...)
+ |      @brief Gets the frame color
+ |      @args real
+ |      
+ |      This method may return an invalid color if the color is not set.
+ |      
+ |      @param real Set to true to return the real instead of local value
+ |  
+ |  has_dither_pattern(...)
+ |      @brief True, if the dither pattern is set
+ |      
+ |      This method is a convenience method for "has_dither_pattern?(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  has_fill_color(...)
+ |      @brief True, if the fill color is set
+ |      
+ |      This method is a convenience method for "has_fill_color?(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  has_frame_color(...)
+ |      @brief True, if the frame color is set
+ |      
+ |      This method is a convenience method for "has_frame_color?(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  has_line_style(...)
+ |      @brief True, if the line style is set
+ |      
+ |      This method is a convenience method for "has_line_style?(true)"
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  has_lower_hier_level(...)
+ |      @brief Gets a value indicating whether a lower hierarchy level is explicitly specified
+ |      
+ |      This method is a convenience method for "has_lower_hier_level?(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  has_source_name(...)
+ |      @brief Gets a value indicating whether a stream layer name is specified for this layer
+ |      
+ |      This method is a convenience method for "has_source_name?(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  has_upper_hier_level(...)
+ |      @brief Gets a value indicating whether an upper hierarchy level is explicitly specified
+ |      
+ |      This method is a convenience method for "has_upper_hier_level?(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  layer_index(...)
+ |      @brief Gets the the layer index
+ |      
+ |      This is the index of the actual layer used. The source specification given by \source_layer, \source_datatype, \source_name is evaluated and the corresponding layer is looked up in the layout object. If a \source_layer_index is specified, this layer index is taken as the layer index to use.
+ |  
+ |  line_style_(...)
+ |      @brief Gets the line style index
+ |      
+ |      This method may deliver an invalid line style index if it is not set (see \has_line_style?).
+ |      
+ |      @param real Set to true to return the real instead of local value
+ |      This method has been introduced in version 0.25.
+ |  
+ |  lower_hier_level_(...)
+ |      @brief Gets the lower hierarchy level shown
+ |      @args real
+ |      
+ |      This is the hierarchy level at which the drawing starts. This property is only meaningful, if \has_lower_hier_level is true. The hierarchy level can be relative in which case, 0 refers to the context cell's level. A mode can be specfied for the hierarchy level which is 0 for absolute, 1 for minimum of specified level and set level and 2 for maximum of specified level and set level.
+ |  
+ |  lower_hier_level_mode(...)
+ |      @brief Gets the mode for the lower hierarchy level.
+ |      
+ |      This method is a convenience method for "lower_hier_level_mode(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  lower_hier_level_relative(...)
+ |      @brief Gets a value indicating whether the upper hierarchy level is relative.
+ |      
+ |      This method is a convenience method for "lower_hier_level_relative(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  marked_(...)
+ |      @brief Gets the marked state
+ |      @args real
+ |  
+ |  set_lower_hier_level(...)
+ |      @brief Sets the lower hierarchy level, whether it is relative to the context cell and the mode
+ |      @args level,relative,mode
+ |      
+ |      If this method is called, the lower hierarchy level is enabled. See \lower_hier_level for a description of this property.
+ |      
+ |      This method has been introduced in version 0.20.
+ |  
+ |  set_upper_hier_level(...)
+ |      @brief Sets the upper hierarchy level, if it is relative to the context cell and the mode
+ |      @args level,relative,mode
+ |      
+ |      If this method is called, the upper hierarchy level is enabled. See \upper_hier_level for a description of this property.
+ |      
+ |      This method has been introduced in version 0.20.
+ |  
+ |  source_(...)
+ |      @brief Gets the source specification 
+ |      @args real
+ |      
+ |      This method delivers the source specification as a string
+ |      
+ |      @param real Set to true to return the computed instead of local value
+ |  
+ |  source_cellview_(...)
+ |      @brief Gets the cellview index that this layer refers to
+ |      @args real
+ |      
+ |      If "real" is true, the effective value is returned.
+ |  
+ |  source_datatype_(...)
+ |      @brief Gets the stream datatype that the shapes are taken from
+ |      @args real
+ |      
+ |      If the datatype is positive, the actual layer is looked up by this stream datatype. If a name or layer index is specified, the stream datatype is not used.
+ |      
+ |      If "real" is true, the effective value is returned.
+ |  
+ |  source_layer_(...)
+ |      @brief Gets the stream layer that the shapes are taken from
+ |      @args real
+ |      
+ |      If the layer is positive, the actual layer is looked up by this stream layer. If a name or layer index is specified, the stream layer is not used.
+ |      
+ |      If "real" is true, the effective value is returned.
+ |  
+ |  source_layer_index_(...)
+ |      @brief Gets the layer index that the shapes are taken from
+ |      @args real
+ |      
+ |      If the layer index is positive, the shapes drawn are taken from this layer rather than searched for by layer and datatype. This property is stronger than the layer/datatype or name specification.
+ |      
+ |      The similar method \layer_index returns the actual layer index used, not the given one. The latter may be negative indicating that layer/datatype or name specifications are used.
+ |      
+ |      If "real" is true, the effective value is returned.
+ |  
+ |  source_name_(...)
+ |      @brief Gets the stream name that the shapes are taken from
+ |      @args real
+ |      
+ |      If the name is non-empty, the actual layer is looked up by this stream layer name. If a layer index (see \layer_index) is specified, the stream datatype is not used.
+ |      A name is only meaningful for OASIS files.
+ |      
+ |      If "real" is true, the effective value is returned.
+ |  
+ |  trans_(...)
+ |      @brief Gets the transformations that the layer is transformed with
+ |      @args real
+ |      
+ |      The transformations returned by this accessor is the one used for displaying this layer. The layout is transformed with each of these transformations before it is drawn.
+ |      
+ |      If "real" is true, the effective value is returned.
+ |  
+ |  transparent_(...)
+ |      @brief Gets the transparency state
+ |      @args real
+ |  
+ |  upper_hier_level_(...)
+ |      @brief Gets the upper hierarchy level shown
+ |      @args real
+ |      
+ |      This is the hierarchy level at which the drawing starts. This property is only meaningful, if \has_upper_hier_level is true. The hierarchy level can be relative in which case, 0 refers to the context cell's level. A mode can be specfied for the hierarchy level which is 0 for absolute, 1 for minimum of specified level and set level and 2 for maximum of specified level and set level.
+ |  
+ |  upper_hier_level_mode(...)
+ |      @brief Gets the mode for the upper hierarchy level.
+ |      
+ |      This method is a convenience method for "upper_hier_level_mode(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  upper_hier_level_relative(...)
+ |      @brief Gets a value indicating whether the upper hierarchy level is relative.
+ |      
+ |      This method is a convenience method for "upper_hier_level_relative(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  valid_(...)
+ |      @brief Gets the validity state
+ |      @args real
+ |  
+ |  visible_(...)
+ |      @brief Gets the visibility state
+ |      @args real
+ |  
+ |  width_(...)
+ |      @brief Gets the line width
+ |      @args real
+ |  
+ |  xfill_(...)
+ |      @brief Gets a value indicating whether shapes are drawn with a cross
+ |      @args real
+ |      
+ |      This attribute has been introduced in version 0.25.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors inherited from LayerProperties:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |  
+ |  animation
+ |      @brief Gets the animation state
+ |      
+ |      This method is a convenience method for "animation(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the animation state
+ |      @args animation
+ |      
+ |      See the description of the \animation method for details about the animation state
+ |  
+ |  dither_pattern
+ |      @brief Gets the dither pattern index
+ |      
+ |      This method is a convenience method for "dither_pattern(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the dither pattern index
+ |      @args index
+ |      The dither pattern index must be one of the valid indices.
+ |      The first indices are reserved for built-in pattern, the following ones are custom pattern.
+ |      Index 0 is always solid filled and 1 is always the hollow filled pattern.
+ |      For custom pattern see \LayoutView#add_stipple.
+ |  
+ |  fill_brightness
+ |      @brief Gets the fill brightness value
+ |      
+ |      This method is a convenience method for "fill_brightness(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the fill brightness
+ |      @args brightness
+ |      
+ |      For neutral brightness set this value to 0. For darker colors set it to a negative value (down to -255), for brighter colors to a positive value (up to 255)
+ |  
+ |  fill_color
+ |      @brief Gets the fill color
+ |      
+ |      This method is a convenience method for "fill_color(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the fill color to the given value
+ |      @args color
+ |      
+ |      The color is a 32bit value encoding the blue value in the lower 8 bits, the green value in the next 8 bits and the red value in the 8 bits above that.
+ |  
+ |  frame_brightness
+ |      @brief Gets the frame brightness value
+ |      
+ |      This method is a convenience method for "frame_brightness(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the frame brightness
+ |      @args brightness
+ |      
+ |      For neutral brightness set this value to 0. For darker colors set it to a negative value (down to -255), for brighter colors to a positive value (up to 255)
+ |  
+ |  frame_color
+ |      @brief Gets the frame color
+ |      
+ |      This method is a convenience method for "frame_color(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the frame color to the given value
+ |      @args color
+ |      
+ |      The color is a 32bit value encoding the blue value in the lower 8 bits, the green value in the next 8 bits and the red value in the 8 bits above that.
+ |  
+ |  line_style
+ |      @brief Gets the line style index
+ |      
+ |      This method is a convenience method for "line_style(true)"
+ |      
+ |      This method has been introduced in version 0.25.
+ |      
+ |      @brief Sets the line style index
+ |      
+ |      The line style index must be one of the valid indices.
+ |      The first indices are reserved for built-in pattern, the following ones are custom pattern.
+ |      Index 0 is always solid filled.
+ |      For custom line styles see \LayoutView#add_line_style.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  lower_hier_level
+ |      @brief Gets the lower hierarchy level shown
+ |      
+ |      This method is a convenience method for "lower_hier_level(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the lower hierarchy level
+ |      @args level
+ |      
+ |      If this method is called, the lower hierarchy level is enabled. See \lower_hier_level for a description of this property.
+ |  
+ |  marked
+ |      @brief Gets the marked state
+ |      
+ |      This method is a convenience method for "marked?(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the marked state
+ |      @args marked
+ |  
+ |  name
+ |      @brief Gets the name
+ |      
+ |      
+ |      @brief Sets the name to the given string
+ |      @args name
+ |  
+ |  source
+ |      @brief Gets the source specification 
+ |      
+ |      This method is a convenience method for "source(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Loads the source specification from a string
+ |      @args s
+ |      
+ |      Sets the source specification to the given string. The source specification may contain the cellview index, the source layer (given by layer/datatype or layer name), transformation, property selector etc.
+ |      This method throws an exception if the specification is not valid.
+ |  
+ |  source_cellview
+ |      @brief Gets the cellview index that this layer refers to
+ |      
+ |      This method is a convenience method for "source_cellview(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the cellview index that this layer refers to
+ |      @args cellview_index
+ |      
+ |      See \cellview for a description of the transformations.
+ |  
+ |  source_datatype
+ |      @brief Gets the stream datatype that the shapes are taken from
+ |      
+ |      This method is a convenience method for "source_datatype(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the stream datatype that the shapes are taken from
+ |      @args datatype
+ |      
+ |      See \datatype for a description of this property
+ |  
+ |  source_layer
+ |      @brief Gets the stream layer that the shapes are taken from
+ |      
+ |      This method is a convenience method for "source_layer(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the stream layer that the shapes are taken from
+ |      @args layer
+ |      
+ |      See \source_layer for a description of this property
+ |  
+ |  source_layer_index
+ |      @brief Gets the stream layer that the shapes are taken from
+ |      
+ |      This method is a convenience method for "source_layer_index(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the layer index specification that the shapes are taken from
+ |      @args index
+ |      
+ |      See \source_layer_index for a description of this property.
+ |  
+ |  source_name
+ |      @brief Gets the stream name that the shapes are taken from
+ |      
+ |      This method is a convenience method for "source_name(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the stream layer name that the shapes are taken from
+ |      @args name
+ |      
+ |      See \name for a description of this property
+ |  
+ |  trans
+ |      @brief Gets the transformations that the layer is transformed with
+ |      
+ |      This method is a convenience method for "trans(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the transformations that the layer is transformed with
+ |      @args trans_vector
+ |      
+ |      See \trans for a description of the transformations.
+ |  
+ |  transparent
+ |      @brief Gets the transparency state
+ |      
+ |      This method is a convenience method for "transparent?(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the transparency state
+ |      @args transparent
+ |  
+ |  upper_hier_level
+ |      @brief Gets the upper hierarchy level shown
+ |      
+ |      This method is a convenience method for "upper_hier_level(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets a upper hierarchy level
+ |      @args level
+ |      
+ |      If this method is called, the upper hierarchy level is enabled. See \upper_hier_level for a description of this property.
+ |  
+ |  valid
+ |      @brief Gets the validity state
+ |      
+ |      This method is a convenience method for "valid?(true)"
+ |      
+ |      This method has been introduced in version 0.23.
+ |      
+ |      @brief Sets the validity state
+ |      @args valid
+ |  
+ |  visible
+ |      @brief Gets the visibility state
+ |      
+ |      This method is a convenience method for "visible?(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the visibility state
+ |      @args visible
+ |  
+ |  width
+ |      @brief Gets the line width
+ |      
+ |      This method is a convenience method for "width(true)"
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @brief Sets the line width to the given width
+ |      @args width
+ |  
+ |  xfill
+ |      @brief Gets a value indicating whether shapes are drawn with a cross
+ |      
+ |      This method is a convenience method for "xfill?(true)"
+ |      
+ |      This attribute has been introduced in version 0.25.
+ |      
+ |      
+ |      @brief Sets a value indicating whether shapes are drawn with a cross
+ |      @args xfill
+ |      
+ |      This attribute has been introduced in version 0.25.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from __Base:
+ |  
+ |  __delattr__(self, name, /)
+ |      Implement delattr(self, name).
+ |  
+ |  __getattribute__(self, name, /)
+ |      Return getattr(self, name).
+ |  
+ |  __new__(*args, **kwargs) from builtins.type
+ |      Create and return a new object.  See help(type) for accurate signature.
+ |  
+ |  __setattr__(self, name, value, /)
+ |      Implement setattr(self, name, value).
+

@@ -1,0 +1,370 @@
+class DBox(__Base)
+ |  @brief A box class with floating-point coordinates
+ |  
+ |  This object represents a box (a rectangular shape).
+ |  
+ |  The definition of the attributes is: p1 is the lower left point, p2 the 
+ |  upper right one. If a box is constructed from two points (or four coordinates), the 
+ |  coordinates are sorted accordingly.
+ |  
+ |  A box can be empty. An empty box represents no area
+ |  (not even a point). Empty boxes behave neutral with respect to most operations. 
+ |  Empty boxes return true on \empty?.
+ |  
+ |  A box can be a point or a single
+ |  line. In this case, the area is zero but the box still
+ |  can overlap other boxes for example and it is not empty.
+ |  
+ |  See @<a href="/programming/database_api.xml">The Database API@</a> for more details about the database objects.
+ |  
+ |  Method resolution order:
+ |      DBox
+ |      __Base
+ |      builtins.object
+ |  
+ |  Methods defined here:
+ |  
+ |  __add__(...)
+ |      @brief Joins two boxes
+ |      
+ |      @args box
+ |      
+ |      The + operator joins the first box with the one given as 
+ |      the second argument. Joining constructs a box that encloses
+ |      both boxes given. Empty boxes are neutral: they do not
+ |      change another box when joining. Overwrites this box
+ |      with the result.
+ |      
+ |      @param box The box to join with this box.
+ |      
+ |      @return The joined box
+ |  
+ |  __and__(...)
+ |      @brief Returns the intersection of this box with another box
+ |      
+ |      @args box
+ |      
+ |      The intersection of two boxes is the largest
+ |      box common to both boxes. The intersection may be 
+ |      empty if both boxes to not touch. If the boxes do
+ |      not overlap but touch the result may be a single
+ |      line or point with an area of zero. Overwrites this box
+ |      with the result.
+ |      
+ |      @param box The box to take the intersection with
+ |      
+ |      @return The intersection box
+ |  
+ |  __eq__(...)
+ |      @brief Returns true if this box is equal to the other box
+ |      @args box
+ |      Returns true, if this box and the given box are equal
+ |  
+ |  __ge__(...)
+ |      Return self>=value.
+ |  
+ |  __gt__(...)
+ |      Return self>value.
+ |  
+ |  __init__(...)
+ |      @brief Creates a box from two points
+ |      
+ |      @args lower_left, upper_right
+ |      
+ |      Two points are given to create a new box. If the coordinates are not provided in the correct order (i.e. right < left), these are swapped.
+ |  
+ |  __le__(...)
+ |      Return self<=value.
+ |  
+ |  __lt__(...)
+ |      @brief Returns true if this box is 'less' than another box
+ |      @args box
+ |      Returns true, if this box is 'less' with respect to first and second point (in this order)
+ |  
+ |  __mul__(...)
+ |      @brief Returns the scaled box
+ |      
+ |      @args scale_factor
+ |      
+ |      The * operator scales the box with the given factor and returns the result.
+ |      
+ |      This method has been introduced in version 0.22.
+ |      
+ |      @param scale_factor The scaling factor
+ |      
+ |      @return The scaled box
+ |  
+ |  __ne__(...)
+ |      @brief Returns true if this box is not equal to the other box
+ |      @args box
+ |      Returns true, if this box and the given box are not equal
+ |  
+ |  __repr__(...)
+ |      @brief Returns a string representing this box
+ |      
+ |      This string can be turned into a box again by using \from_s
+ |  
+ |  __str__(...)
+ |      @brief Returns a string representing this box
+ |      
+ |      This string can be turned into a box again by using \from_s
+ |  
+ |  area(...)
+ |      @brief Computes the box area
+ |      
+ |      Returns the box area or 0 if the box is empty
+ |  
+ |  assign(...)
+ |      @brief Assigns another object to self
+ |      @args other
+ |  
+ |  center(...)
+ |      @brief Gets the center of the box
+ |  
+ |  contains(...)
+ |      @brief Returns true if the box contains the given point
+ |      
+ |      @args point
+ |      Tests whether a point is inside the box.
+ |      It also returns true if the point is exactly on the box contour.
+ |      
+ |      @param p The point to test against.
+ |      
+ |      @return true if the point is inside the box.
+ |  
+ |  create(...)
+ |      @brief Ensures the C++ object is created
+ |      Use this method to ensure the C++ object is created, for example to ensure that resources are allocated. Usually C++ objects are created on demand and not necessarily when the script object is created.
+ |  
+ |  destroy(...)
+ |      @brief Explicitly destroys the object
+ |      Explicitly destroys the object on C++ side if it was owned by the script interpreter. Subsequent access to this object will throw an exception.
+ |      If the object is not owned by the script, this method will do nothing.
+ |  
+ |  destroyed(...)
+ |      @brief Returns a value indicating whether the object was already destroyed
+ |      This method returns true, if the object was destroyed, either explicitly or by the C++ side.
+ |      The latter may happen, if the object is owned by a C++ object which got destroyed itself.
+ |  
+ |  dup(...)
+ |      @brief Creates a copy of self
+ |  
+ |  empty(...)
+ |      @brief Returns a value indicating whether the box is empty
+ |      
+ |      An empty box may be created with the default constructor for example. Such a box is neutral when combining it with other boxes and renders empty boxes if used in box intersections and false in geometrical relationship tests.
+ |  
+ |  enlarge(...)
+ |      @brief Enlarges the box by a certain amount.
+ |      
+ |      @args enlargement
+ |      
+ |      Enlarges the box by x and y value specified in the vector
+ |      passed. Positive values with grow the box, negative ones
+ |      will shrink the box. The result may be an empty box if the
+ |      box disappears. The amount specifies the grow or shrink
+ |      per edge. The width and height will change by twice the
+ |      amount.
+ |      Does not check for coordinate
+ |      overflows.
+ |      
+ |      @param enlargement The grow or shrink amount in x and y direction
+ |      
+ |      @return A reference to this box.
+ |  
+ |  enlarged(...)
+ |      @brief Returns the enlarged box.
+ |      
+ |      @args enlargement
+ |      
+ |      Enlarges the box by x and y value specified in the vector
+ |      passed. Positive values with grow the box, negative ones
+ |      will shrink the box. The result may be an empty box if the
+ |      box disappears. The amount specifies the grow or shrink
+ |      per edge. The width and height will change by twice the
+ |      amount.
+ |      Does not modify this box. Does not check for coordinate
+ |      overflows.
+ |      
+ |      @param enlargement The grow or shrink amount in x and y direction
+ |      
+ |      @return The enlarged box.
+ |  
+ |  from_ibox(...) from builtins.type
+ |      @brief Creates a floating-point coordinate box from an integer coordinate box
+ |      
+ |      This constructor has been introduced in version 0.25 and replaces the previous static method 'from_ibox'.
+ |  
+ |  from_s(...) from builtins.type
+ |      @brief Creates a box object from a string
+ |      @args s
+ |      Creates the object from a string representation (as returned by \to_s)
+ |      
+ |      This method has been added in version 0.23.
+ |  
+ |  hash(...)
+ |      @brief Computes a hash value
+ |      Returns a hash value for the given box. This method enables boxes as hash keys.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  height(...)
+ |      @brief Gets the height of the box
+ |  
+ |  inside(...)
+ |      @brief Tests if this box is inside the argument box
+ |      
+ |      @args box
+ |      
+ |      Returns true, if this box is inside the given box, i.e. the box intersection renders this box
+ |  
+ |  is_const_object(...)
+ |      @brief Returns a value indicating whether the reference is a const reference
+ |      This method returns true, if self is a const reference.
+ |      In that case, only const methods may be called on self.
+ |  
+ |  is_point(...)
+ |      @brief Returns true, if the box is a single point
+ |  
+ |  move(...)
+ |      @brief Moves the box by a certain distance
+ |      
+ |      @args distance
+ |      
+ |      Moves the box by a given offset and returns the moved
+ |      box. Does not check for coordinate overflows.
+ |      
+ |      @param distance The offset to move the box.
+ |      
+ |      @return A reference to this box.
+ |  
+ |  moved(...)
+ |      @brief Returns the box moved by a certain distance
+ |      
+ |      @args distance
+ |      
+ |      Moves the box by a given offset and returns the moved
+ |      box. Does not modify this box. Does not check for coordinate
+ |      overflows.
+ |      
+ |      @param distance The offset to move the box.
+ |      
+ |      @return The moved box.
+ |  
+ |  new(...) from builtins.type
+ |      @brief Creates a box from two points
+ |      
+ |      @args lower_left, upper_right
+ |      
+ |      Two points are given to create a new box. If the coordinates are not provided in the correct order (i.e. right < left), these are swapped.
+ |  
+ |  overlaps(...)
+ |      @brief Tests if this box overlaps the argument box
+ |      
+ |      @args box
+ |      
+ |      Returns true, if the intersection box of this box with the argument box exists and has a non-vanishing area
+ |  
+ |  perimeter(...)
+ |      @brief Returns the perimeter of the box
+ |      
+ |      This method is equivalent to 2*(width+height). For empty boxes, this method returns 0.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  to_itype(...)
+ |      @brief Converts the box to an integer coordinate box
+ |      
+ |      The database unit can be specified to translate the floating-point coordinate box in micron units to an integer-coordinate box in database units. The boxes coordinates will be divided by the database unit.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  to_s(...)
+ |      @brief Returns a string representing this box
+ |      
+ |      This string can be turned into a box again by using \from_s
+ |  
+ |  touches(...)
+ |      @brief Tests if this box touches the argument box
+ |      
+ |      @args box
+ |      
+ |      Two boxes touch if they overlap or their boundaries share at least one common point. Touching is equivalent to a non-empty intersection ('!(b1 & b2).empty?').
+ |  
+ |  transformed(...)
+ |      @brief Returns the box transformed with the given complex transformation
+ |      
+ |      @args t
+ |      
+ |      @param t The magnifying transformation to apply
+ |      @return The transformed box (a DBox now)
+ |  
+ |  width(...)
+ |      @brief Gets the width of the box
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |  
+ |  bottom
+ |      @brief Gets the bottom coordinate of the box
+ |      
+ |      
+ |      @brief Sets the bottom coordinate of the box
+ |      @args c
+ |  
+ |  left
+ |      @brief Gets the left coordinate of the box
+ |      
+ |      
+ |      @brief Sets the left coordinate of the box
+ |      @args c
+ |  
+ |  p1
+ |      @brief Gets the lower left point of the box
+ |      
+ |      
+ |      @brief Sets the lower left point of the box
+ |      @args p
+ |  
+ |  p2
+ |      @brief Gets the upper right point of the box
+ |      
+ |      
+ |      @brief Sets the upper right point of the box
+ |      @args p
+ |  
+ |  right
+ |      @brief Gets the right coordinate of the box
+ |      
+ |      
+ |      @brief Sets the right coordinate of the box
+ |      @args c
+ |  
+ |  top
+ |      @brief Gets the top coordinate of the box
+ |      
+ |      
+ |      @brief Sets the top coordinate of the box
+ |      @args c
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from __Base:
+ |  
+ |  __delattr__(self, name, /)
+ |      Implement delattr(self, name).
+ |  
+ |  __getattribute__(self, name, /)
+ |      Return getattr(self, name).
+ |  
+ |  __new__(*args, **kwargs) from builtins.type
+ |      Create and return a new object.  See help(type) for accurate signature.
+ |  
+ |  __setattr__(self, name, value, /)
+ |      Implement setattr(self, name, value).
+

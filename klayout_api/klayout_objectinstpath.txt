@@ -1,0 +1,322 @@
+class ObjectInstPath(__Base)
+ |  @brief A class describing a selected shape or instance
+ |  
+ |  A shape or instance is addressed by a path which describes all instances leading to the specified
+ |  object. These instances are described through \InstElement objects, which specify the instance and, in case of array instances, the specific array member.
+ |  For shapes, additionally the layer and the shape itself is specified. The ObjectInstPath objects
+ |  encapsulates both forms, which can be distinguished with the \is_cell_inst? predicate.
+ |  
+ |  An instantiation path leads from a top cell down to the container cell which either holds the shape or the instance.
+ |  The top cell can be obtained through the \top attribute, the container cell through the \source attribute. Both are cell indexes which can be converted to \Cell objects through the \Layout#cell. In case of objects located in the top cell, \top and \source refer to the same cell.
+ |  The first element of the instantiation path is the instance located within the top cell leading to the first child cell. The second element leads to the next child cell and so forth. \path_nth can be used to obtain a specific element of the path.
+ |  
+ |  The \cv_index attribute specifies the cellview the selection applies to. Use \LayoutView#cellview to obtain the \CellView object from the index.
+ |  
+ |  The shape or instance the selection refers to can be obtained with \shape and \inst respectively. Use \is_cell_inst? to decide whether the selection refers to an instance or not.
+ |  
+ |  The ObjectInstPath class plays a role when retrieving and modifying the selection of shapes and instances through \LayoutView#object_selection, \LayoutView#object_selection=, \LayoutView#select_object and \LayoutView#unselect_object. \ObjectInstPath objects can be modified to reflect a new selection, but the new selection becomes active only after it is installed in the view. The following sample demonstrates that. It implements a function to convert all shapes to polygons:
+ |  
+ |  @code
+ |  mw = RBA::Application::instance::main_window
+ |  view = mw.current_view
+ |  
+ |  begin
+ |  
+ |    view.transaction("Convert selected shapes to polygons")
+ |  
+ |    sel = view.object_selection
+ |  
+ |    sel.each do |s|
+ |      if !s.is_cell_inst? && !s.shape.is_text?
+ |        ly = view.cellview(s.cv_index).layout
+ |        # convert to polygon
+ |        s.shape.polygon = s.shape.polygon
+ |      end
+ |    end
+ |    
+ |    view.object_selection = sel
+ |  
+ |  ensure
+ |    view.commit
+ |  end
+ |  @/code
+ |  
+ |  Note, that without resetting the selection in the above example, the application might raise errors because after modifying the selected objects, the current selection will no longer be valid. Establishing a new valid selection in the way shown above will help avoiding this issue.
+ |  
+ |  Method resolution order:
+ |      ObjectInstPath
+ |      __Base
+ |      builtins.object
+ |  
+ |  Methods defined here:
+ |  
+ |  __eq__(...)
+ |      @brief Equality of two ObjectInstPath objects
+ |      @args b
+ |      Note: this operator returns true if both instance paths refer to the same object, not just identical ones.
+ |      
+ |      This method has been introduced with version 0.24.
+ |  
+ |  __ge__(...)
+ |      Return self>=value.
+ |  
+ |  __gt__(...)
+ |      Return self>value.
+ |  
+ |  __init__(...)
+ |      @brief Creates a new object of this class
+ |  
+ |  __le__(...)
+ |      Return self<=value.
+ |  
+ |  __lt__(...)
+ |      @brief Provides an order criterion for two ObjectInstPath objects
+ |      @args b
+ |      Note: this operator is just provided to establish any order, not a particular one.
+ |      
+ |      This method has been introduced with version 0.24.
+ |  
+ |  __ne__(...)
+ |      @brief Inequality of two ObjectInstPath objects
+ |      @args b
+ |      See the comments on the == operator.
+ |      
+ |      This method has been introduced with version 0.24.
+ |  
+ |  append_path(...)
+ |      @brief Appends an element to the instantiation path
+ |      @args element
+ |      
+ |      This method allows building of an instantiation path pointing to the selected object.
+ |      For an instance selection, the last component added is the instance which is selected.
+ |      For a shape selection, the path points to the cell containing the selected shape.
+ |      
+ |      This method was introduced in version 0.24.
+ |  
+ |  assign(...)
+ |      @brief Assigns another object to self
+ |      @args other
+ |  
+ |  cell_index(...)
+ |      @brief Gets the cell index of the cell that the selection applies to.
+ |      This method returns the cell index that describes which cell the selected shape is located in or the cell whose instance is selected if \is_cell_inst? is true.
+ |      This property is set implicitly by setting the top cell and adding elements to the instantiation path.
+ |      To obtain the index of the container cell, use \source.
+ |  
+ |  clear_path(...)
+ |      @brief Clears the instantiation path
+ |      
+ |      This method was introduced in version 0.24.
+ |  
+ |  create(...)
+ |      @brief Ensures the C++ object is created
+ |      Use this method to ensure the C++ object is created, for example to ensure that resources are allocated. Usually C++ objects are created on demand and not necessarily when the script object is created.
+ |  
+ |  destroy(...)
+ |      @brief Explicitly destroys the object
+ |      Explicitly destroys the object on C++ side if it was owned by the script interpreter. Subsequent access to this object will throw an exception.
+ |      If the object is not owned by the script, this method will do nothing.
+ |  
+ |  destroyed(...)
+ |      @brief Returns a value indicating whether the object was already destroyed
+ |      This method returns true, if the object was destroyed, either explicitly or by the C++ side.
+ |      The latter may happen, if the object is owned by a C++ object which got destroyed itself.
+ |  
+ |  dtrans(...)
+ |      @brief Gets the transformation applicable for the shape in micron space.
+ |      
+ |      This method returns the same transformation than \trans, but applicable to objects in micrometer units:
+ |      
+ |      @code
+ |      # renders the micrometer-unit polygon in top cell coordinates:
+ |      dpolygon_in_top = sel.dtrans * sel.shape.dpolygon
+ |      @/code
+ |      
+ |      This method is not applicable to instance selections. A more generic attribute is \source_dtrans.
+ |      
+ |      The method has been introduced in version 0.25.
+ |  
+ |  dup(...)
+ |      @brief Creates a copy of self
+ |  
+ |  each_inst(...)
+ |      @brief Yields the instantiation path
+ |      
+ |      The instantiation path describes by an sequence of \InstElement objects the path by which the cell containing the selected shape is found from the cell view's current cell.
+ |      If this object represents an instance, the path will contain the selected instance as the last element.
+ |      The elements are delivered top down.
+ |  
+ |  inst(...)
+ |      @brief Deliver the instance represented by this selection
+ |      
+ |      This method delivers valid results only if \is_cell_inst? is true.
+ |      It returns the instance reference (an \Instance object) that this selection represents.
+ |      
+ |      This property is set implicitly by adding instance elements to the instantiation path.
+ |      
+ |      This method has been added in version 0.16.
+ |  
+ |  is_cell_inst(...)
+ |      @brief True, if this selection represents a cell instance
+ |      
+ |      If this attribute is true, the shape reference and layer are not valid.
+ |  
+ |  is_const_object(...)
+ |      @brief Returns a value indicating whether the reference is a const reference
+ |      This method returns true, if self is a const reference.
+ |      In that case, only const methods may be called on self.
+ |  
+ |  layout(...)
+ |      @brief Gets the Layout object the selected object lives in.
+ |      
+ |      This method returns the \Layout object that the selected object lives in. This method may return nil, if the selection does not point to a valid object.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  new(...) from builtins.type
+ |      @brief Creates a new object of this class
+ |  
+ |  path_length(...)
+ |      @brief Returns the length of the path (number of elements delivered by \each_inst)
+ |      
+ |      This method has been added in version 0.16.
+ |  
+ |  path_nth(...)
+ |      @brief Returns the nth element of the path (similar to \each_inst but with direct access through the index)
+ |      @args n
+ |      
+ |      @param n The index of the element to retrieve (0..\path_length-1)
+ |      This method has been added in version 0.16.
+ |  
+ |  source(...)
+ |      @brief Returns to the cell index of the cell that the selected element resides inside.
+ |      
+ |      If this reference represents a cell instance, this method delivers the index of the cell in which the cell instance resides. Otherwise, this method returns the same value than \cell_index.
+ |      
+ |      This property is set implicitly by setting the top cell and adding elements to the instantiation path.
+ |      
+ |      This method has been added in version 0.16.
+ |  
+ |  source_dtrans(...)
+ |      @brief Gets the transformation applicable for an instance and shape in micron space.
+ |      
+ |      This method returns the same transformation than \source_trans, but applicable to objects in micrometer units:
+ |      
+ |      @code
+ |      # renders the cell instance as seen from top level:
+ |      dcell_inst_in_top = sel.source_dtrans * sel.inst.dcell_inst
+ |      @/code
+ |      
+ |      The method has been introduced in version 0.25.
+ |  
+ |  source_trans(...)
+ |      @brief Gets the transformation applicable for an instance and shape.
+ |      
+ |      If this object represents a shape, this transformation describes how the selected shape is transformed into the current cell of the cell view.
+ |      If this object represents an instance, this transformation describes how the selected instance is transformed into the current cell of the cell view.
+ |      This method is similar to \trans, except that the resulting transformation does not include the instance transformation if the object represents an instance.
+ |      
+ |      This property is set implicitly by setting the top cell and adding elements to the instantiation path.
+ |      
+ |      This method has been added in version 0.16.
+ |  
+ |  trans(...)
+ |      @brief Gets the transformation applicable for the shape.
+ |      
+ |      If this object represents a shape, this transformation describes how the selected shape is transformed into the current cell of the cell view.
+ |      Basically, this transformation is the accumulated transformation over the instantiation path. If the ObjectInstPath represents a cell instance, this includes the transformation of the selected instance as well.
+ |      
+ |      This property is set implicitly by setting the top cell and adding elements to the instantiation path.
+ |      This method is not applicable for instance selections. A more generic attribute is \source_trans.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |  
+ |  cv_index
+ |      @brief Gets the cellview index that describes which cell view the shape or instance is located in
+ |      
+ |      
+ |      @brief Sets the cellview index that describes which cell view the shape or instance is located in
+ |      @args index
+ |      
+ |      This method has been introduced in version 0.24.
+ |  
+ |  layer
+ |      @brief Gets the layer index that describes which layer the selected shape is on
+ |      
+ |      This method delivers valid results only for object selections that represent shapes, i.e for which \is_cell_inst? is false.
+ |      
+ |      @brief Sets to the layer index that describes which layer the selected shape is on
+ |      @args layer_index
+ |      
+ |      Setting the layer property to a valid layer index makes the path a shape selection path.
+ |      Setting the layer property to a negative layer index makes the selection an instance selection.
+ |      
+ |      This method has been introduced in version 0.24.
+ |  
+ |  seq
+ |      @brief Gets the sequence number
+ |      
+ |      The sequence number describes when the item was selected.
+ |      A sequence number of 0 indicates that the item was selected in the first selection action (without 'Shift' pressed).
+ |      
+ |      
+ |      @brief Sets the sequence number
+ |      @args n
+ |      
+ |      See \seq for a description of this property.
+ |      
+ |      This method was introduced in version 0.24.
+ |  
+ |  shape
+ |      @brief Gets the shape object that describes the selected shape geometrically
+ |      
+ |      This method delivers valid results only for object selections that represent shapes, i.e for which \is_cell_inst? is false.
+ |      
+ |      The shape object may be modified. This does not have an immediate effect on the selection. Instead, the selection must be set in the view using \LayoutView#object_selection= or \LayoutView#select_object.
+ |      
+ |      
+ |      @brief Sets the shape object that describes the selected shape geometrically
+ |      @args shape
+ |      
+ |      When using this setter, the layer index must be set to a valid layout layer (see \layer=).
+ |      Setting both properties makes the selection a shape selection.
+ |      
+ |      This method has been introduced in version 0.24.
+ |  
+ |  top
+ |      @brief Gets the cell index of the top cell the selection applies to
+ |      
+ |      The top cell is identical to the current cell provided by the cell view.
+ |      It is the cell from which is instantiation path originates and the container cell if not instantiation path is set.
+ |      
+ |      This method has been introduced in version 0.24.
+ |      
+ |      @brief Sets the cell index of the top cell the selection applies to
+ |      @args cell_index
+ |      
+ |      See \top_cell for a description of this property.
+ |      
+ |      This method has been introduced in version 0.24.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from __Base:
+ |  
+ |  __delattr__(self, name, /)
+ |      Implement delattr(self, name).
+ |  
+ |  __getattribute__(self, name, /)
+ |      Return getattr(self, name).
+ |  
+ |  __new__(*args, **kwargs) from builtins.type
+ |      Create and return a new object.  See help(type) for accurate signature.
+ |  
+ |  __setattr__(self, name, value, /)
+ |      Implement setattr(self, name, value).
+

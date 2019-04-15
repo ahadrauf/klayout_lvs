@@ -1,0 +1,1419 @@
+class LayoutView(__Base)
+ |  @brief The view object presenting one or more layout objects
+ |  
+ |  The visual part of the view is the tab panel in the main window. The non-visual part are the redraw thread, the layout handles, cell lists, layer view lists etc. This object controls these aspects of the view and controls the appearance of the data.
+ |  
+ |  Method resolution order:
+ |      LayoutView
+ |      __Base
+ |      builtins.object
+ |  
+ |  Methods defined here:
+ |  
+ |  __init__(...)
+ |      @brief Creates a standalone view
+ |      
+ |      This constructor is for special purposes only. To create a view in the context of a main window, use \MainWindow#create_view and related methods.
+ |      
+ |      This constructor has been introduced in version 0.25.
+ |  
+ |  active_cellview(...)
+ |      @brief Gets the active cellview (shown in hierarchy browser)
+ |      
+ |      This is a convenience method which is equivalent to cellview(active_cellview_index()).
+ |      
+ |      This method has been introduced in version 0.19.
+ |      Starting from version 0.25, the returned object can be manipulated which will have an immediate effect on the display.
+ |  
+ |  active_cellview_index(...)
+ |      @brief Gets the index of the active cellview (shown in hierarchy browser)
+ |  
+ |  add_line_style(...)
+ |      @brief Adds a custom line style from a string
+ |      
+ |      @param name The name under which this pattern will appear in the style editor
+ |      @param string A string describing the bits of the pattern ('.' for missing pixel, '*' for a set pixel)
+ |      @return The index of the newly created style, which can be used as the line style index of \LayerProperties.
+ |      This method has been introduced in version 0.25.
+ |  
+ |  add_missing_layers(...)
+ |      @brief Adds new layers to layer list
+ |      This method was introduced in version 0.19.
+ |  
+ |  add_stipple(...)
+ |      @brief Adds a stipple pattern given by a string
+ |      
+ |      'string' is a string describing the pattern. It consists of one or more lines composed of '.' or '*' characters and separated by newline characters. A '.' is for a missing pixel and '*' for a set pixel. The length of each line must be the same. Blanks before or after each line are ignored.
+ |      
+ |      @param name The name under which this pattern will appear in the stipple editor
+ |      @param string See above
+ |      @return The index of the newly created stipple pattern, which can be used as the dither pattern index of \LayerProperties.
+ |      This method has been introduced in version 0.25.
+ |  
+ |  annotation(...)
+ |      @brief Gets the annotation given by an ID
+ |      Returns a reference to the annotation given by the respective ID or an invalid annotation if the ID is not valid.
+ |      Use \Annotation#is_valid? to determine whether the returned annotation is valid or not.
+ |      
+ |      The returned annotation is a 'live' object and changing it will update the view.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  ascend(...)
+ |      @brief Ascends upwards in the hierarchy.
+ |      @args index
+ |      Removes one element from the specific path of the cellview with the given index. Returns the element removed.
+ |  
+ |  begin_layers(...)
+ |      @brief Begin iterator for the layers
+ |      @args index
+ |      
+ |      This iterator delivers the layers of this view, either in a recursive or non-recursive
+ |      fashion, depending which iterator increment methods are used.
+ |      The iterator delivered by \end_layers is the past-the-end iterator. It can be compared
+ |      agains a current iterator to check, if there are no further elements.
+ |      This version addresses a specific list in a multi-tab layer properties arrangement with the "index" parameter. This method has been introduced in version 0.21.
+ |  
+ |  bookmark_view(...)
+ |      @brief Bookmarks the current view under the given name
+ |      
+ |      @args name
+ |      
+ |      @param name The name under which to bookmark the current state
+ |  
+ |  box(...)
+ |      @brief Returns the displayed box (DBox) in micron space
+ |  
+ |  cancel(...)
+ |      @brief Cancels all edit operations
+ |      
+ |      This method will stop all pending edit operations (i.e. drag and drop) and cancel the current selection. Calling this method is useful to ensure there are no potential interactions with the script's functionality.
+ |  
+ |  cellview(...)
+ |      @brief Gets the cellview object for a given index
+ |      
+ |      @args cv_index
+ |      
+ |      @param cv_index The cellview index for which to get the object for
+ |      
+ |      Starting with version 0.25, this method returns a \CellView object that can be manipulated to directly reflect any changes in the display.
+ |  
+ |  cellviews(...)
+ |      @brief Gets the number of cellviews
+ |  
+ |  clear_annotations(...)
+ |      @brief Clears all annotations on this view
+ |  
+ |  clear_config(...)
+ |      @brief Clears the local configuration parameters
+ |      
+ |      See \set_config for a description of the local configuration parameters.
+ |  
+ |  clear_images(...)
+ |      @brief Clear all images on this view
+ |  
+ |  clear_layers(...)
+ |      @brief Clears all layers for the given layer properties list
+ |      @args index
+ |      This version addresses a specific list in a multi-tab layer properties arrangement with the "index" parameter. This method has been introduced in version 0.21.
+ |  
+ |  clear_line_styles(...)
+ |      @brief Removes all custom line styles
+ |      All line styles except the fixed ones are removed. If any of the custom styles is still used by the layers displayed, the results will be undefined.
+ |      This method has been introduced in version 0.25.
+ |  
+ |  clear_object_selection(...)
+ |      @brief Clears the selection of geometrical objects (shapes or cell instances)
+ |      The selection of other objects (such as annotations and images) will not be affected.
+ |      
+ |      This method has been introduced in version 0.24
+ |  
+ |  clear_stipples(...)
+ |      @brief Removes all custom line styles
+ |      All stipple pattern except the fixed ones are removed. If any of the custom stipple pattern is still used by the layers displayed, the results will be undefined.
+ |  
+ |  clear_transactions(...)
+ |      @brief Clears all transactions
+ |      
+ |      Discard all actions in the undo buffer. After clearing that buffer, no undo is available. It is important to clear the buffer when making database modifications outside transactions, i.e after that modifications have been done. If failing to do so, 'undo' operations are likely to produce invalid results.
+ |      This method was introduced in version 0.16.
+ |  
+ |  commit(...)
+ |      @brief Ends a transaction
+ |      
+ |      See \transaction for a detailed description of transactions. 
+ |      This method was introduced in version 0.16.
+ |  
+ |  commit_config(...)
+ |      @brief Commits the configuration settings
+ |      
+ |      Some configuration options are queued for performance reasons and become active only after 'commit_config' has been called. After a sequence of \set_config calls, this method should be called to activate the settings made by these calls.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  create(...)
+ |      @brief Ensures the C++ object is created
+ |      Use this method to ensure the C++ object is created, for example to ensure that resources are allocated. Usually C++ objects are created on demand and not necessarily when the script object is created.
+ |  
+ |  create_layout(...)
+ |      @brief Create a new, empty layout and associate it with the given technology
+ |      
+ |      @args tech,add_cellview,init_layers
+ |      
+ |      The add_cellview parameter controls whether to create a new cellview (true)
+ |      or clear all cellviews before (false). This variant also allows to control whether the layer properties are
+ |      initialized (init_layers = true) or not (init_layers = false).
+ |      
+ |      @return The index of the cellview created.
+ |      
+ |      This variant has been introduced in version 0.22.
+ |  
+ |  create_rdb(...)
+ |      @brief Creates a new report database and returns the index of the new database
+ |      @args name
+ |      @param name The name of the new report database
+ |      @return The index of the new database
+ |      This method returns an index of the new report database. Use \rdb to get the actual object. If a report database with the given name already exists, a unique name will be created.
+ |      The name will be replaced by the file name when a file is loaded into the report database.
+ |  
+ |  current(...) from builtins.type
+ |      @brief Returns the current view
+ |      The current view is the one that is shown in the current tab. Returns nil if no layout is loaded.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  delete_layer(...)
+ |      @brief Deletes the layer properties node specified by the iterator
+ |      @args index, iter
+ |      
+ |      This method deletes the object that the iterator points to and invalidates
+ |      the iterator since the object that the iterator points to is no longer valid.
+ |      This version addresses a specific list in a multi-tab layer properties arrangement with the "index" parameter. This method has been introduced in version 0.21.
+ |  
+ |  delete_layer_list(...)
+ |      @brief Deletes the given properties list
+ |      @args index
+ |      At least one layer properties list must remain. This method may change the current properties list.
+ |      This method has been introduced in version 0.21.
+ |  
+ |  delete_layers(...)
+ |      @brief Deletes the layer properties nodes specified by the iterator
+ |      @args index, iterators
+ |      
+ |      This method deletes the nodes specifies by the iterators. This method is the most convenient way to delete multiple entries.
+ |      This version addresses a specific list in a multi-tab layer properties arrangement with the "index" parameter. This method has been introduced in version 0.22.
+ |  
+ |  descend(...)
+ |      @brief Descends further into the hierarchy.
+ |      @args path, index
+ |      Adds the given path (given as an array of InstElement objects) to the specific path of the cellview with the given index. In effect, the cell addressed by the terminal of the new path components can be shown in the context of the upper cells, if the minimum hierarchy level is set to a negative value.
+ |      The path is assumed to originate from the current cell and contain specific instances sorted from top to bottom.
+ |  
+ |  destroy(...)
+ |      @brief Explicitly destroys the object
+ |      Explicitly destroys the object on C++ side if it was owned by the script interpreter. Subsequent access to this object will throw an exception.
+ |      If the object is not owned by the script, this method will do nothing.
+ |  
+ |  destroyed(...)
+ |      @brief Returns a value indicating whether the object was already destroyed
+ |      This method returns true, if the object was destroyed, either explicitly or by the C++ side.
+ |      The latter may happen, if the object is owned by a C++ object which got destroyed itself.
+ |  
+ |  each_annotation(...)
+ |      @brief Iterates over all annotations attached to this view
+ |  
+ |  each_annotation_selected(...)
+ |      @brief Iterate over each selected annotation objects, yielding a \Annotation object for each of them
+ |      This method was introduced in version 0.19.
+ |  
+ |  each_image(...)
+ |      @brief Iterate over all images attached to this view
+ |      
+ |      With version 0.25, the objects returned by the iterator are references and can be manipulated to change their appearance.
+ |  
+ |  each_image_selected(...)
+ |      @brief Iterate over each selected image object, yielding a \Image object for each of them
+ |      This method was introduced in version 0.19.
+ |  
+ |  each_layer(...)
+ |      @brief Hierarchically iterates over the layers in the given layer list
+ |      
+ |      This version of this method allows specification of the layer list to be iterated over. The layer list is specified by it's index which is a value between 0 and \num_layer_lists-1.For details see the parameter-less version of this method.
+ |      
+ |      This method was introduced in version 0.25.
+ |  
+ |  each_object_selected(...)
+ |      @brief Iterates over each selected geometrical object, yielding a \ObjectInstPath object for each of them
+ |      
+ |      This iterator will deliver const objects - they cannot be modified. In order to modify the selection, create a copy of the \ObjectInstPath objects, modify them and install the new selection using \select_object or \object_selection=.
+ |      
+ |      Another way of obtaining the selection is \object_selection, which returns an array of \ObjectInstPath objects.
+ |  
+ |  each_object_selected_transient(...)
+ |      @brief Iterates over each geometrical objects in the transient selection, yielding a \ObjectInstPath object for each of them
+ |      
+ |      This method was introduced in version 0.18.
+ |  
+ |  enable_edits(...)
+ |      @brief Enables or disables edits
+ |      
+ |      @args enable
+ |      @param enable Enable edits if set to true
+ |      
+ |      This method allows putting the view into read-only mode by disabling all edit functions. For doing so, this method has to be called with a 'false' argument. Calling it with a 'true' parameter enables all edits again. This method must not be confused with the edit/viewer mode. The LayoutView's enable_edits method is intended to temporarily disable all menu entries and functions which could allow the user to alter the database.
+ |      In 0.25, this method has been moved from MainWindow to LayoutView.
+ |  
+ |  end_layers(...)
+ |      @brief End iterator for the layers
+ |      @args index
+ |      See \begin_layers for a description about this iterator
+ |      This version addresses a specific list in a multi-tab layer properties arrangement with the "index" parameter. This method has been introduced in version 0.21.
+ |  
+ |  erase_annotation(...)
+ |      @brief Erases the annotation given by the id
+ |      Deletes an existing annotation given by the id parameter. The id of an annotation can be obtained through \Annotation#id.
+ |      
+ |      This method has been introduced in version 0.24.
+ |      Starting with version 0.25, the annotation's \Annotation#delete method can also be used to delete an annotation.
+ |  
+ |  erase_cellview(...)
+ |      @brief Erases the cellview with the given index
+ |      
+ |      @args index
+ |      
+ |      This closes the given cellview and unloads the layout associated with it, unless referred to by another cellview.
+ |  
+ |  erase_image(...)
+ |      @brief Erase the given image
+ |      @param id The id of the object to erase
+ |      
+ |      Erases the image with the given Id. The Id can be obtained with if "id" method of the image object.
+ |      
+ |      This method has been introduced in version 0.20.
+ |      
+ |      With version 0.25, \Image#delete can be used to achieve the same results.
+ |  
+ |  expand_layer_properties(...)
+ |      @brief Expands the layer properties for the given tab
+ |      @args index
+ |      
+ |      This method will expand all wildcard specifications in the layer properties by iterating over the specified objects (i.e. layers, cellviews) and by replacing default colors and stipples by the ones specified with the palettes.
+ |      
+ |      This method was introduced in version 0.21.
+ |  
+ |  get_config(...)
+ |      @brief Gets the value of a local configuration parameter
+ |      
+ |      @args name
+ |      @param name The name of the configuration parameter whose value shall be obtained (a string)
+ |      
+ |      @return The value of the parameter
+ |      
+ |      See \set_config for a description of the local configuration parameters.
+ |  
+ |  get_config_names(...)
+ |      @brief Gets the configuration parameter names
+ |      
+ |      @return A list of configuration parameter names
+ |      
+ |      This method returns the names of all known configuration parameters. These names can be used to get and set configuration parameter values.
+ |      
+ |      This method was introduced in version 0.25.
+ |  
+ |  get_current_cell_path(...)
+ |      @brief Gets the cell path of the current cell
+ |      
+ |      @args cv_index
+ |      
+ |      The current cell is the one highlighted in the browser with the focus rectangle. The 
+ |      current path is returned for the cellview given by cv_index.
+ |      The cell path is a list of cell indices from the top cell to the current cell.
+ |      
+ |      @param cv_index The cellview index for which to get the current path from (usally this will be the active cellview index)
+ |      This method is was deprecated in version 0.25 since from then, the \CellView object can be used to obtain an manipulate the selected cell.
+ |  
+ |  get_image(...)
+ |      @brief Gets the layout image as a \QImage
+ |      
+ |      @args width, height
+ |      @param width The width of the image to render in pixel.
+ |      @param height The height of the image to render in pixel.
+ |      
+ |      The image contains the current scene (layout, annotations etc.).
+ |      The image is drawn synchroneously with the given width and height. Drawing may take some time.
+ |  
+ |  get_image_with_options(...)
+ |      @brief Gets the layout image as a \QImage (with options)
+ |      
+ |      @args width, height, linewidth, oversampling, resolution, target, monochrome
+ |      @param width The width of the image to render in pixel.
+ |      @param height The height of the image to render in pixel.
+ |      @param linewidth The width of a line in pixels (usually 1) or 0 for default.
+ |      @param oversampling The oversampling factor (1..3) or 0 for default.
+ |      @param resolution The resolution (pixel size compared to a screen pixel size, i.e 1/oversampling) or 0 for default.
+ |      @param target_box The box to draw or an empty box for default.
+ |      @param monochrome If true, monochrome images will be produced.
+ |      
+ |      The image contains the current scene (layout, annotations etc.).
+ |      The image is written as a PNG file to the given file. The image is drawn synchroneously with the given width and height. Drawing may take some time. Monochrome images don't have background or annotation objects currently.
+ |      
+ |      This method has been introduced in 0.23.10.
+ |  
+ |  get_line_style(...)
+ |      @brief Gets the line style string for the style with the given index
+ |      
+ |      This method will return the line style string for the style with the given index.
+ |      The format of the string is the same than the string accepted by \add_line_style.
+ |      An empty string corresponds to 'solid line'.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  get_screenshot(...)
+ |      @brief Gets a screenshot as a \QImage
+ |      
+ |      Getting the image requires the drawing to be complete. Ideally, synchroneous mode is switched on for the application to guarantee this condition. The image will have the size of the viewport showing the current layout.
+ |  
+ |  get_stipple(...)
+ |      @brief Gets the stipple pattern string for the pattern with the given index
+ |      
+ |      This method will return the stipple pattern string for the pattern with the given index.
+ |      The format of the string is the same than the string accepted by \add_stipple.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  has_annotation_selection(...)
+ |      @brief Returns true, if annotations (rulers) are selected in this view
+ |      This method was introduced in version 0.19.
+ |  
+ |  has_image_selection(...)
+ |      @brief Returns true, if images are selected in this view
+ |      This method was introduced in version 0.19.
+ |  
+ |  has_object_selection(...)
+ |      @brief Returns true, if geometrical objects (shapes or cell instances) are selected in this view
+ |  
+ |  has_transient_object_selection(...)
+ |      @brief Returns true, if geometrical objects (shapes or cell instances) are selected in this view in the transient selection
+ |      
+ |      The transient selection represents the objects selected when the mouse hovers over the layout windows. This selection is not used for operations but rather to indicate which object would be selected if the mouse is clicked.
+ |      
+ |      This method was introduced in version 0.18.
+ |  
+ |  hide_cell(...)
+ |      @brief Hides the given cell for the given cellview
+ |      
+ |      @args cell_index, cv_index
+ |  
+ |  image(...)
+ |      @brief Gets the image given by an ID
+ |      Returns a reference to the image given by the respective ID or an invalid image if the ID is not valid.
+ |      Use \Image#is_valid? to determine whether the returned image is valid or not.
+ |      
+ |      The returned image is a 'live' object and changing it will update the view.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  init_layer_properties(...)
+ |      @brief Fills the layer properties for a new layer
+ |      @args props
+ |      
+ |      This method initializes a layer properties object's color and stipples according to the defaults for the given layer source specification. The layer's source must be set already on the layer properties object.
+ |      
+ |      This method was introduced in version 0.19.
+ |      
+ |      @param props The layer properties object to initialize.
+ |  
+ |  insert_annotation(...)
+ |      @brief Inserts an annotation object into the given view
+ |      Inserts a new annotation into the view. Existing annotation will remain. Use \clear_annotations to delete them before inserting new ones. Use \replace_annotation to replace an existing one with a new one. 
+ |      Starting with version 0.25 this method modifies self's ID to reflect the ID of the ruler created. After an annotation is inserted into the view, it can be modified and the changes of properties will become reflected immediately in the view.
+ |  
+ |  insert_image(...)
+ |      @brief Insert an image object into the given view
+ |      Insert the image object given by obj into the view.
+ |      
+ |      With version 0.25, this method will attach the image object to the view and the image object will become a 'live' object - i.e. changes to the object will change the appearance of the image on the screen.
+ |  
+ |  insert_layer(...)
+ |      @brief Inserts the given layer properties node into the list before the given position
+ |      @args index, iter, node
+ |      
+ |      This version addresses a specific list in a multi-tab layer properties arrangement with the "index" parameter. This method inserts the new properties node before the position given by "iter" and returns a const reference to the element created. The iterator that specified the position will remain valid after the node was inserted and will point to the newly created node. It can be used to add futher nodes. 
+ |      This method has been introduced in version 0.21.
+ |      Since version 0.22, this method accepts LayerProperties and LayerPropertiesNode objects. A LayerPropertiesNode object can contain a hierarchy of further nodes.
+ |  
+ |  insert_layer_list(...)
+ |      @brief Inserts a new layer properties list at the given index
+ |      @args index
+ |      This method inserts a new tab at the given position. The current layer properties list will be changed to the new list.
+ |      This method has been introduced in version 0.21.
+ |  
+ |  is_cell_hidden(...)
+ |      @brief Returns true, if the cell is hidden
+ |      
+ |      @args cell_index, cv_index
+ |      
+ |      @return True, if the cell with "cell_index" is hidden for the cellview "cv_index"
+ |  
+ |  is_const_object(...)
+ |      @brief Returns a value indicating whether the reference is a const reference
+ |      This method returns true, if self is a const reference.
+ |      In that case, only const methods may be called on self.
+ |  
+ |  is_transacting(...)
+ |      @brief Indicates if a transaction is ongoing
+ |      
+ |      See \transaction for a detailed description of transactions. 
+ |      This method was introduced in version 0.16.
+ |  
+ |  load_layer_props(...)
+ |      @brief Loads the layer properties with options
+ |      
+ |      @args fn, cv_index, add_default
+ |      @param fn The file name of the .lyp file to load
+ |      @param cv_index See description text
+ |      @param add_default If true, default layers will be added for each other layer in the layout
+ |      
+ |      Load the layer properties from the file given in "fn".
+ |      This version allows to specify whether defaults should be used for all other layers by setting "add_default" to true. It can be used to load the layer properties for a specific cellview by setting "cv_index" to the index for which the layer properties file should be applied. All present definitions for this layout will be removed before the properties file is loaded. "cv_index" can be set to -1. In that case, the layer properties file is applied to each of the layouts individually.
+ |      
+ |      Note that this version will override all cellview index definitions in the layer properties file.
+ |      
+ |      This variant has been added on version 0.21.
+ |  
+ |  load_layout(...)
+ |      @brief Loads a (new) file into the layout view
+ |      
+ |      @args filename, add_cellview
+ |      
+ |      Loads the file given by the "filename" parameter.
+ |      The add_cellview param controls whether to create a new cellview (true)
+ |      or clear all cellviews before (false).
+ |      
+ |      @return The index of the cellview loaded.
+ |  
+ |  max_hier(...)
+ |      @brief Selects all hierarchy levels available
+ |      
+ |      Show the layout in full depth down to the deepest level of hierarchy. This method may cause a redraw.
+ |  
+ |  new(...) from builtins.type
+ |      @brief Creates a standalone view
+ |      
+ |      This constructor is for special purposes only. To create a view in the context of a main window, use \MainWindow#create_view and related methods.
+ |      
+ |      This constructor has been introduced in version 0.25.
+ |  
+ |  num_layer_lists(...)
+ |      @brief Gets the number of layer properties tabs present
+ |      This method has been introduced in version 0.23.
+ |  
+ |  num_rdbs(...)
+ |      @brief Gets the number of report databases loaded into this view
+ |      @return The number of \ReportDatabase objects present in this view
+ |  
+ |  on_annotation_changed_(...)
+ |      @brief A event indicating that an annotation has been modified
+ |      The argument of the event is the ID of the annotation that was changed.
+ |      This event has been added in version 0.25.
+ |  
+ |  on_cellview_changed_(...)
+ |      @brief An event indicating that a cellview has changed
+ |      @args cellview_index
+ |      
+ |      If a cellview is modified, this event is triggered.
+ |      When this event is triggered, the cellview have already been changed.
+ |      The integer parameter of this event will indicate the cellview that has changed.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_cellview_observer/remove_cellview_observer) have been removed in 0.25.
+ |  
+ |  on_current_layer_list_changed_(...)
+ |      @brief An event indicating the current layer list (the selected tab) has changed
+ |      @args index
+ |      @param index The index of the new current layer list
+ |      
+ |      This event is triggered after the current layer list was changed - i.e. a new tab was selected.
+ |      
+ |      This event was introduced in version 0.25.
+ |  
+ |  on_image_changed_(...)
+ |      @brief A event indicating that an image has been modified
+ |      The argument of the event is the ID of the image that was changed.
+ |      This event has been added in version 0.25.
+ |  
+ |  on_layer_list_changed_(...)
+ |      @brief An event indicating that the layer list has changed
+ |      @args flags
+ |      
+ |      This event is triggered after the layer list has changed it's configuration.
+ |      The integer argument gives a hint about the nature of the changed:
+ |      Bit 0 is set, if the properties (visibility, color etc.) of one or more layers have changed. Bit 1 is
+ |      set if the hierarchy has changed. Bit 2 is set, if layer names have changed.
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_layer_list_observer/remove_layer_list_observer) have been removed in 0.25.
+ |  
+ |  on_layer_list_deleted_(...)
+ |      @brief An event indicating that a layer list (a tab) has been removed
+ |      @args index
+ |      @param index The index of the layer list that was removed
+ |      
+ |      This event is triggered after the layer list has been removed - i.e. a tab was deleted.
+ |      
+ |      This event was introduced in version 0.25.
+ |  
+ |  on_layer_list_inserted_(...)
+ |      @brief An event indicating that a layer list (a tab) has been inserted
+ |      @args index
+ |      @param index The index of the layer list that was inserted
+ |      
+ |      This event is triggered after the layer list has been inserted - i.e. a new tab was created.
+ |      
+ |      This event was introduced in version 0.25.
+ |  
+ |  pan_center(...)
+ |      @brief Pans to the given point
+ |      
+ |      @args p
+ |      
+ |      The window is positioned such that "p" becomes the new center
+ |  
+ |  pan_down(...)
+ |      @brief Pans down
+ |  
+ |  pan_left(...)
+ |      @brief Pans to the left
+ |  
+ |  pan_right(...)
+ |      @brief Pans to the right
+ |  
+ |  pan_up(...)
+ |      @brief Pans upward
+ |  
+ |  rdb(...)
+ |      @brief Gets the report database with the given index
+ |      @args index
+ |      @return The \ReportDatabase object or nil if the index is not valid
+ |  
+ |  reload_layout(...)
+ |      @brief Reloads the given cellview
+ |      
+ |      @args cv
+ |      
+ |      @param cv The index of the cellview to reload
+ |  
+ |  remove_line_style(...)
+ |      @brief Removes the line style with the given index
+ |      @args index
+ |      The line styles with an index less than the first custom style. If a style is removed that is still used, the results are undefined.
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  remove_rdb(...)
+ |      @brief Removes a report database with the given index
+ |      @args index
+ |      @param The index of the report database to remove from this view
+ |  
+ |  remove_stipple(...)
+ |      @brief Removes the stipple pattern with the given index
+ |      @args index
+ |      The pattern with an index less than the first custom pattern cannot be removed. If a stipple pattern is removed that is still used, the results are undefined.
+ |  
+ |  remove_unused_layers(...)
+ |      @brief Removes unused layers from layer list
+ |      This method was introduced in version 0.19.
+ |  
+ |  rename_cellview(...)
+ |      @brief Renames the cellview with the given index
+ |      
+ |      @args name, index
+ |      
+ |      If the name is not unique, a unique name will be constructed from the name given.
+ |      The name may be different from the filename but is associated with the layout object.
+ |      If a layout is shared between multiple cellviews (which may happen due to a clone of the layout view
+ |      for example), all cellviews are renamed.
+ |  
+ |  rename_layer_list(...)
+ |      @brief Sets the title of the given layer properties tab
+ |      @args index, name
+ |      This method has been introduced in version 0.21.
+ |  
+ |  replace_annotation(...)
+ |      @brief Replaces the annotation given by the id with the new one
+ |      Replaces an existing annotation given by the id parameter with the new one. The id of an annotation can be obtained through \Annotation#id.
+ |      
+ |      This method has been introduced in version 0.24.
+ |  
+ |  replace_image(...)
+ |      @brief Replace an image object with the new image
+ |      
+ |      @param id The id of the object to replace
+ |      @param new_obj The new object to replace the old one
+ |      
+ |      Replaces  the image with the given Id with the new object. The Id can be obtained with if "id" method of the image object.
+ |      
+ |      This method has been introduced in version 0.20.
+ |  
+ |  replace_layer_node(...)
+ |      @brief Replaces the layer node at the position given by "iter" with a new one
+ |      @args index, iter, node
+ |      This version addresses a specific list in a multi-tab layer properties arrangement with the "index" parameter. 
+ |      This method has been introduced in version 0.21.
+ |      Since version 0.22, this method accepts LayerProperties and LayerPropertiesNode objects. A LayerPropertiesNode object can contain a hierarchy of further nodes.
+ |  
+ |  reset_title(...)
+ |      @brief Resets the title to the standard title
+ |      
+ |      See \set_title and \title for a description about how titles are handled.
+ |  
+ |  save_as(...)
+ |      @brief Saves a layout to the given stream file
+ |      
+ |      @args index, filename, options
+ |      @param index The cellview index of the layout to save.
+ |      @param filename The file to write.
+ |      @param options Writer options.
+ |      
+ |      The layout with the given index is written to the stream file with the given options. 'options' is a \SaveLayoutOptions object that specifies which format to write and further options such as scaling factor etc.
+ |      Calling this method is equivalent to calling 'write' on the respective layout object.
+ |      
+ |      If the file name ends with a suffix ".gz" or ".gzip", the file is compressed with the zlib algorithm.
+ |  
+ |  save_image(...)
+ |      @brief Saves the layout as an image to the given file
+ |      
+ |      @args filename, width, height
+ |      @param filename The file to which to write the screenshot to.
+ |      @param width The width of the image to render in pixel.
+ |      @param height The height of the image to render in pixel.
+ |      
+ |      The image contains the current scene (layout, annotations etc.).
+ |      The image is written as a PNG file to the given file. The image is drawn synchroneously with the given width and height. Drawing may take some time.
+ |  
+ |  save_image_with_options(...)
+ |      @brief Saves the layout as an image to the given file (with options)
+ |      
+ |      @args filename, width, height, linewidth, oversampling, resolution, target, monochrome
+ |      @param filename The file to which to write the screenshot to.
+ |      @param width The width of the image to render in pixel.
+ |      @param height The height of the image to render in pixel.
+ |      @param linewidth The width of a line in pixels (usually 1) or 0 for default.
+ |      @param oversampling The oversampling factor (1..3) or 0 for default.
+ |      @param resolution The resolution (pixel size compared to a screen pixel, i.e 1/oversampling) or 0 for default.
+ |      @param target_box The box to draw or an empty box for default.
+ |      @param monochrome If true, monochrome images will be produced.
+ |      
+ |      The image contains the current scene (layout, annotations etc.).
+ |      The image is written as a PNG file to the given file. The image is drawn synchroneously with the given width and height. Drawing may take some time. Monochrome images don't have background or annotation objects currently.
+ |      
+ |      This method has been introduced in 0.23.10.
+ |  
+ |  save_layer_props(...)
+ |      @brief Saves the layer properties
+ |      
+ |      @args fn
+ |      
+ |      Save the layer properties to the file given in "fn"
+ |  
+ |  save_screenshot(...)
+ |      @brief Saves a screenshot to the given file
+ |      
+ |      @args filename
+ |      @param filename The file to which to write the screenshot to.
+ |      
+ |      The screenshot is written as a PNG file to the given file. This requires the drawing to be complete. Ideally, synchroneous mode is switched on for the application to guarantee this condition. The image will have the size of the viewport showing the current layout.
+ |  
+ |  select_cell(...)
+ |      @brief Selects a cell by index for a certain cell view
+ |      
+ |      @args cell_index, cv_index
+ |      
+ |      Select the current (top) cell by specifying a path (a list of cell indices from top to the actual cell) and the cellview index for which this cell should become the currently shown one.
+ |      This method selects the cell to be drawn. In constrast, the \set_current_cell_path method selects the cell that is highlighted in the cell tree (but not necessarily drawn).
+ |      This method is was deprecated in version 0.25 since from then, the \CellView object can be used to obtain an manipulate the selected cell.
+ |  
+ |  select_cell_path(...)
+ |      @brief Selects a cell by cell index for a certain cell view
+ |      
+ |      @args cell_index, cv_index
+ |      
+ |      Select the current (top) cell by specifying a cell indexand the cellview index for which this cell should become the currently shown one. The path to the cell is constructed by selecting one that leads to a top cell.
+ |      This method selects the cell to be drawn. In constrast, the \set_current_cell_path method selects the cell that is highlighted in the cell tree (but not necessarily drawn).
+ |      This method is was deprecated in version 0.25 since from then, the \CellView object can be used to obtain an manipulate the selected cell.
+ |  
+ |  select_object(...)
+ |      @brief Adds the given selection to the list of selected objects
+ |      @args obj
+ |      
+ |      The selection provided by the \ObjectInstPath descriptor is added to the list of selected objects.
+ |      To clear the previous selection, use \clear_object_selection.
+ |      
+ |      The selection of other objects (such as annotations and images) will not be affected.
+ |      
+ |      Another way of selecting objects is \object_selection=.
+ |      
+ |      This method has been introduced in version 0.24
+ |  
+ |  selected_cells_paths(...)
+ |      @brief Gets the paths of the selected cells
+ |      
+ |      @args cv_index
+ |      
+ |      Gets a list of cell paths to the cells selected in the cellview given by \cv_index. The "selected cells" are the ones selected in the cell list or cell tree. This is not the "current cell" which is the one that is shown in the layout window.
+ |      
+ |      The cell paths are arrays of cell indexes where the last element is the actual cell selected.
+ |      
+ |      This method has be introduced in version 0.25.
+ |  
+ |  selected_layers(...)
+ |      @brief Gets the selected layers
+ |      
+ |      Returns an array of \LayerPropertiesIterator objects pointing to the currently selected layers. If no layer view is selected currently, an empty array is returned.
+ |  
+ |  set_active_cellview_index(...)
+ |      @brief Makes the cellview with the given index the active one (shown in hierarchy browser)
+ |      @args index
+ |      See \active_cellview_index.
+ |      
+ |      This method has been renamed from set_active_cellview_index to active_cellview_index= in version 0.25. The original name is still available, but is deprecated.
+ |  
+ |  set_config(...)
+ |      @brief Sets a local configuration parameter with the given name to the given value
+ |      
+ |      @args name, value
+ |      @param name The name of the configuration parameter to set
+ |      @param value The value to which to set the configuration parameter
+ |      
+ |      This method sets a local configuration parameter with the given name to the given value. Values can only be strings. Numerical values have to be converted into strings first. Local configuration parameters override global configurations for this specific view. This allows for example to override global settings of background colors. Any local settings are not written to the configuration file.
+ |  
+ |  set_current_cell_path(...)
+ |      @brief Sets the path to the current cell
+ |      
+ |      @args cv_index
+ |      
+ |      The current cell is the one highlighted in the browser with the focus rectangle. The
+ |      cell given by the path is hightlighted and scrolled into view.
+ |      To select the cell to be drawn, use the \select_cell or \select_cell_path method.
+ |      
+ |      @param cv_index The cellview index for which to set the current path for (usally this will be the active cellview index)
+ |      @param path The path to the current cell
+ |      
+ |      This method is was deprecated in version 0.25 since from then, the \CellView object can be used to obtain an manipulate the selected cell.
+ |  
+ |  set_current_layer_list(...)
+ |      @brief Sets the index of the currently selected layer properties tab
+ |      @args index
+ |      This method has been introduced in version 0.21.
+ |  
+ |  set_layer_properties(...)
+ |      @brief Sets the layer properties of the layer pointed to by the iterator
+ |      @args index, iter, props
+ |      
+ |      This method replaces the layer properties of the element pointed to by "iter" by the properties given by "props" in the tab given by "index". It will not change the hierarchy but just the properties of the given node.This version addresses a specific list in a multi-tab layer properties arrangement with the "index" parameter. This method has been introduced in version 0.21.
+ |  
+ |  set_title(...)
+ |      @brief Sets the title of the view
+ |      
+ |      @args title
+ |      @param title The title string to use
+ |      
+ |      Override the standard title of the view indicating the file names loaded by the specified title string. The title string can be reset with \reset_title to the standard title again.
+ |  
+ |  show_all_cells(...)
+ |      @brief Makes all cells shown (cancel effects of \hide_cell) for the specified cell view
+ |      Unlike \show_all_cells, this method will only clear the hidden flag on the cell view selected by \cv_index.
+ |      
+ |      This variant has been added in version 0.25.
+ |  
+ |  show_cell(...)
+ |      @brief Shows the given cell for the given cellview (cancel effect of \hide_cell)
+ |      
+ |      @args cell_index, cv_index
+ |  
+ |  show_image(...)
+ |      @brief Shows or hides the given image
+ |      @param id The id of the object to show or hide
+ |      @param visible True, if the image should be shown
+ |      
+ |      Sets the visibility of the image with the given Id. The Id can be obtained with if "id" method of the image object.
+ |      
+ |      This method has been introduced in version 0.20.
+ |      
+ |      With version 0.25, \Image#visible= can be used to achieve the same results.
+ |  
+ |  show_layout(...)
+ |      @brief Shows an existing layout in the view
+ |      @args layout, tech, add_cellview, init_layers
+ |      
+ |      Shows the given layout in the view. If add_cellview is true, the new layout is added to the list of cellviews in the view.
+ |      The technology to use for that layout can be specified as well with the 'tech' parameter. Depending on the definition of the technology, layer properties may be loaded for example.
+ |      The technology string can be empty for the default technology.
+ |      This variant also allows to control whether the layer properties are
+ |      initialized (init_layers = true) or not (init_layers = false).
+ |      
+ |      Note: once a layout is passed to the view with show_layout, it is owned by the view and must not be destroyed with the 'destroy' method.
+ |      
+ |      @return The index of the cellview created.
+ |      
+ |      This method has been introduced in version 0.22.
+ |  
+ |  show_rdb(...)
+ |      @brief Shows a report database in the marker browser on a certain layout
+ |      @args rdb_index, cv_index
+ |      The marker browser is opened showing the report database with the index given by "rdb_index".
+ |      It will be attached (i.e. navigate to) the layout with the given cellview index in "cv_index".
+ |  
+ |  stop(...)
+ |      @brief Stops redraw thread and close any browsers
+ |      This method usually does not need to be called explicitly. The redraw thread is stopped automatically.
+ |  
+ |  stop_redraw(...)
+ |      @brief Stops the redraw thread
+ |      
+ |      It is very important to stop the redraw thread before applying changes to the layout or the cell views and the LayoutView configuration. This is usually done automatically. For rare cases, where this is not the case, this method is provided.
+ |  
+ |  transaction(...)
+ |      @brief Begins a transaction
+ |      
+ |      @args description
+ |      @param description A text that appears in the 'undo' description
+ |      
+ |      A transaction brackets a sequence of database modifications that appear as a single undo action. Only modifications that are wrapped inside a transaction..commit call pair can be undone.
+ |      Each transaction must be terminated with a \commit method call, even if some error occured. It is advisable therefore to catch errors and issue a commit call in this case.
+ |      
+ |      This method was introduced in version 0.16.
+ |  
+ |  unselect_object(...)
+ |      @brief Removes the given selection from the list of selected objects
+ |      @args obj
+ |      
+ |      The selection provided by the \ObjectInstPath descriptor is removed from the list of selected objects.
+ |      If the given object was not part of the selection, nothing will be changed.
+ |      The selection of other objects (such as annotations and images) will not be affected.
+ |      
+ |      This method has been introduced in version 0.24
+ |  
+ |  update_content(...)
+ |      @brief Updates the layout view to the current state
+ |      
+ |      This method triggers an update of the hierarchy tree and layer view tree. Usually, this method does not need to be called. The widgets are updated automatically in most cases.
+ |      
+ |      Currently, this method should be called however, after the layer view tree has been changed by the \insert_layer, \replace_layer_node or \delete_layer methods.
+ |  
+ |  viewport_height(...)
+ |      @brief Return the viewport height in pixels
+ |      This method was introduced in version 0.18.
+ |  
+ |  viewport_trans(...)
+ |      @brief Returns the transformation that converts micron coordinates to pixels
+ |      Hint: the transformation returned will convert any point in micron coordinate space into a pixel coordinate. Contrary to usual convention, the y pixel coordinate is given in a mathematically oriented space - which means the bottom coordinate is 0.
+ |      This method was introduced in version 0.18.
+ |  
+ |  viewport_width(...)
+ |      @brief Returns the viewport width in pixels
+ |      This method was introduced in version 0.18.
+ |  
+ |  zoom_box(...)
+ |      @brief Sets the viewport to the given box
+ |      
+ |      @args box
+ |      @param box The box to which to set the view in micron coordinates
+ |  
+ |  zoom_fit(...)
+ |      @brief Fits the contents of the current view into the window
+ |  
+ |  zoom_fit_sel(...)
+ |      @brief Fits the contents of the current selection into the window
+ |      
+ |      This method has been introduced in version 0.25.
+ |  
+ |  zoom_in(...)
+ |      @brief Zooms in somewhat
+ |  
+ |  zoom_out(...)
+ |      @brief Zooms out somewhat
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors defined here:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |  
+ |  active_setview_index
+ |      @brief Makes the cellview with the given index the active one (shown in hierarchy browser)
+ |      @args index
+ |      See \active_cellview_index.
+ |      
+ |      This method has been renamed from set_active_cellview_index to active_cellview_index= in version 0.25. The original name is still available, but is deprecated.
+ |  
+ |  current_layer
+ |      @brief Gets the current layer view
+ |      
+ |      Returns the \LayerPropertiesIterator pointing to the current layer view (the one that has the focus). If no layer view is active currently, a null iterator is returned.
+ |      
+ |      
+ |      @brief Sets the current layer view
+ |      @args iter
+ |      
+ |      Specifies an \LayerPropertiesIterator pointing to the new current layer view.
+ |      
+ |      This method has been introduced in version 0.23.
+ |  
+ |  current_layer_list
+ |      @brief Gets the index of the currently selected layer properties tab
+ |      This method has been introduced in version 0.21.
+ |      
+ |      
+ |      @brief Sets the index of the currently selected layer properties tab
+ |      @args index
+ |      This method has been introduced in version 0.21.
+ |  
+ |  max_hier_levels
+ |      @brief Returns the maximum hierarchy level up to which to display geometries
+ |      
+ |      @return The maximum level up to which to display geometries
+ |      
+ |      @brief Sets the maximum hierarchy level up to which to display geometries
+ |      
+ |      @args level
+ |      @param level The maximum level below which to display something
+ |      
+ |      This methods allows to set the maximum hierarchy below which to display geometries.This method may cause a redraw if required.
+ |  
+ |  min_hier_levels
+ |      @brief Returns the minimum hierarchy level at which to display geometries
+ |      
+ |      @return The minimum level at which to display geometries
+ |      
+ |      @brief Sets the minimum hierarchy level at which to display geometries
+ |      
+ |      @args level
+ |      @param level The minimum level above which to display something
+ |      
+ |      This methods allows to set the minimum hierarchy level above which to display geometries.This method may cause a redraw if required.
+ |  
+ |  object_selection
+ |      @brief Returns a list of selected objects
+ |      This method will deliver an array of \ObjectInstPath objects listing the selected geometrical objects. Other selected objects such as annotations and images will not be contained in that list.
+ |      
+ |      The list returned is an array of copies of \ObjectInstPath objects. They can be modified, but they will become a new selection only after re-introducing them into the view through \object_selection= or \select_object.
+ |      
+ |      Another way of obtaining the selected objects is \each_object_selected.
+ |      
+ |      This method has been introduced in version 0.24.
+ |      
+ |      
+ |      @brief Sets the list of selected objects
+ |      @args sel
+ |      
+ |      This method will set the selection of geometrical objects such as shapes and instances. It is the setter which complements the \object_selection method.
+ |      
+ |      Another way of setting the selection is through \clear_object_selection and \select_object.
+ |      
+ |      This method has been introduced in version 0.24.
+ |  
+ |  on_active_cellview_changed
+ |      @brief An event indicating that the active cellview has changed
+ |      
+ |      If the active cellview is changed by selecting a new one from the drop-down list, this event is triggered.
+ |      When this event is triggered, the cellview has already been changed.
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_active_cellview_changed/remove_active_cellview_changed) have been removed in 0.25.
+ |      
+ |      
+ |      @brief An event indicating that the active cellview has changed
+ |      
+ |      If the active cellview is changed by selecting a new one from the drop-down list, this event is triggered.
+ |      When this event is triggered, the cellview has already been changed.
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_active_cellview_changed/remove_active_cellview_changed) have been removed in 0.25.
+ |      
+ |      
+ |      @brief An event indicating that the active cellview has changed
+ |      
+ |      If the active cellview is changed by selecting a new one from the drop-down list, this event is triggered.
+ |      When this event is triggered, the cellview has already been changed.
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_active_cellview_changed/remove_active_cellview_changed) have been removed in 0.25.
+ |  
+ |  on_annotation_changed
+ |      @brief A event indicating that an annotation has been modified
+ |      The argument of the event is the ID of the annotation that was changed.
+ |      This event has been added in version 0.25.
+ |      
+ |      
+ |      @brief A event indicating that an annotation has been modified
+ |      The argument of the event is the ID of the annotation that was changed.
+ |      This event has been added in version 0.25.
+ |  
+ |  on_annotation_selection_changed
+ |      @brief A event indicating that the annotation selection has changed
+ |      This event has been added in version 0.25.
+ |      
+ |      
+ |      @brief A event indicating that the annotation selection has changed
+ |      This event has been added in version 0.25.
+ |      
+ |      
+ |      @brief A event indicating that the annotation selection has changed
+ |      This event has been added in version 0.25.
+ |  
+ |  on_annotations_changed
+ |      @brief A event indicating that annotations have been added or removed
+ |      This event has been added in version 0.25.
+ |      
+ |      
+ |      @brief A event indicating that annotations have been added or removed
+ |      This event has been added in version 0.25.
+ |      
+ |      
+ |      @brief A event indicating that annotations have been added or removed
+ |      This event has been added in version 0.25.
+ |  
+ |  on_cell_visibility_changed
+ |      @brief An event indicating that the visibility of one or more cells has changed
+ |      
+ |      This event is triggered after the visibility of one or more cells has changed.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_cell_visibility_observer/remove_cell_visibility_observer) have been removed in 0.25.
+ |      
+ |      
+ |      @brief An event indicating that the visibility of one or more cells has changed
+ |      
+ |      This event is triggered after the visibility of one or more cells has changed.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_cell_visibility_observer/remove_cell_visibility_observer) have been removed in 0.25.
+ |      
+ |      
+ |      @brief An event indicating that the visibility of one or more cells has changed
+ |      
+ |      This event is triggered after the visibility of one or more cells has changed.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_cell_visibility_observer/remove_cell_visibility_observer) have been removed in 0.25.
+ |  
+ |  on_cellview_changed
+ |      @brief An event indicating that a cellview has changed
+ |      @args cellview_index
+ |      
+ |      If a cellview is modified, this event is triggered.
+ |      When this event is triggered, the cellview have already been changed.
+ |      The integer parameter of this event will indicate the cellview that has changed.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_cellview_observer/remove_cellview_observer) have been removed in 0.25.
+ |      
+ |      
+ |      @brief An event indicating that a cellview has changed
+ |      @args cellview_index
+ |      
+ |      If a cellview is modified, this event is triggered.
+ |      When this event is triggered, the cellview have already been changed.
+ |      The integer parameter of this event will indicate the cellview that has changed.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_cellview_observer/remove_cellview_observer) have been removed in 0.25.
+ |  
+ |  on_cellviews_changed
+ |      @brief An event indicating that the cellview collection has changed
+ |      
+ |      If new cellviews are added or cellviews are removed, this event is triggered.
+ |      When this event is triggered, the cellviews have already been changed.
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_cellview_list_observer/remove_cellview_list_observer) have been removed in 0.25.
+ |      
+ |      
+ |      @brief An event indicating that the cellview collection has changed
+ |      
+ |      If new cellviews are added or cellviews are removed, this event is triggered.
+ |      When this event is triggered, the cellviews have already been changed.
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_cellview_list_observer/remove_cellview_list_observer) have been removed in 0.25.
+ |      
+ |      
+ |      @brief An event indicating that the cellview collection has changed
+ |      
+ |      If new cellviews are added or cellviews are removed, this event is triggered.
+ |      When this event is triggered, the cellviews have already been changed.
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_cellview_list_observer/remove_cellview_list_observer) have been removed in 0.25.
+ |  
+ |  on_close
+ |      @brief A event indicating that the view is about to close
+ |      
+ |      This event is triggered when the view is going to be closed entirely.
+ |      
+ |      It has been added in version 0.25.
+ |      
+ |      @brief A event indicating that the view is about to close
+ |      
+ |      This event is triggered when the view is going to be closed entirely.
+ |      
+ |      It has been added in version 0.25.
+ |      
+ |      @brief A event indicating that the view is about to close
+ |      
+ |      This event is triggered when the view is going to be closed entirely.
+ |      
+ |      It has been added in version 0.25.
+ |  
+ |  on_current_layer_list_changed
+ |      @brief An event indicating the current layer list (the selected tab) has changed
+ |      @args index
+ |      @param index The index of the new current layer list
+ |      
+ |      This event is triggered after the current layer list was changed - i.e. a new tab was selected.
+ |      
+ |      This event was introduced in version 0.25.
+ |      
+ |      
+ |      @brief An event indicating the current layer list (the selected tab) has changed
+ |      @args index
+ |      @param index The index of the new current layer list
+ |      
+ |      This event is triggered after the current layer list was changed - i.e. a new tab was selected.
+ |      
+ |      This event was introduced in version 0.25.
+ |  
+ |  on_file_open
+ |      @brief An event indicating that a file was opened
+ |      
+ |      If a file is loaded, this event is triggered.
+ |      When this event is triggered, the file was already loaded and the new file is the new active cellview.
+ |      Despite it's name, this event is also triggered if a layout object is loaded into the view.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_file_open_observer/remove_file_open_observer) have been removed in 0.25.
+ |      
+ |      
+ |      @brief An event indicating that a file was opened
+ |      
+ |      If a file is loaded, this event is triggered.
+ |      When this event is triggered, the file was already loaded and the new file is the new active cellview.
+ |      Despite it's name, this event is also triggered if a layout object is loaded into the view.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_file_open_observer/remove_file_open_observer) have been removed in 0.25.
+ |      
+ |      
+ |      @brief An event indicating that a file was opened
+ |      
+ |      If a file is loaded, this event is triggered.
+ |      When this event is triggered, the file was already loaded and the new file is the new active cellview.
+ |      Despite it's name, this event is also triggered if a layout object is loaded into the view.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_file_open_observer/remove_file_open_observer) have been removed in 0.25.
+ |  
+ |  on_hide
+ |      @brief A event indicating that the view is going to become invisible
+ |      
+ |      It has been added in version 0.25.
+ |      
+ |      @brief A event indicating that the view is going to become invisible
+ |      
+ |      It has been added in version 0.25.
+ |      
+ |      @brief A event indicating that the view is going to become invisible
+ |      
+ |      It has been added in version 0.25.
+ |  
+ |  on_image_changed
+ |      @brief A event indicating that an image has been modified
+ |      The argument of the event is the ID of the image that was changed.
+ |      This event has been added in version 0.25.
+ |      
+ |      
+ |      @brief A event indicating that an image has been modified
+ |      The argument of the event is the ID of the image that was changed.
+ |      This event has been added in version 0.25.
+ |  
+ |  on_image_selection_changed
+ |      @brief A event indicating that the image selection has changed
+ |      This event has been added in version 0.25.
+ |      
+ |      
+ |      @brief A event indicating that the image selection has changed
+ |      This event has been added in version 0.25.
+ |      
+ |      
+ |      @brief A event indicating that the image selection has changed
+ |      This event has been added in version 0.25.
+ |  
+ |  on_images_changed
+ |      @brief A event indicating that images have been added or removed
+ |      This event has been added in version 0.25.
+ |      
+ |      
+ |      @brief A event indicating that images have been added or removed
+ |      This event has been added in version 0.25.
+ |      
+ |      
+ |      @brief A event indicating that images have been added or removed
+ |      This event has been added in version 0.25.
+ |  
+ |  on_layer_list_changed
+ |      @brief An event indicating that the layer list has changed
+ |      @args flags
+ |      
+ |      This event is triggered after the layer list has changed it's configuration.
+ |      The integer argument gives a hint about the nature of the changed:
+ |      Bit 0 is set, if the properties (visibility, color etc.) of one or more layers have changed. Bit 1 is
+ |      set if the hierarchy has changed. Bit 2 is set, if layer names have changed.
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_layer_list_observer/remove_layer_list_observer) have been removed in 0.25.
+ |      
+ |      
+ |      @brief An event indicating that the layer list has changed
+ |      @args flags
+ |      
+ |      This event is triggered after the layer list has changed it's configuration.
+ |      The integer argument gives a hint about the nature of the changed:
+ |      Bit 0 is set, if the properties (visibility, color etc.) of one or more layers have changed. Bit 1 is
+ |      set if the hierarchy has changed. Bit 2 is set, if layer names have changed.
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_layer_list_observer/remove_layer_list_observer) have been removed in 0.25.
+ |  
+ |  on_layer_list_deleted
+ |      @brief An event indicating that a layer list (a tab) has been removed
+ |      @args index
+ |      @param index The index of the layer list that was removed
+ |      
+ |      This event is triggered after the layer list has been removed - i.e. a tab was deleted.
+ |      
+ |      This event was introduced in version 0.25.
+ |      
+ |      
+ |      @brief An event indicating that a layer list (a tab) has been removed
+ |      @args index
+ |      @param index The index of the layer list that was removed
+ |      
+ |      This event is triggered after the layer list has been removed - i.e. a tab was deleted.
+ |      
+ |      This event was introduced in version 0.25.
+ |  
+ |  on_layer_list_inserted
+ |      @brief An event indicating that a layer list (a tab) has been inserted
+ |      @args index
+ |      @param index The index of the layer list that was inserted
+ |      
+ |      This event is triggered after the layer list has been inserted - i.e. a new tab was created.
+ |      
+ |      This event was introduced in version 0.25.
+ |      
+ |      
+ |      @brief An event indicating that a layer list (a tab) has been inserted
+ |      @args index
+ |      @param index The index of the layer list that was inserted
+ |      
+ |      This event is triggered after the layer list has been inserted - i.e. a new tab was created.
+ |      
+ |      This event was introduced in version 0.25.
+ |  
+ |  on_rdb_list_changed
+ |      @brief An event that is triggered the list of report databases is changed
+ |      
+ |      If a report database is added or removed, this event is triggered.
+ |      
+ |      This event was translated from the Observer pattern to an event in version 0.25.
+ |      
+ |      @brief An event that is triggered the list of report databases is changed
+ |      
+ |      If a report database is added or removed, this event is triggered.
+ |      
+ |      This event was translated from the Observer pattern to an event in version 0.25.
+ |      
+ |      @brief An event that is triggered the list of report databases is changed
+ |      
+ |      If a report database is added or removed, this event is triggered.
+ |      
+ |      This event was translated from the Observer pattern to an event in version 0.25.
+ |  
+ |  on_selection_changed
+ |      @brief An event that is triggered if the selection is changed
+ |      
+ |      If the selection changed, this event is triggered.
+ |      
+ |      This event was translated from the Observer pattern to an event in version 0.25.
+ |      
+ |      @brief An event that is triggered if the selection is changed
+ |      
+ |      If the selection changed, this event is triggered.
+ |      
+ |      This event was translated from the Observer pattern to an event in version 0.25.
+ |      
+ |      @brief An event that is triggered if the selection is changed
+ |      
+ |      If the selection changed, this event is triggered.
+ |      
+ |      This event was translated from the Observer pattern to an event in version 0.25.
+ |  
+ |  on_show
+ |      @brief A event indicating that the view is going to become visible
+ |      
+ |      It has been added in version 0.25.
+ |      
+ |      @brief A event indicating that the view is going to become visible
+ |      
+ |      It has been added in version 0.25.
+ |      
+ |      @brief A event indicating that the view is going to become visible
+ |      
+ |      It has been added in version 0.25.
+ |  
+ |  on_transient_selection_changed
+ |      @brief An event that is triggered if the transient selection is changed
+ |      
+ |      If the transient selection is changed, this event is triggered.
+ |      The transient selection is the highlighted selection when the mouse hovers over some object(s).
+ |      This event was translated from the Observer pattern to an event in version 0.25.
+ |      
+ |      @brief An event that is triggered if the transient selection is changed
+ |      
+ |      If the transient selection is changed, this event is triggered.
+ |      The transient selection is the highlighted selection when the mouse hovers over some object(s).
+ |      This event was translated from the Observer pattern to an event in version 0.25.
+ |      
+ |      @brief An event that is triggered if the transient selection is changed
+ |      
+ |      If the transient selection is changed, this event is triggered.
+ |      The transient selection is the highlighted selection when the mouse hovers over some object(s).
+ |      This event was translated from the Observer pattern to an event in version 0.25.
+ |  
+ |  on_viewport_changed
+ |      @brief An event indicating that the viewport (the visible rectangle) has changed
+ |      
+ |      This event is triggered after a new display rectangle was chosen - for example, because the user zoomed into the layout.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_viewport_changed_observer/remove_viewport_changed_observer) have been removed in 0.25.
+ |      
+ |      
+ |      @brief An event indicating that the viewport (the visible rectangle) has changed
+ |      
+ |      This event is triggered after a new display rectangle was chosen - for example, because the user zoomed into the layout.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_viewport_changed_observer/remove_viewport_changed_observer) have been removed in 0.25.
+ |      
+ |      
+ |      @brief An event indicating that the viewport (the visible rectangle) has changed
+ |      
+ |      This event is triggered after a new display rectangle was chosen - for example, because the user zoomed into the layout.
+ |      
+ |      Before version 0.25 this event was based on the observer pattern obsolete now. The corresponding methods (add_viewport_changed_observer/remove_viewport_changed_observer) have been removed in 0.25.
+ |  
+ |  title
+ |      @brief Returns the view's title string
+ |      
+ |      @return The title string
+ |      
+ |      The title string is either a string composed of the file names loaded (in some "readable" manner) or a customized title string set by \set_title.
+ |      
+ |      @brief Sets the title of the view
+ |      
+ |      @args title
+ |      @param title The title string to use
+ |      
+ |      Override the standard title of the view indicating the file names loaded by the specified title string. The title string can be reset with \reset_title to the standard title again.
+ |  
+ |  ----------------------------------------------------------------------
+ |  Methods inherited from __Base:
+ |  
+ |  __delattr__(self, name, /)
+ |      Implement delattr(self, name).
+ |  
+ |  __getattribute__(self, name, /)
+ |      Return getattr(self, name).
+ |  
+ |  __new__(*args, **kwargs) from builtins.type
+ |      Create and return a new object.  See help(type) for accurate signature.
+ |  
+ |  __setattr__(self, name, value, /)
+ |      Implement setattr(self, name, value).
+
