@@ -22,6 +22,8 @@ https://www.klayout.de/doc-qt4/about/variant_notation.html
 """
 import pya
 import numpy as np
+import networkx as nx
+import time
 
 #####################################################################################
 ## User-defined constants
@@ -32,9 +34,21 @@ MF = 2  # The buffer in how much each polygon should get expanded to account for
 etch_hole_size = 5  # To improve computation time, we can ignore etch holes. Set 
                     # to 0 if you don't want to ignore etch holes. The metric for
                     # ignoring shapes will be if shape_area &lt;= etch_hole_size^2
+                    
+# Layers not in this list will be ignored
+# This can work in parallel with etch_hole_size
+# Just be careful when using this, since for example if you use SOIHOLE to 
+# take out large chunks of the SOI layer (instead of small etch holes), then
+# a region you thought was connected might be unconnected
+# If you want to avoid this risk, set filter_by_valid_layers to False
+filter_by_valid_layers = True
+valid_layers = [3, 6] #["SOI", "METAL"]
 
 #####################################################################################
 ## Main Code
+
+#####################################################################################
+## Initialize the schematic, represented by a graph data structure (polygons = vertices)
 
 # Initialization of layout view
 app = pya.Application.instance()  # Select the current application
@@ -49,38 +63,161 @@ if lv is None:
     raise IllegalArgumentException("Shape Statistics: No view selected")
 
 # Define objects
-skipped = 0
-paths = 0
-polygons = 0
-boxes = 0
-texts = 0
-other = 0
+num_skipped = 0
+polygons = []
+labeled_polygons = {}
+net_counts = {}
 
-for obj in lv.each_object_selected():
+start_time = time.clock()
+
+def find_center(polygon):  # A debugging function
+    x = 0
+    y = 0
+    N = 0
+    for pt in polygon.each_point_hull():
+        x += pt.x
+        y += pt.y
+        N += 1
+    return (x/N, y/N)
+
+for i, obj in enumerate(lv.each_object_selected()):
     shape = obj.shape
     if shape.darea() &lt;= etch_hole_size*etch_hole_size:
-        skipped = skipped + 1
+        num_skipped += 1
         continue
-    
-    if not (shape.is_box() || shape.is_polygon() || shape.is_path()):
-        skipped = skipped + 1
+    elif filter_by_valid_layers and shape.layer_info.layer not in valid_layers:
+        num_skipped += 1
         continue
+        
+    shape = shape.dup()
+    shape.layer_info.layer = valid_layers[0]
     
-    if shape.is_path():
-        paths += 1
+    if shape.is_polygon():
+        poly = shape.dpolygon
+        #print("Polygon", find_center(poly), poly)
+        if MF &gt; 0:
+            #poly.size(MF)
+            area = poly.area()
+            mag = (area + MF*MF) / area
+            #print(mag)
+            poly.transform(pya.DCplxTrans(mag))
+            #print(find_center(poly), poly)
+        polygons.append(poly)
     elif shape.is_box():
-        boxes += 1
-    elif shape.is_polygon():
-        polygons += 1
-    elif shape.is_text():
-        texts += 1
+        box = shape.dbox
+        #print("Box", box.center())
+        if MF &gt; 0:
+            box.top = box.top + MF
+            box.bottom = box.bottom - MF
+            box.left = box.left - MF
+            box.right = box.right + MF
+            #print(box.center())
+        polygons.append(pya.DPolygon(box))
+    elif shape.is_path():
+        path = shape.dpath
+        #print("Path", find_center(path.polygon()))
+        if MF &gt; 0:
+            path.width = path.width + 2*MF  # One MF buffer on each side
+            #print(find_center(path.polygon()))
+        polygons.append(path.polygon())
     else:
-        other += 1
+        num_skipped = num_skipped + 1
+        continue
+        
+    net = shape.property("NET")
+    direction = shape.property("DIR")
+    if net is not None:
+        labeled_polygons[i] = (net, direction)
+        if net not in net_counts:
+            net_counts[net] = 0
+        else:
+            net_counts[net] += 1
+            
+    #print(polygons[-1])
+polygon_read_time = time.clock()
+        
+print("# polygons after filtering:", len(polygons))
+print("# polygons skipped:", num_skipped)
+print("Time to read all polygons:", polygon_read_time - start_time, "seconds")
 
-print("Skipped", skipped)
-print("Paths", paths)
-print("Boxes", boxes)
-print("Polygons", polygons)
-print("Texts", texts)
-print("Other", other)</text>
+# Create the NetworkX connectivity graph representing all the polygon connections
+# Takes V^2/2 steps --&gt; O(V^2) time complexity, O(V^2) space complexity
+N = len(polygons)
+schematic = nx.empty_graph(N)
+for i in range(N):
+    for j in range(i+1, N):
+        if polygons[i].touches(polygons[j]):
+            schematic.add_edge(i, j)
+graph_generation_time = time.clock()
+            
+print(schematic)
+print("Time to generate connectivity graph:", graph_generation_time - polygon_read_time, "seconds")
+            
+# Process the final graph and output all connected components
+# Operates using a DFS --&gt; O(V+E) time complexity, O(V) space complexity
+nets = list(nx.connected_component_subgraphs(schematic))
+net_generation_time = time.clock()
+print("Time to generate nets:", net_generation_time - graph_generation_time, "seconds")
+
+
+###########################################################################################
+## Process the schematic
+
+# Run LVS
+# O(V) time complexity, O(V) worst case space complexity
+num_errors = 0
+num_warnings = 0
+num_powered_nets = 0
+for net in nets:  # Each net is a networkx graph structure, with polygons for nodes
+    net_polygons_indices = net.nodes()  # net_polygons = array of nodes.
+                                        # If net_polygons[0] = 1, that represents the polygon stored as polygons[1]
+    net_name = None
+    net_num_sources = 0
+    net_num_sinks = 0
+    for net_polygon_index in net_polygons_indices:
+        net_polygon = polygons[net_polygon_index]
+        if net_polygon_index in labeled_polygons:
+            net_polygon_net_name, net_polygon_dir = labeled_polygons[net_polygon_index]
+        else:
+            net_polygon_net_name, net_polygon_dir = None, None
+
+        if net_polygon_net_name is not None:
+            if net_name is None:
+                net_name = net_polygon_net_name
+            else:
+                if net_name != net_polygon_net_name:
+                    print("ERROR: Net", net_name, "connected to Net", net_polygon_net_name)
+                    num_errors += 1
+        
+        if net_polygon_dir is not None:
+            if net_polygon_dir == "SRC" or net_polygon_dir == "SOURCE":
+                net_num_sources += 1
+            elif net_polygon_dir == "SINK":
+                net_num_sinks += 1
+        if net_num_sinks &gt; 0 and net_num_sources == 0:
+            print("WARNING: Net", net_name, "has", net_num_sinks, "power sinks but no power sources")
+            num_warnings += 1
+    if net_name is not None:
+        num_powered_nets += 1
+lvs_time = time.clock()
+print("Time to run LVS:", lvs_time - net_generation_time, "seconds")
+
+# Print a summary of the results    
+print()
+print()
+print("--------------------------------------------------------------------")
+if num_errors == 0 and num_warnings == 0:
+    print("(_＼ヽ\n　 ＼＼ .Λ＿Λ.\n　　 ＼(　ˇωˇ)  F\n　　　 &gt;　⌒ヽ  A\n　　　/ 　 へ＼  B\n　　 /　　/　＼＼  U\n　　 ﾚ　ノ　　 ヽ_つ L\n　　/　/    O\n　 /　/|    U\n　(　(ヽ  S\n　|　|、＼\n　| 丿 ＼ ⌒)\n　| |　　) /\n`ノ ) 　 Lﾉ\n(_／")
+else:
+    print("(＞△＜)○")
+print("LVS complete")
+print("Summary:")
+print("Total number of nets:", len(nets))
+print("Total number of powered nets (PWR, GND, etc.):", num_powered_nets)
+for net_name in net_counts:
+    print("# of connected components in Net", str(net_name) + ":", net_counts[net_name])
+print()
+print("Number of errors:", num_errors)
+print("Number of warnings:", num_warnings)
+</text>
 </klayout-macro>
