@@ -26,7 +26,6 @@ import pya
 import numpy as np
 import networkx as nx
 import time
-sys.exit(0)
 
 #####################################################################################
 ## User-defined constants
@@ -158,7 +157,7 @@ print("Time to generate connectivity graph:", graph_generation_time - polygon_re
             
 # Process the final graph and output all connected components
 # Operates using a DFS --&gt; O(V+E) time complexity, O(V) space complexity
-nets = list(nx.connected_component_subgraphs(schematic))
+nets = [schematic.subgraph(c) for c in nx.connected_components(schematic)] # Deprecated in NetworkX 2.4: list(nx.connected_component_subgraphs(schematic))
 net_generation_time = time.clock()
 print("Time to generate nets:", net_generation_time - graph_generation_time, "seconds")
 

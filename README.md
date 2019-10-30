@@ -40,17 +40,16 @@ You can find the KLayout API here: https://www.klayout.de/doc-qt4/code/index.htm
 # Setting up a File to Run LVS
 Layout versus Schematic works by first defining a schematic (like a circuit netlist, essentially a list of nets and polygons connected to those nets), and then
 checking that the actual layout (i.e. wiring) doesn't short two nets together. You can denote a polygon's "net" via User Properties in KLayout: see below.
-!(User Properties Tutorial)[./user_properties_image.png "User Properties Tutorial"]
+!(User Properties Tutorial)[https://github.com/ahadrauf/klayout_lvs/blob/master/user_properties_image.png "User Properties Tutorial"]
 Essentially, you denote a max of two properties:
 * "NET": "net_name"
 * "DIR": "SRC" or "SINK" (or you can leave this one out to imply "SINK")
-Sources ("SRC") are reserved for pads or other regions where power/signals will be inputted, and the code checked that no two sources are shorted. Frankly, this
-could also potentially just be removed assuming people assigned their net names correctly, but this was a check to make sure any auto-generated polygons
-were properly placed on separate nets. Sinks ("SINK") is meant for everything else - the code doesn't give any errors if two sinks are connected, so if you're
-confident in your net naming you can just omit the "DIR" key-value pair to make everything a "SINK".
+Sources ("SRC") are reserved for pads or other regions where power/signals will be inputted, and the code just outputs a warning if there are 
+sinks but no sources. Frankly, this could could probably be removed in hindsight :D. Sinks ("SINK") is meant for everything else - the 
+code doesn't give any errors if two sinks are connected, so if you're confident in your net naming you can just omit the "DIR" key-value pair to 
+make everything a "SINK".
 
-You can edit User Properties manually by double clicking any polygon in KLayout (Editor). To date, I still haven't found a way to do it using our MATLAB KLayout
-library, but this can be a project for future iterations.
+You can edit User Properties manually by double clicking any polygon in KLayout (Editor). To date, I still haven't found a way to do it using our MATLAB K
 
 ## Miscellaneous
 Here are some helpful resources I found while creating this repository:
