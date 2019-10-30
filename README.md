@@ -40,7 +40,7 @@ You can find the KLayout API here: https://www.klayout.de/doc-qt4/code/index.htm
 # Setting up a File to Run LVS
 Layout versus Schematic works by first defining a schematic (like a circuit netlist, essentially a list of nets and polygons connected to those nets), and then
 checking that the actual layout (i.e. wiring) doesn't short two nets together. You can denote a polygon's "net" via User Properties in KLayout: see below.
-!(User Properties Tutorial)[user_properties_image.png "User Properties Tutorial"]
+!(User Properties Tutorial)[./user_properties_image.png "User Properties Tutorial"]
 Essentially, you denote a max of two properties:
 * "NET": "net_name"
 * "DIR": "SRC" or "SINK" (or you can leave this one out to imply "SINK")
