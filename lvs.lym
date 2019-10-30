@@ -20,10 +20,13 @@ This is a KLayout-based Layout-versus-Schematic checker for MEMS layouts
 Information about using KLayout's User Properties:
 https://www.klayout.de/doc-qt4/about/variant_notation.html
 """
+import sys
+print(sys.version)
 import pya
 import numpy as np
 import networkx as nx
 import time
+sys.exit(0)
 
 #####################################################################################
 ## User-defined constants
